@@ -1,0 +1,1 @@
+module.exports.jwtSecret = "X*FC^F&XF7xGD*X&DG@#$#@%$#%$#@#$#@$#@"
