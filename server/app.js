@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const router = require('./routes');
 const passport = require('passport');
 const sequelize = require('./api/models/database-connection');
 require('./config/passportJWTConfig')(passport);
@@ -10,6 +9,14 @@ const User = require('./api/models/user');
 const Project = require('./api/models/project');
 const ProjectMembers = require('./api/models/projectMembers')
 const Story = require('./api/models/story');
+
+// const router = require('./routes');
+
+const userRouter = require('./api/routes/userRoutes');
+const projectRouter = require('./api/routes/projectRoutes');
+const projectMembersRouter = require('./api/routes/projectMemberRoutes');
+const storyRouter = require('./api/routes/storyRoutes');
+
 //! ---------------------- MIDDLEWARES ----------------------------------
 app.use(passport.initialize());
 app.use(
@@ -19,7 +26,13 @@ app.use(
 );
 app.use(bodyParser.json());
 app.use(cors());
-app.use('/api', router);
+
+//? ---------------------- ROUTES ------------------------------
+
+app.use('/user', userRouter)
+app.use('/project', projectRouter)
+app.use('/projectMembers', projectMembersRouter)
+app.use('/story', storyRouter)
 
 //! ----------------------------------Database Sync--------------------------------
 Project.belongsTo(User, {

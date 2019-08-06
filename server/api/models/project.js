@@ -1,7 +1,5 @@
 const Sequelize = require('sequelize');
 const dbConnection = require('./database-connection');
-const User = require('./user');
-const ProjectMembers = require('./projectMembers');
 
 //! INITIALIZING THE PROEJCT PROPERTY IN DATABASE
 const Project = dbConnection.define('project', {
