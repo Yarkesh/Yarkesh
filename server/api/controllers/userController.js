@@ -40,9 +40,9 @@ exports.getUserProjects = (req, res) => {
       }]
     }]
   }).then(projects => {
-    return res.status(200).json({
-      projects: projects.map(project => project.project)
-    });
+    return res.status(200).json(
+      projects.map(project => project.project)
+    );
   })
     .catch(err => {
       return res.status(500).json({

@@ -54,6 +54,7 @@ const Story = dbConnection.define('story', {
         type: Sequelize.STRING,
         allowNull: true
     },
+
     //* Foreign key to assignments table
     assignedTo: {
         type: Sequelize.INTEGER,
@@ -69,6 +70,7 @@ const Story = dbConnection.define('story', {
         type: Sequelize.INTEGER,
         allowNull: true,
     }
+    //epic
 
 });
 
