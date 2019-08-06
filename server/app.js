@@ -17,7 +17,7 @@ const projectRouter = require('./api/routes/projectRoutes');
 const projectMembersRouter = require('./api/routes/projectMemberRoutes');
 const storyRouter = require('./api/routes/storyRoutes');
 
-//! ---------------------- MIDDLEWARES ----------------------------------
+//! --------------------------- MIDDLEWARES ---------------------------------------
 app.use(passport.initialize());
 app.use(
     bodyParser.urlencoded({

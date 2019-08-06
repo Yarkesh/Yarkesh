@@ -6,7 +6,8 @@ const postgresConfig = require('../../config/databaseConfig')
 //postgreSql database . name : Yarkesh . port : 5432 
 const sequelize = new Sequelize(postgresConfig.name, postgresConfig.userName, postgresConfig.password, {
   host: postgresConfig.host,
-  dialect: 'postgres'
+  dialect: 'postgres',
+  logging: false
 });
 
 module.exports = sequelize
