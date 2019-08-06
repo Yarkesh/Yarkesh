@@ -4,13 +4,11 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
 const sequelize = require('./api/models/database-connection');
-require('./config/passportJWTConfig')(passport);
+require('../config/passportJWTConfig')(passport);
 const User = require('./api/models/user');
 const Project = require('./api/models/project');
 const ProjectMembers = require('./api/models/projectMembers')
 const Story = require('./api/models/story');
-
-// const router = require('./routes');
 
 const userRouter = require('./api/routes/userRoutes');
 const projectRouter = require('./api/routes/projectRoutes');
