@@ -31,5 +31,4 @@ const ProjectMembers = dbConnection.define('projectmembers', {
     }
 });
 
-
 module.exports = ProjectMembers;

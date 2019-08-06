@@ -31,5 +31,4 @@ const Project = dbConnection.define('project', {
     }
 });
 
-
 module.exports = Project;

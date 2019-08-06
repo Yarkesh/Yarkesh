@@ -1,5 +1,4 @@
 const Project = require('../models/project');
-const ProjectMembers = require('../models/projectMembers');
 const User = require('../models/user');
 const Story = require('../models/story')
 
@@ -32,7 +31,6 @@ exports.getProjectStories = (req, res) => {
             });
         });
 };
-
 exports.createStory = (req, res) => {
     //creating project with foreign key for user
     Story.create({

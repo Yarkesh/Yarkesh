@@ -1,4 +1,4 @@
-const User = require('../models/user');
+
 const ProjectMembers = require('../models/projectMembers')
 const Project = require('../models/project')
 
@@ -23,6 +23,7 @@ module.exports.isMember = (req, res, next) => {
         })
     })
 }
+
 module.exports.isCreator = (req, res, next) => {
     Project.findAll({
         where: {

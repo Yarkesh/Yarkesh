@@ -3,11 +3,10 @@ const bcrypt = require('bcrypt');
 const errorHandler = require('./errorHandler');
 const jwt = require('jsonwebtoken');
 const jwtSecret = require('../../config/secretAndUrl').jwtSecret;
-const {
-  validationResult
-} = require('express-validator');
+const { validationResult } = require('express-validator');
 const ProjectMembers = require('../models/projectMembers')
 const Project = require('../models/project')
+
 //! FOR TEST ONLY
 exports.getUserInfo = (req, res) => {
   User.findAll({
@@ -89,6 +88,7 @@ exports.signUp = (req, res) => {
         .catch(err => {
           return res.status(500).json({
             message: 'sign up failed',
+            err
           });
         });
     }

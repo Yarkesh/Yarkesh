@@ -1,6 +1,7 @@
 const Project = require('../models/project');
 const ProjectMembers = require('../models/projectMembers');
 const User = require('../models/user');
+
 exports.getProjectsByCreatorId = (req, res) => {
   // finding projects created by this certain user
   Project.findAll({

@@ -1,4 +1,4 @@
-module.exports.postgresPassword = '0123456789'
-module.exports.postgresuserName = 'postgres'
-module.exports.postgresname = 'Yarkesh'
-module.exports.postgreshost = 'localhost'
+module.exports.password = '0123456789'
+module.exports.userName = 'postgres'
+module.exports.name = 'Yarkesh'
+module.exports.host = 'localhost'

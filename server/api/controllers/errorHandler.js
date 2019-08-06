@@ -1,3 +1,4 @@
+
 exports.handler = (inputErrors) => {
     const outputErrors = new Object();
     inputErrors.forEach((item) => {
