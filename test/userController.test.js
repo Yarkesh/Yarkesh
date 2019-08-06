@@ -95,36 +95,32 @@ var failPasswordSignInRequest = {
 }
 
 describe("correct sign in", () => {
-    it("logged in", (done) => {
+    it("logged in correct ", (done) => {
         request(app).post("/user/signin").send(correctSignInRequest)
             .end(function (err, res) {
                 expect(res.statusCode).to.equal(200);
                 done();
             })
     })
-})
 
-describe("fail(email) sign in", () => {
-    it("logged in", (done) => {
+
+    it("logged in failed for email", (done) => {
         request(app).post("/user/signin").send(failEmailSignInRequest)
             .end(function (err, res) {
                 expect(res.statusCode).to.equal(404);
                 done();
             })
     })
-})
 
-describe("fail(password) sign in", () => {
-    it("logged in", (done) => {
+    it("logged in faied for password", (done) => {
         request(app).post("/user/signin").send(failPasswordSignInRequest)
             .end(function (err, res) {
                 expect(res.statusCode).to.equal(404);
                 done();
             })
     })
+
 })
-
-
 //* ------------------------------------------Get User Info------------------------------------------
 
 
