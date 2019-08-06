@@ -1,8 +1,6 @@
 const User = require('../models/user')
 
-const {
-  check
-} = require('express-validator');
+const { check } = require('express-validator');
 //Checking if the attributes provided are valid
 exports.signUp = [
   //Email validation
