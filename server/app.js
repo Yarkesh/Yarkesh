@@ -62,5 +62,4 @@ Story.belongsTo(User, {
 })
 
 sequelize.sync();
-
 module.exports = app;

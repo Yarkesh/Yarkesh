@@ -65,7 +65,10 @@ exports.signUp = (req, res) => {
   bcrypt.hash(req.body.password, 10, (err, hash) => {
     if (err) {
       return res.status(500).json({
-        message: 'cannot hash'
+
+        message: 'sign up failed',
+        err: 'cannot hash',
+        err
       });
     } else if (hash) {
       //create user in database with the given attributes
