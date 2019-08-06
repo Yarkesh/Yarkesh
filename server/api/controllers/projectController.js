@@ -58,10 +58,14 @@ exports.createProject = (req, res) => {
         projectId: project.projectId
       });
       return res.status(200).json({
+
         title: project.title,
-        id: project.projectId,
-        creatorId: project.creatorId,
-        message: `project created!`
+        projectId: project.projectId,
+        description: project.description,
+        createdAt: project.createdAt,
+        creator: {
+          name: req.user.name,
+        }
       });
     })
     .catch(err => {
