@@ -50,7 +50,8 @@ router.post(
     projectController.getProjectDetails
 );
 
-router.post('/getmembers',
+router.post(
+    '/getmembers',
     passport.authenticate("jwt", { session: false }),
     authenticateRoutes.isMember,
     projectMemberController.getProjectMembers
