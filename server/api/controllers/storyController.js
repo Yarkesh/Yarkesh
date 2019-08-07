@@ -5,20 +5,23 @@ const Story = require('../models/story')
 exports.getProjectStories = (req, res) => {
     // finding projects created by this certain user
     Story.findAll({
-        where: {
-            projectId: req.body.projectId
-        },
-        include: [{
-            model: User,
-            attributes: ['name'],
-            as: 'creator'
-        },
-        {
-            model: Project,
-            attributes: ['title']
-        }
-        ]
-    })
+            where: {
+                projectId: req.body.projectId
+            },
+            order: [
+                ["storyPoint", 'DESC']
+            ],
+            include: [{
+                    model: User,
+                    attributes: ['name'],
+                    as: 'creator'
+                },
+                {
+                    model: Project,
+                    attributes: ['title']
+                }
+            ]
+        })
         .then(stories => {
             return res.status(200).json({
                 stories
@@ -34,14 +37,15 @@ exports.getProjectStories = (req, res) => {
 exports.createStory = (req, res) => {
     //creating project with foreign key for user
     Story.create({
-        as: req.body.as,
-        iWant: req.body.iWant,
-        soThat: req.body.soThat,
-        acceptance: req.body.acceptance,
-        // foreign key to user : creatorId given from the jwt
-        creatorId: req.user.userId,
-        projectId: req.body.projectId
-    })
+            as: req.body.as,
+            iWant: req.body.iWant,
+            soThat: req.body.soThat,
+            storyPoint: req.body.storyPoint,
+            acceptance: req.body.acceptance,
+            // foreign key to user : creatorId given from the jwt
+            creatorId: req.user.userId,
+            projectId: req.body.projectId
+        })
         .then(story => {
             return res.status(200).json({
                 message: `story created!`,
