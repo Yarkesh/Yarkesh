@@ -1,8 +1,7 @@
 const router = require('express').Router();
 const passport = require('passport')
 const projectController = require('../controllers/projectController')
-const authenticateRoutes = require('../controllers/authentication')
-
+const authenticateRoutes = require('../middlewares/authentication')
 
 router.post(
     '/getProjectsByCreator',

@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const passport = require('passport')
 const projectMemberController = require('../controllers/projectMemberController')
-const authenticateRoutes = require('../controllers/authentication')
+const authenticateRoutes = require('../middlewares/authentication')
 
 router.post(
     '/addmembers',
