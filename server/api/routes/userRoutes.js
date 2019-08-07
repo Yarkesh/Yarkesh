@@ -19,7 +19,7 @@ router.get(
     userController.getUserInfo
 );
 
-router.post(
+router.get(
     '/getUserProjects',
     passport.authenticate("jwt", { session: false }),
     userController.getUserProjects

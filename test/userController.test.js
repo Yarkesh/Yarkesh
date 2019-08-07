@@ -123,8 +123,6 @@ describe("correct sign in", () => {
 //TODO: Check this....Change the token for next test to not to be not valid
 var token = "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicmV6YSIsImVtYWlsIjoicmV6YUB5YWhvby5jb20iLCJ1c2VySWQiOjMsInVzZXJOYW1lIjoicmV6YSIsImlhdCI6MTU2NTE1NDE0NiwiZXhwIjoxNTY1MTkwMTQ2fQ.r6KKrVmscwCwCwWwipmXdBNl6JRXLrWfHGHXmwAmR_s"
 
-
-
 describe("user info", () => {
     it("getting user info", (done) => {
         request(app).get("/api/user/singleUserInfo").set({ Authorization: token })
