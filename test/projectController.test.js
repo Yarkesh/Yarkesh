@@ -43,13 +43,41 @@ describe("create project", () => {
 var correctProjectId = {
     projectId: 2
 }
+
+var wrongeProjectIdForNotBeAMember = {
+    projectId: 1
+}
+
+var wrongeProjectIdForNotBeLoggedIn = {
+    projectId: 2
+}
 describe("get Project details", () => {
     it("correct get project details", (done) => {
         request(app)
             .post('/api/project/getprojectdetails')
-            .send(correctProjectId).set({ Authorization: token })
+            .send(correctProjectId)
+            .set({ Authorization: token })
             .end((err, res) => {
                 expect(res.statusCode).to.equal(200);
+                done();
+            })
+    })
+    it("failed to get project details for not being a member of that project", (done) => {
+        request(app)
+            .post('/api/project/getprojectdetails')
+            .send(wrongeProjectIdForNotBeAMember)
+            .set({ Authorization: token })
+            .end((err, res) => {
+                expect(res.statusCode).to.equal(401);
+                done();
+            })
+    })
+    it("failed to get project details for not being logged in", (done) => {
+        request(app)
+            .post('/api/project/getprojectdetails')
+            .send(wrongeProjectIdForNotBeLoggedIn)
+            .end((err, res) => {
+                expect(res.statusCode).to.equal(401);
                 done();
             })
     })
