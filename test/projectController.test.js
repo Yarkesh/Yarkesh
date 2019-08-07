@@ -38,7 +38,7 @@ describe("create project", () => {
 })
 
 
-//* ---------------------------------------Get Project Result---------------------------------------
+//* ---------------------------------------Get Project details---------------------------------------
 
 var correctProjectId = {
     projectId: 2
@@ -76,6 +76,29 @@ describe("get Project details", () => {
         request(app)
             .post('/api/project/getprojectdetails')
             .send(wrongeProjectIdForNotBeLoggedIn)
+            .end((err, res) => {
+                expect(res.statusCode).to.equal(401);
+                done();
+            })
+    })
+})
+
+
+//* ---------------------------------------get Projects By Creator Id---------------------------------------
+
+describe("get Projects By Creator Id", () => {
+    it("correctly getting Project by creator id", (done) => {
+        request(app)
+            .get('/api/project/getProjectsByCreator')
+            .set({ Authorization: token })
+            .end((err, res) => {
+                expect(res.statusCode).to.equal(200);
+                done();
+            })
+    })
+    it("faild getting Project by creator id for authorization", (done) => {
+        request(app)
+            .get('/api/project/getProjectsByCreator')
             .end((err, res) => {
                 expect(res.statusCode).to.equal(401);
                 done();

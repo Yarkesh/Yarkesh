@@ -3,7 +3,7 @@ const passport = require('passport')
 const projectController = require('../controllers/projectController')
 const authenticateRoutes = require('../middlewares/authentication')
 
-router.post(
+router.get(
     '/getProjectsByCreator',
     passport.authenticate("jwt", { session: false }),
     projectController.getProjectsByCreatorId
