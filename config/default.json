@@ -1,14 +1,14 @@
 {
     "app": {
         "webServer": {
-            "port": 3000,
+            "port": 8585,
             "jwtSecret": "X*FC^F&XF7xGD*X&DG@#$#@%$#%$#@#$#@$#@"
         }
     },
     "sql": {
         "name": "Yarkesh",
         "userName": "postgres",
-        "password": "0123456789",
+        "password": "123",
         "host": "localhost"
     }
 }
