@@ -1,7 +1,7 @@
 {
     "app": {
         "webServer": {
-            "port": 3000,
+            "port": 8585,
             "jwtSecret": "X*FC^F&XF7xGD*X&DG@#$#@%$#%$#@#$#@$#@"
         }
     },
