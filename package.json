@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon server/server.js",
     "start": "node server/server.js",
-    "test": "./node_modules/.bin/mocha"
+    "test": "mocha -w"
   },
   "author": "",
   "license": "ISC",

@@ -10,16 +10,14 @@ describe("DataBase Connection user controller", () => {
         sequelize.authenticate().then(done());
     })
 })
-
 //* ------------------------------------------Sign Up------------------------------------------
 var correctSignUpRequest = {
-    userName: "mammad2", //TODO: rewrite this for next test to be unique
-    email: "mammad2@yahoo.com", //TODO: rewrite this for next test to be unique
-    name: "mammad2",
+    userName: "mammad5", //TODO: rewrite this for next test to be unique
+    email: "mammad5@yahoo.com", //TODO: rewrite this for next test to be unique
+    name: "mammad5",
     password: "mmmmm5",
     confirmPassword: "mmmmm5"
 }
-
 var failSignUpRequest = {
     userName: "reza",
     email: "reza@yahoo.com",
@@ -27,6 +25,7 @@ var failSignUpRequest = {
     password: "mmmmm5",
     confirmPassword: "mmmmm5"
 }
+
 var notValidSignUpRequest = {
     userName: "mohsen",
     email: "mohsen@yahoo.com",

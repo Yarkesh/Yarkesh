@@ -26,5 +26,31 @@ describe("create project", () => {
                 done();
             })
     })
+    it("failed create project without authorization", (done) => {
+        request(app)
+            .post('/api/project/createproject')
+            .send(correctCreateProject)
+            .end((err, res) => {
+                expect(res.statusCode).to.equal(401);
+                done();
+            })
+    })
+})
 
+
+//* ---------------------------------------Get Project Result---------------------------------------
+
+var correctProjectId = {
+    projectId: 2
+}
+describe("get Project details", () => {
+    it("correct get project details", (done) => {
+        request(app)
+            .post('/api/project/getprojectdetails')
+            .send(correctProjectId).set({ Authorization: token })
+            .end((err, res) => {
+                expect(res.statusCode).to.equal(200);
+                done();
+            })
+    })
 })
