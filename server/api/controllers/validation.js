@@ -1,4 +1,4 @@
-const User = require('../models/user')
+const User = require('../models/user');
 
 const { check } = require('express-validator');
 //Checking if the attributes provided are valid
@@ -17,7 +17,7 @@ exports.signUp = [
         }
       }).then(res => {
         if (res.length) {
-          return Promise.reject("Email already in use");
+          return Promise.reject('Email already in use');
         }
       });
     }),
@@ -36,7 +36,7 @@ exports.signUp = [
         }
       }).then(res => {
         if (res.length) {
-          return Promise.reject("userName already in use");
+          return Promise.reject('userName already in use');
         }
       });
     }),
