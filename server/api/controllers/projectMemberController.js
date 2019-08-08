@@ -1,10 +1,9 @@
 const Project = require('../models/project');
 const ProjectMembers = require('../models/projectMembers');
 const User = require('../models/user');
-const story = require('../models/story');
 
 exports.getProjectMembers = (req, res) => {
-	//TODO fix this shit
+	// TODO fix this shit
 	ProjectMembers.findAll({
 		where: {
 			projectId: req.body.projectId
