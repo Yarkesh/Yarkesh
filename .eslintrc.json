@@ -7,7 +7,7 @@
 		"global-require": "error",
 		"callback-return": "error",
 		"brace-style": "error",
-		"max-lines-per-function": ["error", 53],
+		"max-lines-per-function": ["error", 60],
 		"max-nested-callbacks": ["error", 3],
 		"max-lines": ["error", 200],
 		"arrow-body-style": ["error", "always"],
@@ -16,11 +16,10 @@
 		"no-multi-assign": "error",
 		"keyword-spacing": ["error", { "before": true, "after": true }],
 		"no-inline-comments": "error",
-		"no-tabs": "error",
 		"space-before-blocks": "error",
 		"spaced-comment": ["error", "always"],
-		"comma-spacing": ["warn", { "befor": false, "after": true }],
-		"max-len": ["warn", { "code": 80 }],
+		"comma-spacing": "warn",
+		"max-len": ["warn", { "code": 90 }],
 		"no-unused-vars": "warn",
 		"prettier/prettier": "warn",
 		"no-console": "warn",
@@ -31,7 +30,8 @@
 		"no-inner-declarations": "warn",
 		"no-irregular-whitespace": "warn",
 		"no-empty-function": "warn",
-		"no-continue": "warn"
+		"no-continue": "warn",
+		"no-undef": "off" // ? maybe later???
 	},
 	"env": {
 		"browser": true,

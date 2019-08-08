@@ -1,107 +1,84 @@
 const request = require('supertest');
 const expect = require('chai').expect;
-const app = require('../server/app')
+const dataForTests = require('./dataForTests');
+const app = require('../server/app');
 
-//* ---------------------------------------Create Project---------------------------------------
+// * -----------------------------------Create Project-----------------------------------
 
-var correctCreateProject = {
-    title: "test",
-    description: "this is from integration test"
-}
+describe('create project', () => {
+	it('correct create project', (done) => {
+		request(app)
+			.post('/api/project/createproject')
+			.send(dataForTests.correctCreateProject)
+			.set({ Authorization: dataForTests.token })
+			.end((res) => {
+				expect(res.statusCode).to.equal(200);
+				done();
+			});
+	});
+	it('failed create project without authorization', (done) => {
+		request(app)
+			.post('/api/project/createproject')
+			.send(dataForTests.correctCreateProject)
+			.end((res) => {
+				expect(res.statusCode).to.equal(401);
+				done();
+			});
+	});
+});
 
-//TODO: Check this....Change the token for next test to not to be not valid
-var token = "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicmV6YSIsImVtYWlsIjoicmV6YUB5YWhvby5jb20iLCJ1c2VySWQiOjMsInVzZXJOYW1lIjoicmV6YSIsImlhdCI6MTU2NTE1NDE0NiwiZXhwIjoxNTY1MTkwMTQ2fQ.r6KKrVmscwCwCwWwipmXdBNl6JRXLrWfHGHXmwAmR_s"
+// * ---------------------------------Get Project details---------------------------------
 
+describe('get Project details', () => {
+	it('correct get project details', (done) => {
+		request(app)
+			.post('/api/project/getprojectdetails')
+			.send(dataForTests.correctProjectId)
+			.set({ Authorization: dataForTests.token })
+			.end((res) => {
+				expect(res.statusCode).to.equal(200);
+				done();
+			});
+	});
+	it('failed to get project details for not being a member of that project', (done) => {
+		request(app)
+			.post('/api/project/getprojectdetails')
+			.send(dataForTests.wrongeProjectIdForNotBeAMember)
+			.set({ Authorization: dataForTests.token })
+			.end((res) => {
+				expect(res.statusCode).to.equal(401);
+				done();
+			});
+	});
+	it('failed to get project details for not being logged in', (done) => {
+		request(app)
+			.post('/api/project/getprojectdetails')
+			.send(dataForTests.wrongeProjectIdForNotBeLoggedIn)
+			.end((res) => {
+				expect(res.statusCode).to.equal(401);
+				done();
+			});
+	});
+});
 
+// * ----------------------------get Projects By Creator Id------------------------------
 
-describe("create project", () => {
-
-    it("correct create project", (done) => {
-        request(app)
-            .post('/api/project/createproject')
-            .send(correctCreateProject)
-            .set({ Authorization: token })
-            .end((err, res) => {
-                expect(res.statusCode).to.equal(200);
-                done();
-            })
-    })
-    it("failed create project without authorization", (done) => {
-        request(app)
-            .post('/api/project/createproject')
-            .send(correctCreateProject)
-            .end((err, res) => {
-                expect(res.statusCode).to.equal(401);
-                done();
-            })
-    })
-})
-
-
-//* ---------------------------------------Get Project details---------------------------------------
-
-var correctProjectId = {
-    projectId: 2
-}
-
-var wrongeProjectIdForNotBeAMember = {
-    projectId: 1
-}
-
-var wrongeProjectIdForNotBeLoggedIn = {
-    projectId: 2
-}
-describe("get Project details", () => {
-    it("correct get project details", (done) => {
-        request(app)
-            .post('/api/project/getprojectdetails')
-            .send(correctProjectId)
-            .set({ Authorization: token })
-            .end((err, res) => {
-                expect(res.statusCode).to.equal(200);
-                done();
-            })
-    })
-    it("failed to get project details for not being a member of that project", (done) => {
-        request(app)
-            .post('/api/project/getprojectdetails')
-            .send(wrongeProjectIdForNotBeAMember)
-            .set({ Authorization: token })
-            .end((err, res) => {
-                expect(res.statusCode).to.equal(401);
-                done();
-            })
-    })
-    it("failed to get project details for not being logged in", (done) => {
-        request(app)
-            .post('/api/project/getprojectdetails')
-            .send(wrongeProjectIdForNotBeLoggedIn)
-            .end((err, res) => {
-                expect(res.statusCode).to.equal(401);
-                done();
-            })
-    })
-})
-
-
-//* ---------------------------------------get Projects By Creator Id---------------------------------------
-
-describe("get Projects By Creator Id", () => {
-    it("correctly getting Project by creator id", (done) => {
-        request(app)
-            .get('/api/project/getProjectsByCreator')
-            .set({ Authorization: token })
-            .end((err, res) => {
-                expect(res.statusCode).to.equal(200);
-                done();
-            })
-    })
-    it("faild getting Project by creator id for authorization", (done) => {
-        request(app)
-            .get('/api/project/getProjectsByCreator')
-            .end((err, res) => {
-                expect(res.statusCode).to.equal(401);
-                done();
-            })
-    })
-})
+describe('get Projects By Creator Id', () => {
+	it('correctly getting Project by creator id', (done) => {
+		request(app)
+			.get('/api/project/getProjectsByCreator')
+			.set({ Authorization: dataForTests.token })
+			.end((res) => {
+				expect(res.statusCode).to.equal(200);
+				done();
+			});
+	});
+	it('faild getting Project by creator id for authorization', (done) => {
+		request(app)
+			.get('/api/project/getProjectsByCreator')
+			.end((res) => {
+				expect(res.statusCode).to.equal(401);
+				done();
+			});
+	});
+});

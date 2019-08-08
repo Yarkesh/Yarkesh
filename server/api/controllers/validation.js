@@ -1,16 +1,16 @@
-const User = require('../models/user');
-const story = require('../models/story');
 const { check } = require('express-validator');
-//Checking if the attributes provided are valid
+const User = require('../models/user');
+
+// Checking if the attributes provided are valid
 exports.signUp = [
-	//Email validation
+	// Email validation
 	check('email')
 		.isEmail()
 		.normalizeEmail()
 		.withMessage('email is not valid')
 		.isLength({ max: 50 })
 		.withMessage("email can't be more than 50 characters long")
-		.custom((email, { req }) => {
+		.custom((email) => {
 			return User.findAll({
 				where: {
 					email: email
@@ -29,7 +29,7 @@ exports.signUp = [
 			max: 32
 		})
 		.withMessage('username must be  between 2 and 32 characters long')
-		.custom((userName, { req }) => {
+		.custom((userName) => {
 			return User.findAll({
 				where: {
 					userName: userName
@@ -40,7 +40,7 @@ exports.signUp = [
 				}
 			});
 		}),
-	//name validation
+	// name validation
 	check('name')
 		.isLength({
 			min: 2,
@@ -48,7 +48,7 @@ exports.signUp = [
 		})
 		.withMessage('name must be  between 2 and 32 characters long'),
 
-	//password validation
+	// password validation
 	check('password')
 		.isLength({
 			min: 6
@@ -57,11 +57,13 @@ exports.signUp = [
 		.matches(/\d/)
 		.withMessage('password must contain a number'),
 
-	//confirmpassword validation
+	// confirmpassword validation
 	check(
 		'confirmPassword',
 		'passwordConfirmation field must have the same value as the password field'
 	)
 		.exists()
-		.custom((value, { req }) => value === req.body.password)
+		.custom((value, { req }) => {
+			value === req.body.password;
+		})
 ];

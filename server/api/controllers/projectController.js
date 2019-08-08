@@ -47,7 +47,7 @@ exports.getProjectDetails = (req, res) => {
 };
 
 exports.createProject = (req, res) => {
-	//creating project with foreign key for user
+	// creating project with foreign key for user
 	Project.create({
 		title: req.body.title,
 		description: req.body.description,

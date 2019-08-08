@@ -1,23 +1,24 @@
 const router = require('express').Router();
-const passport = require('passport')
-const projectController = require('../controllers/projectController')
-const authenticateRoutes = require('../middlewares/authentication')
+const passport = require('passport');
+const projectController = require('../controllers/projectController');
+const authenticateRoutes = require('../middlewares/authentication');
 
 router.get(
-    '/getProjectsByCreator',
-    passport.authenticate("jwt", { session: false }),
-    projectController.getProjectsByCreatorId
+	'/getProjectsByCreator',
+	passport.authenticate('jwt', { session: false }),
+	projectController.getProjectsByCreatorId
 );
 router.post(
-    '/createProject', passport.authenticate("jwt", { session: false }),
-    projectController.createProject);
-
-router.post(
-    '/getProjectDetails',
-    passport.authenticate("jwt", { session: false }),
-    authenticateRoutes.isMember,
-    projectController.getProjectDetails
+	'/createProject',
+	passport.authenticate('jwt', { session: false }),
+	projectController.createProject
 );
 
+router.post(
+	'/getProjectDetails',
+	passport.authenticate('jwt', { session: false }),
+	authenticateRoutes.isMember,
+	projectController.getProjectDetails
+);
 
-module.exports = router
+module.exports = router;
