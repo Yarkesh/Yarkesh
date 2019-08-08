@@ -1,14 +1,18 @@
 {
   "name": "yarkesh",
   "version": "1.0.0",
-  "description": "",
+  "description": "application project management platform for agile developers",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon server/server.js",
     "start": "node server/server.js",
     "test": "mocha -w"
   },
-  "author": "",
+  "author": "mjavad_alj",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mjavadalj/Yarkesh"
+  },
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^3.0.6",
@@ -29,5 +33,13 @@
     "mocha": "^6.2.0",
     "nodemon": "^1.19.1",
     "supertest": "^4.0.2"
-  }
+  },
+  "keywords": [
+    "agile",
+    "scrum",
+    "application project management platform for agile developers",
+    "web app",
+    "managing application project flow"
+  ],
+  "homepage": "https://github.com/mjavadalj/Yarkesh"
 }
