@@ -1,0 +1,579 @@
+{
+	"info": {
+		"_postman_id": "0a32852a-45e4-432a-b18a-a3641e7371d1",
+		"name": "Yarkesh Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "signup",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \n\t\"userName\": \"reza\",\n    \"email\": \"reza@yahoo.com\",\n    \"name\": \"reza\",\n    \"password\": \"mmmmm5\",\n    \"confirmPassword\": \"mmmmm5\"\n\t\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8585/api/user/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"api",
+								"user",
+								"signup"
+							]
+						},
+						"description": "send user for signup"
+					},
+					"response": []
+				},
+				{
+					"name": "signin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \n    \"email\": \"reza@yahoo.com\",\n    \"password\" : \"mmmmm5\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8585/api/user/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"api",
+								"user",
+								"signin"
+							]
+						},
+						"description": "send user for signup"
+					},
+					"response": []
+				},
+				{
+					"name": "getUserProjects",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicmV6YSIsImVtYWlsIjoicmV6YUB5YWhvby5jb20iLCJ1c2VySWQiOjMsInVzZXJOYW1lIjoicmV6YSIsImlhdCI6MTU2NTE1NDE0NiwiZXhwIjoxNTY1MTkwMTQ2fQ.r6KKrVmscwCwCwWwipmXdBNl6JRXLrWfHGHXmwAmR_s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8585/api/user/getUserProjects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"api",
+								"user",
+								"getUserProjects"
+							]
+						},
+						"description": "send user for signup"
+					},
+					"response": []
+				},
+				{
+					"name": "get single user info",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicmV6YSIsImVtYWlsIjoicmV6YUB5YWhvby5jb20iLCJ1c2VySWQiOjMsInVzZXJOYW1lIjoicmV6YSIsImlhdCI6MTU2NTE1NDE0NiwiZXhwIjoxNTY1MTkwMTQ2fQ.r6KKrVmscwCwCwWwipmXdBNl6JRXLrWfHGHXmwAmR_s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8585/api/user/singleUserInfo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"api",
+								"user",
+								"singleUserInfo"
+							]
+						},
+						"description": "send user for signup"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Project",
+			"item": [
+				{
+					"name": "get Projects by userId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicmV6YSIsImVtYWlsIjoicmV6YUB5YWhvby5jb20iLCJ1c2VySWQiOjMsInVzZXJOYW1lIjoicmV6YSIsImlhdCI6MTU2NTE1NDE0NiwiZXhwIjoxNTY1MTkwMTQ2fQ.r6KKrVmscwCwCwWwipmXdBNl6JRXLrWfHGHXmwAmR_s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8585/api/project/getProjectsByCreator",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"api",
+								"project",
+								"getProjectsByCreator"
+							]
+						},
+						"description": "show all projects"
+					},
+					"response": []
+				},
+				{
+					"name": "get project details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicmV6YSIsImVtYWlsIjoicmV6YUB5YWhvby5jb20iLCJ1c2VySWQiOjMsInVzZXJOYW1lIjoicmV6YSIsImlhdCI6MTU2NTE1NDE0NiwiZXhwIjoxNTY1MTkwMTQ2fQ.r6KKrVmscwCwCwWwipmXdBNl6JRXLrWfHGHXmwAmR_s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \n\t\"projectId\" : \"2\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8585/api/project/getprojectdetails",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"api",
+								"project",
+								"getprojectdetails"
+							]
+						},
+						"description": "show all projects"
+					},
+					"response": []
+				},
+				{
+					"name": "create project",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicmV6YSIsImVtYWlsIjoicmV6YUB5YWhvby5jb20iLCJ1c2VySWQiOjMsInVzZXJOYW1lIjoicmV6YSIsImlhdCI6MTU2NTE1NDE0NiwiZXhwIjoxNTY1MTkwMTQ2fQ.r6KKrVmscwCwCwWwipmXdBNl6JRXLrWfHGHXmwAmR_s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \n\t\"title\" : \"test3  \",\n\t\"description\" : \"third test\"\n}\n"
+						},
+						"url": {
+							"raw": "http://localhost:8585/api/project/createproject",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"api",
+								"project",
+								"createproject"
+							]
+						},
+						"description": "send user for signup"
+					},
+					"response": []
+				}
+			],
+			"description": "project routes"
+		},
+		{
+			"name": "Story",
+			"item": [
+				{
+					"name": "get project stories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicmV6YSIsImVtYWlsIjoicmV6YUB5YWhvby5jb20iLCJ1c2VySWQiOjMsInVzZXJOYW1lIjoicmV6YSIsImlhdCI6MTU2NTE1NDE0NiwiZXhwIjoxNTY1MTkwMTQ2fQ.r6KKrVmscwCwCwWwipmXdBNl6JRXLrWfHGHXmwAmR_s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \n\t\"projectId\":\"2\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8585/api/story/getProjectStories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"api",
+								"story",
+								"getProjectStories"
+							]
+						},
+						"description": "show all projects"
+					},
+					"response": []
+				},
+				{
+					"name": "get story details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicmV6YSIsImVtYWlsIjoicmV6YUB5YWhvby5jb20iLCJ1c2VySWQiOjMsInVzZXJOYW1lIjoicmV6YSIsImlhdCI6MTU2NTE1NDE0NiwiZXhwIjoxNTY1MTkwMTQ2fQ.r6KKrVmscwCwCwWwipmXdBNl6JRXLrWfHGHXmwAmR_s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \n\t\"projectId\" : \"2\",\n\t\"storyId\":\"1\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8585/api/story/getstorydetails",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"api",
+								"story",
+								"getstorydetails"
+							]
+						},
+						"description": "show all projects"
+					},
+					"response": []
+				},
+				{
+					"name": "create story",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicmV6YSIsImVtYWlsIjoicmV6YUB5YWhvby5jb20iLCJ1c2VySWQiOjMsInVzZXJOYW1lIjoicmV6YSIsImlhdCI6MTU2NTE1NDE0NiwiZXhwIjoxNTY1MTkwMTQ2fQ.r6KKrVmscwCwCwWwipmXdBNl6JRXLrWfHGHXmwAmR_s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"projectId\":\"2\",\n\t\"as\" : \"meti123e13e3\" ,\n\t\"iWant\" : \"create second story\" ,\n\t\"soThat\" : \"so that i can manage\",\n\t\"storyPoint\" : \"1\",\n\t\"acceptance\" : {\n\t\t\t\"test\": [\n\t\t\t{\"text\":\"test 1\" , \"done\":\"true\"},\n\t\t\t{\"text\":\"test 2\" , \"done\":\"false\"},\n\t\t\t{\"text\":\"test 3\" , \"done\":\"false\"}\n\t\t\t]\n\t}\n\t\n}\n"
+						},
+						"url": {
+							"raw": "http://localhost:8585/api/story/createstory",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"api",
+								"story",
+								"createstory"
+							]
+						},
+						"description": "send user for signup"
+					},
+					"response": []
+				}
+			],
+			"description": "project routes"
+		},
+		{
+			"name": "Project Members",
+			"item": [
+				{
+					"name": "get Project Members",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicmV6YSIsImVtYWlsIjoicmV6YUB5YWhvby5jb20iLCJ1c2VySWQiOjMsInVzZXJOYW1lIjoicmV6YSIsImlhdCI6MTU2NTE1NDE0NiwiZXhwIjoxNTY1MTkwMTQ2fQ.r6KKrVmscwCwCwWwipmXdBNl6JRXLrWfHGHXmwAmR_s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \n\t\"projectId\": \"2\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8585/api/projectmembers/getmembers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"api",
+								"projectmembers",
+								"getmembers"
+							]
+						},
+						"description": "show all boards of the user in authentication\n"
+					},
+					"response": []
+				},
+				{
+					"name": "add project member",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicmV6YSIsImVtYWlsIjoicmV6YUB5YWhvby5jb20iLCJ1c2VySWQiOjMsInVzZXJOYW1lIjoicmV6YSIsImlhdCI6MTU2NTE1NDE0NiwiZXhwIjoxNTY1MTkwMTQ2fQ.r6KKrVmscwCwCwWwipmXdBNl6JRXLrWfHGHXmwAmR_s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userId\" : \"1\" ,\n\t\"projectId\" : \"2\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8585/api/projectmembers/addmembers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"api",
+								"projectmembers",
+								"addmembers"
+							]
+						},
+						"description": "Create board for the project and user"
+					},
+					"response": []
+				}
+			],
+			"description": "board routes",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b163da53-b757-4cf3-a7c0-ca59f50bc212",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "b20db50a-bd2b-435c-9264-4aa57828e8ec",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}
