@@ -41,7 +41,7 @@ exports.getProjectDetails = (req, res) => {
 		})
 		.catch((err) => {
 			return res.status(500).json({
-				err: err.toString()
+				err
 			});
 		});
 };
