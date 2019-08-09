@@ -58,12 +58,19 @@ exports.signUp = [
 		.withMessage('password must contain a number'),
 
 	// confirmpassword validation
-	check(
-		'confirmPassword',
-		'passwordConfirmation field must have the same value as the password field'
-	)
-		.exists()
-		.custom((value, { req }) => {
-			value === req.body.password;
-		})
+	// check(
+	// 	'confirmPassword',
+	// 	'passwordConfirmation field must have the same value as the password field'
+	// )
+	// 	.exists()
+	// 	.custom((value, { req }) => {
+	// 		value === req.body.password;
+	// 	})
+	check('password').custom((valuee, { req }) => {
+		if (valuee !== req.body.confirmPassword) {
+			throw new Error('Password confirmation is incorrect');
+		} else {
+			return true;
+		}
+	})
 ];
