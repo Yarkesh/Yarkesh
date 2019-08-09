@@ -17,7 +17,7 @@ describe('Sign Up', () => {
 		request(app)
 			.post('/api/user/signup')
 			.send(dataForTests.correctSignUpRequest)
-			.end((res) => {
+			.end((err, res) => {
 				expect(res.statusCode).to.equal(200);
 				done();
 			});
@@ -27,7 +27,7 @@ describe('Sign Up', () => {
 		request(app)
 			.post('/api/user/signup')
 			.send(dataForTests.failSignUpRequest)
-			.end((res) => {
+			.end((err, res) => {
 				expect(res.statusCode).to.equal(422);
 				done();
 			});
@@ -36,7 +36,7 @@ describe('Sign Up', () => {
 		request(app)
 			.post('/api/user/signup')
 			.send(dataForTests.notValidSignUpRequest)
-			.end((res) => {
+			.end((err, res) => {
 				expect(res.statusCode).to.equal(422);
 				done();
 			});
@@ -46,7 +46,7 @@ describe('Sign Up', () => {
 		request(app)
 			.post('/api/user/signup')
 			.send(dataForTests.correctSignUpRequest)
-			.end((res) => {
+			.end((err, res) => {
 				expect(res.message).to.not.equal('sign up failed');
 				done();
 			});
@@ -60,7 +60,7 @@ describe('correct sign in', () => {
 		request(app)
 			.post('/api/user/signin')
 			.send(dataForTests.correctSignInRequest)
-			.end(function(res) {
+			.end((er, res) => {
 				expect(res.statusCode).to.equal(200);
 				done();
 			});
@@ -70,7 +70,7 @@ describe('correct sign in', () => {
 		request(app)
 			.post('/api/user/signin')
 			.send(dataForTests.failEmailSignInRequest)
-			.end(function(res) {
+			.end((err, res) => {
 				expect(res.statusCode).to.equal(404);
 				done();
 			});
@@ -80,7 +80,7 @@ describe('correct sign in', () => {
 		request(app)
 			.post('/api/user/signin')
 			.send(dataForTests.failPasswordSignInRequest)
-			.end(function(res) {
+			.end((err, res) => {
 				expect(res.statusCode).to.equal(404);
 				done();
 			});
@@ -92,7 +92,7 @@ describe('user info', () => {
 		request(app)
 			.get('/api/user/singleUserInfo')
 			.set({ Authorization: dataForTests.token })
-			.end(function(res) {
+			.end((err, res) => {
 				expect(res.statusCode).to.equal(200);
 				done();
 			});
@@ -100,7 +100,7 @@ describe('user info', () => {
 	it('fail getting user info', (done) => {
 		request(app)
 			.get('/api/user/singleUserInfo')
-			.end(function(res) {
+			.end((err, res) => {
 				expect(res.statusCode).to.equal(401);
 				done();
 			});

@@ -1,16 +1,12 @@
 // ! ------jwt--------------------------check and change this
 module.exports.token =
-	'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9' +
-	'.eyJuYW1lIjoicmV6YSIsImVtYWlsIjoicmV6YUB5YWhv' +
-	'by5jb20iLCJ1c2VySWQiOjMsInVzZXJOYW1lIjoicmV6Y' +
-	'SIsImlhdCI6MTU2NTE1NDE0NiwiZXhwIjoxNTY1MTkwMT' +
-	'Q2fQ.r6KKrVmscwCwCwWwipmXdBNl6JRXLrWfHGHXmwAmR_s';
+	'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWxpIiwiZW1haWwiOiJhbGlAeWFob28uY29tIiwidXNlcklkIjoxLCJ1c2VyTmFtZSI6ImFsaSIsImlhdCI6MTU2NTMzMDk4NywiZXhwIjoxNTY1MzY2OTg3fQ.EFE3ptqiDNQ8GBP8fINg-uk_DgCbP_I7Zpi-3bOQVxU';
 
 // ! ------user--------------------------change the first one for aeach test
 module.exports.correctSignUpRequest = {
-	userName: 'mammad5',
-	email: 'mammad5@yahoo.com',
-	name: 'mammad5',
+	userName: 'mammad6',
+	email: 'mammad6@yahoo.com',
+	name: 'mammad6',
 	password: 'mmmmm5',
 	confirmPassword: 'mmmmm5'
 };
@@ -41,7 +37,7 @@ module.exports.failPasswordSignInRequest = {
 	password: 'mmmmm5'
 };
 
-// ! ------project--------------------------change tthe ids to match the use token
+// ! ------project--------------------------change the ids to match the use token
 
 module.exports.correctCreateProject = {
 	title: 'test',
@@ -58,4 +54,10 @@ module.exports.wrongeProjectIdForNotBeAMember = {
 
 module.exports.wrongeProjectIdForNotBeLoggedIn = {
 	projectId: 2
+};
+
+// !------------------------Project Members ----------------------------------
+module.exports.correctAddMembers = {
+	userId: '1',
+	projectId: '2'
 };

@@ -11,7 +11,7 @@ describe('create project', () => {
 			.post('/api/project/createproject')
 			.send(dataForTests.correctCreateProject)
 			.set({ Authorization: dataForTests.token })
-			.end((res) => {
+			.end((err, res) => {
 				expect(res.statusCode).to.equal(200);
 				done();
 			});
@@ -20,7 +20,7 @@ describe('create project', () => {
 		request(app)
 			.post('/api/project/createproject')
 			.send(dataForTests.correctCreateProject)
-			.end((res) => {
+			.end((err, res) => {
 				expect(res.statusCode).to.equal(401);
 				done();
 			});
@@ -35,7 +35,7 @@ describe('get Project details', () => {
 			.post('/api/project/getprojectdetails')
 			.send(dataForTests.correctProjectId)
 			.set({ Authorization: dataForTests.token })
-			.end((res) => {
+			.end((err, res) => {
 				expect(res.statusCode).to.equal(200);
 				done();
 			});
@@ -45,7 +45,7 @@ describe('get Project details', () => {
 			.post('/api/project/getprojectdetails')
 			.send(dataForTests.wrongeProjectIdForNotBeAMember)
 			.set({ Authorization: dataForTests.token })
-			.end((res) => {
+			.end((err, res) => {
 				expect(res.statusCode).to.equal(401);
 				done();
 			});
@@ -54,7 +54,7 @@ describe('get Project details', () => {
 		request(app)
 			.post('/api/project/getprojectdetails')
 			.send(dataForTests.wrongeProjectIdForNotBeLoggedIn)
-			.end((res) => {
+			.end((err, res) => {
 				expect(res.statusCode).to.equal(401);
 				done();
 			});
@@ -68,7 +68,7 @@ describe('get Projects By Creator Id', () => {
 		request(app)
 			.get('/api/project/getProjectsByCreator')
 			.set({ Authorization: dataForTests.token })
-			.end((res) => {
+			.end((err, res) => {
 				expect(res.statusCode).to.equal(200);
 				done();
 			});
@@ -76,7 +76,7 @@ describe('get Projects By Creator Id', () => {
 	it('faild getting Project by creator id for authorization', (done) => {
 		request(app)
 			.get('/api/project/getProjectsByCreator')
-			.end((res) => {
+			.end((err, res) => {
 				expect(res.statusCode).to.equal(401);
 				done();
 			});

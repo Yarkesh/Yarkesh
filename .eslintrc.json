@@ -3,7 +3,7 @@
 	"plugins": ["prettier"],
 	"rules": {
 		// "camelcase": "error",
-		"handle-callback-err": "error",
+		// "handle-callback-err": "error",
 		"global-require": "error",
 		"callback-return": "error",
 		"brace-style": "error",
