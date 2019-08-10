@@ -3,6 +3,7 @@ const dbConnection = require('./database-connection');
 
 // ! INITIALIZING THE PROEJCT PROPERTY IN DATABASE
 const Story = dbConnection.define('story', {
+	// TODO: add title
 	storyId: {
 		type: Sequelize.INTEGER,
 		primaryKey: true,

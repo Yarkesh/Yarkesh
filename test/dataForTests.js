@@ -1,6 +1,13 @@
 // ! ------jwt--------------------------check and change this
 module.exports.token =
-	'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWxpIiwiZW1haWwiOiJhbGlAeWFob28uY29tIiwidXNlcklkIjoxLCJ1c2VyTmFtZSI6ImFsaSIsImlhdCI6MTU2NTMzMDk4NywiZXhwIjoxNTY1MzY2OTg3fQ.EFE3ptqiDNQ8GBP8fINg-uk_DgCbP_I7Zpi-3bOQVxU';
+	'bearer eyJhbGciOiJIUzI1NiIsI' +
+	'nR5cCI6IkpXVCJ9.eyJuYW1lIjoiY' +
+	'WxpIiwiZW1haWwiOiJhbGlAeWFob28' +
+	'uY29tIiwidXNlcklkIjoxLCJ1c2VyT' +
+	'mFtZSI6ImFsaSIsImlhdCI6MTU2NTM' +
+	'zMDk4NywiZXhwIjoxNTY1MzY2OTg3f' +
+	'Q.EFE3ptqiDNQ8GBP8fINg-uk_DgCb' +
+	'P_I7Zpi-3bOQVxU';
 
 // ! ------user--------------------------change the first one for aeach test
 module.exports.correctSignUpRequest = {
