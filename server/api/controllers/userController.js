@@ -1,7 +1,9 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('config');
-const { validationResult } = require('express-validator');
+const {
+	validationResult
+} = require('express-validator');
 const ProjectMembers = require('../models/projectMembers');
 const Project = require('../models/project');
 const User = require('../models/user');
@@ -12,10 +14,10 @@ const jwtSecret = config.get('app.webServer.jwtSecret');
 // ! FOR TEST ONLY
 exports.getUserInfo = (req, res) => {
 	User.findAll({
-		where: {
-			userId: req.user.userId
-		}
-	})
+			where: {
+				userId: req.user.userId
+			}
+		})
 		.then((user) => {
 			return res.status(200).json({
 				userInfo: user[0]
@@ -30,28 +32,27 @@ exports.getUserInfo = (req, res) => {
 
 exports.getUserProjects = (req, res) => {
 	ProjectMembers.findAll({
-		where: {
-			memberId: req.user.userId
-		},
-		include: [
-			{
+			where: {
+				memberId: req.user.userId
+			},
+			include: [{
 				model: Project,
 				attributes: ['title', 'projectId', 'description', 'createdAt'],
-				include: [
-					{
-						model: User,
-						as: 'creator',
-						attributes: ['name']
-					}
-				]
-			}
-		]
-	})
+				include: [{
+					model: User,
+					as: 'creator',
+					attributes: ['name']
+				}]
+			}]
+		})
 		.then((projects) => {
+			console.log(projects)
 			return res.status(200).json(
-				projects.map((project) => {
-					project.project;
-				})
+				// projects.map((project) => {
+				// 	project.project;
+
+				// })
+				projects
 			);
 		})
 		.catch((err) => {
@@ -82,11 +83,11 @@ exports.signUp = (req, res) => {
 		} else if (hash) {
 			// create user in database with the given attributes
 			User.create({
-				userName: req.body.userName,
-				email: req.body.email,
-				name: req.body.name,
-				password: hash
-			})
+					userName: req.body.userName,
+					email: req.body.email,
+					name: req.body.name,
+					password: hash
+				})
 				// sign up success
 				.then((user) => {
 					return res.status(200).json({
@@ -139,8 +140,7 @@ exports.signIn = (req, res) => {
 					};
 					jwt.sign(
 						jwtpayload,
-						jwtSecret,
-						{
+						jwtSecret, {
 							expiresIn: '10h'
 						},
 						(err, encoded) => {

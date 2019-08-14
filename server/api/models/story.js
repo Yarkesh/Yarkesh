@@ -74,4 +74,4 @@ const Story = dbConnection.define('story', {
 	// epic
 });
 
-module.exports = Story;
+module.exports = Story
