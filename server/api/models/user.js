@@ -26,11 +26,12 @@ const User = dbConnection.define('user', {
 	password: {
 		allowNull: false,
 		type: Sequelize.STRING
-	},
-	verified: {
-		type: Sequelize.BOOLEAN,
-		defaultValue: false
 	}
+	// verified: {
+	// 	allowNull: true,
+	// 	type: Sequelize.BOOLEAN,
+	// 	defaultValue: false
+	// }
 });
 
 module.exports = User;
