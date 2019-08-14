@@ -28,6 +28,7 @@ const User = dbConnection.define('user', {
 		type: Sequelize.STRING
 	}
 	// verified: {
+	// 	allowNull: true,
 	// 	type: Sequelize.BOOLEAN,
 	// 	defaultValue: false
 	// }
