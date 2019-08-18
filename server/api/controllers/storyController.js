@@ -1,21 +1,21 @@
-const Project = require('../models/project');
-const User = require('../models/user');
-const Story = require('../models/story');
+const Projects = require('../models/projects');
+const Users = require('../models/users');
+const Stories = require('../models/stories');
 
 exports.getProjectStories = (req, res) => {
 	// finding projects created by this certain user
-	Story.findAll({
+	Stories.findAll({
 		where: {
 			projectId: req.body.projectId
 		},
 		include: [
 			{
-				model: User,
+				model: Users,
 				attributes: ['name'],
 				as: 'creator'
 			},
 			{
-				model: Project,
+				model: Projects,
 				attributes: ['title']
 			}
 		]
@@ -34,7 +34,7 @@ exports.getProjectStories = (req, res) => {
 };
 exports.createStory = (req, res) => {
 	// creating project with foreign key for user
-	Story.create({
+	Stories.create({
 		as: req.body.as,
 		iWant: req.body.iWant,
 		soThat: req.body.soThat,
@@ -57,7 +57,7 @@ exports.createStory = (req, res) => {
 		});
 };
 module.exports.getStoryDetials = (req, res) => {
-	Story.findAll({
+	Stories.findAll({
 		where: {
 			storyId: req.body.storyId
 		}

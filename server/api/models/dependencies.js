@@ -1,26 +1,22 @@
 const Sequelize = require('sequelize');
 const dbConnection = require('./database-connection');
 
-// ! INITIALIZING THE PROEJCT MEMBER PROPERTY IN DATABASE
-const ProjectMembers = dbConnection.define('projectmembers', {
-	projectMemberId: {
+// ! INITIALIZING THE Dependencies PROPERTY IN DATABASE
+const Dependencies = dbConnection.define('dependencies', {
+	dependencyId: {
 		type: Sequelize.INTEGER,
 		primaryKey: true,
 		autoIncrement: true,
 		allowNull: false
 	},
-	memberId: {
+	storyId: {
 		type: Sequelize.INTEGER,
 		allowNull: false
 	},
-	projectId: {
+	dependsOn: {
 		type: Sequelize.INTEGER,
-		allowNull: false
-	},
-	memberRole: {
-		type: Sequelize.STRING,
 		allowNull: false
 	}
 });
 
-module.exports = ProjectMembers;
+module.exports = Dependencies;

@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const dbConnection = require('./database-connection');
 
 // !-------------------User definition in database------------------------
-const User = dbConnection.define('user', {
+const NotConfirmedUsers = dbConnection.define('notConfirmedUsers', {
 	userId: {
 		type: Sequelize.INTEGER,
 		primaryKey: true,
@@ -26,12 +26,15 @@ const User = dbConnection.define('user', {
 	password: {
 		allowNull: false,
 		type: Sequelize.STRING
+	},
+	confirmationCode: {
+		type: Sequelize.STRING,
+		allowNull: true
+	},
+	forgotPasswordCode: {
+		allowNull: true,
+		type: Sequelize.STRING
 	}
-	// verified: {
-	// 	allowNull: true,
-	// 	type: Sequelize.BOOLEAN,
-	// 	defaultValue: false
-	// }
 });
 
-module.exports = User;
+module.exports = NotConfirmedUsers;

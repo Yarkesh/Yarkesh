@@ -2,12 +2,16 @@ const Sequelize = require('sequelize');
 const dbConnection = require('./database-connection');
 
 // ! INITIALIZING THE PROEJCT PROPERTY IN DATABASE
-const Story = dbConnection.define('story', {
+const Stories = dbConnection.define('stories', {
 	// TODO: add title
 	storyId: {
 		type: Sequelize.INTEGER,
 		primaryKey: true,
 		autoIncrement: true,
+		allowNull: false
+	},
+	storyName: {
+		type: Sequelize.STRING,
 		allowNull: false
 	},
 	projectId: {
@@ -35,7 +39,7 @@ const Story = dbConnection.define('story', {
 	},
 	// * Is it a Foreign key ??????
 	// * This gotta be json
-	acceptance: {
+	acceptanceTest: {
 		allowNull: true,
 		type: Sequelize.JSON
 	},
@@ -55,23 +59,20 @@ const Story = dbConnection.define('story', {
 		type: Sequelize.STRING,
 		allowNull: true
 	},
-
-	// * Foreign key to assignments table
-	assignedTo: {
-		type: Sequelize.INTEGER,
-		allowNull: true
-	},
-	// * Foreign key to dependencies table
-	dependency: {
-		allowNull: true,
-		type: Sequelize.STRING
-	},
 	// * Foreign key to sprints table
 	sprintId: {
 		type: Sequelize.INTEGER,
 		allowNull: true
-	}
+	},
+	activityId: {
+		type: Sequelize.INTEGER,
+		allowNull: true
+	},
 	// epic
+	isEpic: {
+		type: Sequelize.BOOLEAN,
+		allowNull: true
+	}
 });
 
-module.exports = Story
+module.exports = Stories;

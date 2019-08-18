@@ -17,5 +17,8 @@ router.get(
 	passport.authenticate('jwt', { session: false }),
 	userController.getUserProjects
 );
+router.post('/confirmEmail', userController.confirmEmail);
+router.post('/forgotpassword', userController.forgotPassword);
+router.post('/changepassword', userController.changePassword);
 
 module.exports = router;
