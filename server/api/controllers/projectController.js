@@ -1,10 +1,10 @@
-const Project = require('../models/project');
+const Projects = require('../models/projects');
 const ProjectMembers = require('../models/projectMembers');
-const User = require('../models/user');
+const Users = require('../models/users');
 
 exports.getProjectsByCreatorId = (req, res) => {
 	// finding projects created by this certain user
-	Project.findAll({
+	Projects.findAll({
 		where: {
 			creatorId: req.user.userId
 		}
@@ -22,13 +22,13 @@ exports.getProjectsByCreatorId = (req, res) => {
 };
 
 exports.getProjectDetails = (req, res) => {
-	Project.findAll({
+	Projects.findAll({
 		where: {
 			projectId: req.body.projectId
 		},
 		include: [
 			{
-				model: User,
+				model: Users,
 				attributes: ['name'],
 				as: 'creator'
 			}
@@ -48,7 +48,7 @@ exports.getProjectDetails = (req, res) => {
 
 exports.createProject = (req, res) => {
 	// creating project with foreign key for user
-	Project.create({
+	Projects.create({
 		title: req.body.title,
 		description: req.body.description,
 		// foreign key to user : creatorId given from the jwt

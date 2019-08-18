@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const dbConnection = require('./database-connection');
 
 // ! INITIALIZING THE PROEJCT PROPERTY IN DATABASE
-const Project = dbConnection.define('project', {
+const Projects = dbConnection.define('projects', {
 	projectId: {
 		type: Sequelize.INTEGER,
 		primaryKey: true,
@@ -23,10 +23,14 @@ const Project = dbConnection.define('project', {
 		type: Sequelize.INTEGER,
 		allowNull: false
 	},
-	isEpic: {
-		type: Sequelize.BOOLEAN,
+	activeSprint: {
+		type: Sequelize.INTEGER,
+		allowNull: true
+	},
+	projectState: {
+		type: Sequelize.JSON,
 		allowNull: true
 	}
 });
 
-module.exports = Project;
+module.exports = Projects;

@@ -11,8 +11,8 @@ module.exports.token =
 
 // ! ------user--------------------------change the first one for aeach test
 module.exports.correctSignUpRequest = {
-	userName: 'mammad6',
-	email: 'mammad6@yahoo.com',
+	userName: `mammad${Math.floor(Math.random()*100)}`,
+	email: `mammad${Math.floor(Math.random()*100)}@yahoo.com`,
 	name: 'mammad6',
 	password: 'mmmmm5',
 	confirmPassword: 'mmmmm5'

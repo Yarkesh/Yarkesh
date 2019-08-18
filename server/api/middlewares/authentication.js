@@ -1,5 +1,5 @@
 const ProjectMembers = require('../models/projectMembers');
-const Project = require('../models/project');
+const Projects = require('../models/projects');
 
 module.exports.isMember = (req, res, next) => {
 	ProjectMembers.findAll({
@@ -25,7 +25,7 @@ module.exports.isMember = (req, res, next) => {
 };
 
 module.exports.isCreator = (req, res, next) => {
-	Project.findAll({
+	Projects.findAll({
 		where: {
 			creatorId: req.user.userId,
 			projectId: req.body.projectId

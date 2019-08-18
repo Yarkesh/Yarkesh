@@ -1,6 +1,6 @@
-const Project = require('../models/project');
+const Projects = require('../models/projects');
 const ProjectMembers = require('../models/projectMembers');
-const User = require('../models/user');
+const Users = require('../models/users');
 
 exports.getProjectMembers = (req, res) => {
 	// TODO fix this shit
@@ -10,11 +10,11 @@ exports.getProjectMembers = (req, res) => {
 		},
 		include: [
 			{
-				model: User,
+				model: Users,
 				attributes: ['name', 'email', 'userName']
 			},
 			{
-				model: Project,
+				model: Projects,
 				attributes: ['title']
 			}
 		]
@@ -43,4 +43,18 @@ exports.addMembers = (req, res) => {
 				err
 			});
 		});
+};
+
+exports.searchMembers = (req, res) => {
+	// Customer.findAll({
+	// 	where: {
+	// 		$or: [
+	// 			{firstName: {$or: searchFor}},
+	// 			{lastName: {$or: searchFor}},
+	// 			{email: {$or: searchFor}}
+	// 		]
+	// 	},
+	// 	order: [['createdAt', 'DESC']],
+	// 	limit: 50
+	// })
 };

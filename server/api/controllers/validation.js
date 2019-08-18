@@ -1,5 +1,6 @@
 const { check } = require('express-validator');
-const User = require('../models/user');
+const Users = require('../models/users');
+const NotConfirmedUsers = require('../models/notConfirmedUsers');
 
 // Checking if the attributes provided are valid
 exports.signUp = [
@@ -11,7 +12,18 @@ exports.signUp = [
 		.isLength({ max: 50 })
 		.withMessage("email can't be more than 50 characters long")
 		.custom((email) => {
-			return User.findAll({
+			return Users.findAll({
+				where: {
+					email: email
+				}
+			}).then((res) => {
+				if (res.length) {
+					return Promise.reject('Email already in use');
+				}
+			});
+		})
+		.custom((email) => {
+			return NotConfirmedUsers.findAll({
 				where: {
 					email: email
 				}
@@ -30,7 +42,18 @@ exports.signUp = [
 		})
 		.withMessage('username must be  between 2 and 32 characters long')
 		.custom((userName) => {
-			return User.findAll({
+			return Users.findAll({
+				where: {
+					userName: userName
+				}
+			}).then((res) => {
+				if (res.length) {
+					return Promise.reject('userName already in use');
+				}
+			});
+		})
+		.custom((userName) => {
+			return NotConfirmedUsers.findAll({
 				where: {
 					userName: userName
 				}
