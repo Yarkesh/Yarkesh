@@ -48,7 +48,6 @@ exports.getUserProjects = (req, res) => {
 		]
 	})
 		.then((projects) => {
-			console.log(projects);
 			return res.status(200).json(
 				projects.map((project) => {
 					return project.project;
