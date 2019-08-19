@@ -7,18 +7,30 @@ router.post('/signup', validation.signUp, userController.signUp);
 router.post('/signin', userController.signIn);
 
 router.get(
-	'/singleUserInfo',
-	passport.authenticate('jwt', { session: false }),
-	userController.getUserInfo
+    '/singleUserInfo',
+    passport.authenticate('jwt', {
+        session: false
+    }),
+    userController.getUserInfo
 );
 
 router.get(
-	'/getUserProjects',
-	passport.authenticate('jwt', { session: false }),
-	userController.getUserProjects
+    '/getUserProjects',
+    passport.authenticate('jwt', {
+        session: false
+    }),
+    userController.getUserProjects
 );
 router.post('/confirmEmail', userController.confirmEmail);
 router.post('/forgotpassword', userController.forgotPassword);
 router.post('/changepassword', userController.changePassword);
 
-module.exports = router;
+router.delete(
+    '/deleteuser',
+    passport.authenticate("jwt", {
+        session: false
+    }),
+    userController.deleteUser
+);
+
+module.exports = router

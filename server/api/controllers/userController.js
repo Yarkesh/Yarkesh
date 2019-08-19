@@ -1,7 +1,9 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('config');
-const { validationResult } = require('express-validator');
+const {
+	validationResult
+} = require('express-validator');
 const randomstring = require('randomstring');
 const ProjectMembers = require('../models/projectMembers');
 const Projects = require('../models/projects');
@@ -14,10 +16,10 @@ const jwtSecret = config.get('app.webServer.jwtSecret');
 // ! FOR TEST ONLY
 exports.getUserInfo = (req, res) => {
 	Users.findAll({
-		where: {
-			userId: req.user.userId
-		}
-	})
+			where: {
+				userId: req.user.userId
+			}
+		})
 		.then((user) => {
 			return res.status(200).json({
 				userInfo: user[0]
@@ -32,23 +34,19 @@ exports.getUserInfo = (req, res) => {
 
 exports.getUserProjects = (req, res) => {
 	ProjectMembers.findAll({
-		where: {
-			memberId: req.user.userId
-		},
-		include: [
-			{
+			where: {
+				memberId: req.user.userId
+			},
+			include: [{
 				model: Projects,
 				attributes: ['title', 'projectId', 'description', 'createdAt'],
-				include: [
-					{
-						model: Users,
-						as: 'creator',
-						attributes: ['name']
-					}
-				]
-			}
-		]
-	})
+				include: [{
+					model: Users,
+					as: 'creator',
+					attributes: ['name']
+				}]
+			}]
+		})
 		.then((projects) => {
 			return res.status(200).json(
 				projects.map((project) => {
@@ -91,12 +89,12 @@ exports.signUp = (req, res) => {
 				.emailVerification(req.body.email, confirmationCode)
 				.then((response) => {
 					NotConfirmedUsers.create({
-						userName: req.body.userName,
-						email: req.body.email,
-						name: req.body.name,
-						password: hash,
-						confirmationCode
-					})
+							userName: req.body.userName,
+							email: req.body.email,
+							name: req.body.name,
+							password: hash,
+							confirmationCode
+						})
 
 						// sign up success
 						.then((user) => {
@@ -148,10 +146,10 @@ exports.signUp = (req, res) => {
 exports.signIn = (req, res) => {
 	// finding the user in database with given email
 	NotConfirmedUsers.findAll({
-		where: {
-			email: req.body.email
-		}
-	})
+			where: {
+				email: req.body.email
+			}
+		})
 		.then((unconfirmedUser) => {
 			if (unconfirmedUser.length != 0) {
 				return res.status(500).json({
@@ -163,10 +161,10 @@ exports.signIn = (req, res) => {
 		.catch();
 
 	Users.findAll({
-		where: {
-			email: req.body.email
-		}
-	})
+			where: {
+				email: req.body.email
+			}
+		})
 		.then((user) => {
 			// if user with such email does not exist
 			if (user.length == 0) {
@@ -196,8 +194,7 @@ exports.signIn = (req, res) => {
 							};
 							jwt.sign(
 								jwtpayload,
-								jwtSecret,
-								{
+								jwtSecret, {
 									expiresIn: '10h'
 								},
 								(err, encoded) => {
@@ -227,10 +224,10 @@ exports.signIn = (req, res) => {
 
 module.exports.confirmEmail = (req, res) => {
 	NotConfirmedUsers.findAll({
-		where: {
-			email: req.body.email
-		}
-	})
+			where: {
+				email: req.body.email
+			}
+		})
 		.then((users) => {
 			let confirmedUser = users[0];
 			if (req.body.code == confirmedUser.confirmationCode) {
@@ -267,16 +264,13 @@ module.exports.forgotPassword = (req, res) => {
 			mail
 				.forgotPassword(users[0].email, forgotPasswordCode)
 				.then(() => {
-					Users.update(
-						{
-							forgotPasswordCode
-						},
-						{
-							where: {
-								email: users[0].email
-							}
+					Users.update({
+						forgotPasswordCode
+					}, {
+						where: {
+							email: users[0].email
 						}
-					);
+					});
 					return res.status(200).json({
 						message: 'forgot password message sent'
 					});
@@ -302,16 +296,13 @@ module.exports.forgotPassword = (req, res) => {
 			mail
 				.forgotPassword(users[0].email, forgotPasswordCode)
 				.then(() => {
-					NotConfirmedUsers.update(
-						{
-							forgotPasswordCode
-						},
-						{
-							where: {
-								email: users[0].email
-							}
+					NotConfirmedUsers.update({
+						forgotPasswordCode
+					}, {
+						where: {
+							email: users[0].email
 						}
-					);
+					});
 					return res.status(200).json({
 						message: 'forgot password message sent'
 					});
@@ -334,16 +325,13 @@ module.exports.changePassword = (req, res) => {
 			bcrypt.hash(req.body.password, 10, (error, hash) => {
 				if (hash) {
 					if (req.body.forgotPasswordCode == users[0].forgotPasswordCode) {
-						Users.update(
-							{
-								password: hash
-							},
-							{
-								where: {
-									email: users[0].email
-								}
+						Users.update({
+							password: hash
+						}, {
+							where: {
+								email: users[0].email
 							}
-						).then(() => {
+						}).then(() => {
 							return res.status(200).json({
 								message: 'password changed1'
 							});
@@ -367,8 +355,7 @@ module.exports.changePassword = (req, res) => {
 			bcrypt.hash(req.body.password, 10, (err, hash) => {
 				if (hash) {
 					if (req.body.forgotPasswordCode == users[0].forgotPasswordCode) {
-						NotConfirmedUsers.update(
-							{
+						NotConfirmedUsers.update({
 								password: hash
 							},
 
@@ -391,4 +378,21 @@ module.exports.changePassword = (req, res) => {
 			});
 		}
 	});
+};
+module.exports.deleteUser = (req, res) => {
+	User.destroy({
+			where: {
+				userId: req.user.userId
+			}
+		})
+		.then(() => {
+			res.status(200).json({
+				message: 'User Deleted'
+			});
+		})
+		.catch((err) => {
+			res.status(500).json({
+				err
+			});
+		});
 };
