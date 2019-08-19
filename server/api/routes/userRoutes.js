@@ -15,14 +15,26 @@ router.post(
 
 router.get(
     '/singleUserInfo',
-    passport.authenticate("jwt", { session: false }),
+    passport.authenticate("jwt", {
+        session: false
+    }),
     userController.getUserInfo
 );
 
 router.post(
     '/getUserProjects',
-    passport.authenticate("jwt", { session: false }),
+    passport.authenticate("jwt", {
+        session: false
+    }),
     userController.getUserProjects
+);
+
+router.delete(
+    '/deleteuser',
+    passport.authenticate("jwt", {
+        session: false
+    }),
+    userController.deleteUser
 );
 
 module.exports = router
