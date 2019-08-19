@@ -10,38 +10,67 @@ const Assignment = require('../models/assignments');
 Projects.belongsTo(Users, {
 	foreignKey: 'creatorId',
 	targetKey: 'userId',
-	as: 'creator'
+	as: 'creator',
+	onUpdate: 'cascade',
+	onDelete: 'cascade',
+	hooks: true
+});
+
+
+
+ProjectMembers.belongsTo(Users, {
+	foreignKey: 'memberId',
+	targetKey: 'userId',
+	as: 'member',
+	onUpdate: 'cascade',
+	onDelete: 'cascade',
+	hooks: true
+});
+
+Users.hasMany(ProjectMembers, {
+	foreignKey: 'memberId',
+	targetKey: 'userId',
+	as: 'member',
+	onUpdate: 'cascade',
+	onDelete: 'cascade',
+	hooks: true
 });
 
 ProjectMembers.belongsTo(Projects, {
 	foreignKey: 'projectId',
-	targetKey: 'projectId'
-});
-ProjectMembers.belongsTo(Users, {
-	foreignKey: 'memberId',
-	targetKey: 'userId'
+	targetKey: 'projectId',
+	as: 'project',
+	onUpdate: 'cascade',
+	onDelete: 'cascade',
+	hooks: true
 });
 
 Stories.belongsTo(Projects, {
 	foreignKey: 'projectId',
-	targetKey: 'projectId'
+	targetKey: 'projectId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade',
+	hooks: true
 });
 
 Projects.hasMany(Sprints, {
 	foreignKey: 'projectId',
 	targetKey: 'projectId',
-	as: 'sprints'
+	as: 'sprints',
+	onUpdate: 'cascade',
+	onDelete: 'cascade',
+	hooks: true
 });
 // Projects.belongsTo(Sprints, {
 // 	foreignKey: 'activeSprint',
 // 	targetKey: 'sprintId',
 // 	as: 'currentSprint'
 // });
-Projects.hasOne(Sprints, {
-	foreignKey: 'activeSprint',
-	targetKey: 'sprintId',
-	as: 'currentSprint'
-});
+// Projects.hasOne(Sprints, {
+// 	foreignKey: 'activeSprint',
+// 	targetKey: 'sprintId',
+// 	as: 'currentSprint'
+// });
 Sprints.hasMany(Stories, {
 	foreignKey: 'sprintId',
 	targetKey: 'sprintId',
@@ -63,11 +92,11 @@ Dependencies.belongsTo(Stories, {
 	targetKey: 'storyId',
 	as: 'dependencies'
 });
-Assignment.belongsTo(Users, {
-	foreignKey: 'userId',
-	targetKey: 'userId',
-	as: 'assignedTo'
-});
+// Assignment.belongsTo(Users, {
+// 	foreignKey: 'userId',
+// 	targetKey: 'userId',
+// 	as: 'assignedTo'
+// });
 Assignment.belongsTo(Stories, {
 	foreignKey: 'storyId',
 	targetKey: 'storyId',

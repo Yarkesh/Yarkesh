@@ -380,7 +380,7 @@ module.exports.changePassword = (req, res) => {
 	});
 };
 module.exports.deleteUser = (req, res) => {
-	User.destroy({
+	Users.destroy({
 			where: {
 				userId: req.user.userId
 			}

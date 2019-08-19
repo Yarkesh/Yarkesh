@@ -8,8 +8,7 @@ exports.getProjectMembers = (req, res) => {
 		where: {
 			projectId: req.body.projectId
 		},
-		include: [
-			{
+		include: [{
 				model: Users,
 				attributes: ['name', 'email', 'userName']
 			},
@@ -27,9 +26,9 @@ exports.getProjectMembers = (req, res) => {
 
 exports.addMembers = (req, res) => {
 	ProjectMembers.create({
-		memberId: req.body.userId,
-		projectId: req.body.projectId
-	})
+			memberId: req.body.userId,
+			projectId: req.body.projectId
+		})
 		.then((result) => {
 			return res.status(200).json({
 				message: 'member added to project',
@@ -57,4 +56,23 @@ exports.searchMembers = (req, res) => {
 	// 	order: [['createdAt', 'DESC']],
 	// 	limit: 50
 	// })
+};
+
+
+module.exports.deleteMember = (req, res) => {
+	ProjectMembers.destroy({
+			where: {
+				memberId: req.user.userId
+			}
+		})
+		.then(() => {
+			res.status(200).json({
+				message: 'Member Deleted'
+			});
+		})
+		.catch((err) => {
+			res.status(500).json({
+				err
+			});
+		});
 };
