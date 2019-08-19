@@ -5,15 +5,27 @@ const authenticateRoutes = require('../middlewares/authentication');
 
 router.post(
 	'/addmembers',
-	passport.authenticate('jwt', { session: false }),
+	passport.authenticate('jwt', {
+		session: false
+	}),
 	authenticateRoutes.isCreator,
 	projectMemberController.addMembers
 );
 
 router.post(
 	'/getmembers',
-	passport.authenticate('jwt', { session: false }),
+	passport.authenticate('jwt', {
+		session: false
+	}),
 	authenticateRoutes.isMember,
 	projectMemberController.getProjectMembers
+);
+router.delete(
+	'/deletemember',
+	passport.authenticate('jwt', {
+		session: false
+	}),
+	authenticateRoutes.isMember,
+	projectMemberController.deleteMember
 );
 module.exports = router;

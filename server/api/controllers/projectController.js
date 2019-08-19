@@ -8,10 +8,10 @@ const Activities = require('../models/activities');
 exports.getProjectsByCreatorId = (req, res) => {
 	// finding projects created by this certain user
 	Projects.findAll({
-		where: {
-			creatorId: req.user.userId
-		}
-	})
+			where: {
+				creatorId: req.user.userId
+			}
+		})
 		.then((projects) => {
 			return res.status(200).json({
 				projects
@@ -26,17 +26,15 @@ exports.getProjectsByCreatorId = (req, res) => {
 
 exports.getProjectDetails = (req, res) => {
 	Projects.findAll({
-		where: {
-			projectId: req.body.projectId
-		},
-		include: [
-			{
+			where: {
+				projectId: req.body.projectId
+			},
+			include: [{
 				model: Users,
 				attributes: ['name'],
 				as: 'creator'
-			}
-		]
-	})
+			}]
+		})
 		.then((projectInfo) => {
 			return res.status(200).json({
 				projectInfo: projectInfo[0]
@@ -52,11 +50,11 @@ exports.getProjectDetails = (req, res) => {
 exports.createProject = (req, res) => {
 	// creating project with foreign key for user
 	Projects.create({
-		title: req.body.title,
-		description: req.body.description,
-		// foreign key to user : creatorId given from the jwt
-		creatorId: req.user.userId
-	})
+			title: req.body.title,
+			description: req.body.description,
+			// foreign key to user : creatorId given from the jwt
+			creatorId: req.user.userId
+		})
 		.then((project) => {
 			ProjectMembers.create({
 				memberId: req.user.userId,
@@ -82,12 +80,11 @@ exports.createProject = (req, res) => {
 
 module.exports.getPorjectSprints = (req, res) => {
 	Projects.findAll({
-		where: {
-			projectId: req.body.projectId
-		},
-		attributes: ['projectId'],
-		include: [
-			{
+			where: {
+				projectId: req.body.projectId
+			},
+			attributes: ['projectId'],
+			include: [{
 				model: Sprints,
 				attributes: ['sprintId'],
 				as: 'sprints',
@@ -126,6 +123,25 @@ module.exports.getPorjectSprints = (req, res) => {
 		.catch((err) => {
 			return res.status(500).json({
 				message: 'lskdfjlksadf',
+				err
+			});
+		});
+};
+
+
+module.exports.deleteProject = (req, res) => {
+	Projects.destroy({
+			where: {
+				projectId: req.body.projectId
+			}
+		})
+		.then(() => {
+			res.status(200).json({
+				message: 'Project Deleted'
+			});
+		})
+		.catch((err) => {
+			res.status(500).json({
 				err
 			});
 		});
