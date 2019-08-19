@@ -102,3 +102,8 @@ Assignment.belongsTo(Stories, {
 	targetKey: 'storyId',
 	as: 'story'
 });
+Projects.hasMany(Activities, {
+	foreignKey: 'projectId',
+	targetKey: 'projectId',
+	as: 'activity'
+});
