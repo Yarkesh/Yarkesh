@@ -27,10 +27,10 @@ Stories.belongsTo(Projects, {
 	targetKey: 'projectId'
 });
 
-Sprints.belongsTo(Projects, {
+Projects.hasMany(Sprints, {
 	foreignKey: 'projectId',
 	targetKey: 'projectId',
-	as: 'project'
+	as: 'sprints'
 });
 // Projects.belongsTo(Sprints, {
 // 	foreignKey: 'activeSprint',
@@ -42,10 +42,10 @@ Projects.hasOne(Sprints, {
 	targetKey: 'sprintId',
 	as: 'currentSprint'
 });
-Stories.belongsTo(Sprints, {
+Sprints.hasMany(Stories, {
 	foreignKey: 'sprintId',
 	targetKey: 'sprintId',
-	as: 'sprint'
+	as: 'stories'
 });
 Stories.belongsTo(Activities, {
 	foreignKey: 'activityId',

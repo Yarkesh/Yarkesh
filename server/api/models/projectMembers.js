@@ -19,7 +19,7 @@ const ProjectMembers = dbConnection.define('projectmembers', {
 	},
 	memberRole: {
 		type: Sequelize.STRING,
-		allowNull: false
+		allowNull: true
 	}
 });
 

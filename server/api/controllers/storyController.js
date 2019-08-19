@@ -35,6 +35,8 @@ exports.getProjectStories = (req, res) => {
 exports.createStory = (req, res) => {
 	// creating project with foreign key for user
 	Stories.create({
+		storyName: req.body.storyName,
+		sprintId: req.body.sprintId,
 		as: req.body.as,
 		iWant: req.body.iWant,
 		soThat: req.body.soThat,
