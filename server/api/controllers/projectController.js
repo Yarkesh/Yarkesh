@@ -1,6 +1,8 @@
 const Projects = require('../models/projects');
 const ProjectMembers = require('../models/projectMembers');
 const Users = require('../models/users');
+const Sprints = require('../models/sprints');
+const Stories = require('../models/stories');
 
 exports.getProjectsByCreatorId = (req, res) => {
 	// finding projects created by this certain user
@@ -72,6 +74,40 @@ exports.createProject = (req, res) => {
 		.catch((err) => {
 			return res.status(500).json({
 				message: 'Project FAILED !',
+				err
+			});
+		});
+};
+
+module.exports.getPorjectSprints = (req, res) => {
+	Projects.findAll({
+		where: {
+			projectId: req.body.projectId
+		},
+		attributes: ['projectId'],
+		include: [
+			{
+				model: Sprints,
+				attributes: ['sprintId'],
+				as: 'sprints',
+				include: [
+					{
+						model: Stories,
+						attributes: ['storyName'],
+						as: 'stories'
+					}
+				]
+			}
+		]
+	})
+		.then((project) => {
+			return res.status(200).json({
+				project
+			});
+		})
+		.catch((err) => {
+			return res.status(500).json({
+				message: 'lskdfjlksadf',
 				err
 			});
 		});

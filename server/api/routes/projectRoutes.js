@@ -21,4 +21,11 @@ router.post(
 	projectController.getProjectDetails
 );
 
+router.post(
+	'/getprojectsprints',
+	passport.authenticate('jwt', { session: false }),
+	authenticateRoutes.isMember,
+	projectController.getPorjectSprints
+);
+
 module.exports = router;

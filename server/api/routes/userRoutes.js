@@ -7,39 +7,24 @@ router.post('/signup', validation.signUp, userController.signUp);
 router.post('/signin', userController.signIn);
 
 router.get(
-<<<<<<< HEAD
-	'/singleUserInfo',
-	passport.authenticate('jwt', { session: false }),
-	userController.getUserInfo
-);
-
-router.get(
-	'/getUserProjects',
-	passport.authenticate('jwt', { session: false }),
-	userController.getUserProjects
-=======
     '/singleUserInfo',
-    passport.authenticate("jwt", {
+    passport.authenticate('jwt', {
         session: false
     }),
     userController.getUserInfo
 );
 
-router.post(
+router.get(
     '/getUserProjects',
-    passport.authenticate("jwt", {
+    passport.authenticate('jwt', {
         session: false
     }),
     userController.getUserProjects
->>>>>>> meti
 );
 router.post('/confirmEmail', userController.confirmEmail);
 router.post('/forgotpassword', userController.forgotPassword);
 router.post('/changepassword', userController.changePassword);
 
-<<<<<<< HEAD
-module.exports = router;
-=======
 router.delete(
     '/deleteuser',
     passport.authenticate("jwt", {
@@ -49,4 +34,3 @@ router.delete(
 );
 
 module.exports = router
->>>>>>> meti
