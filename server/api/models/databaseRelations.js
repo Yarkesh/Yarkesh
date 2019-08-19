@@ -37,11 +37,11 @@ Projects.hasMany(Sprints, {
 // 	targetKey: 'sprintId',
 // 	as: 'currentSprint'
 // });
-Projects.hasOne(Sprints, {
-	foreignKey: 'activeSprint',
-	targetKey: 'sprintId',
-	as: 'currentSprint'
-});
+// Projects.hasOne(Sprints, {
+// 	foreignKey: 'activeSprint',
+// 	targetKey: 'sprintId',
+// 	as: 'currentSprint'
+// });
 Sprints.hasMany(Stories, {
 	foreignKey: 'sprintId',
 	targetKey: 'sprintId',
@@ -72,4 +72,10 @@ Assignment.belongsTo(Stories, {
 	foreignKey: 'storyId',
 	targetKey: 'storyId',
 	as: 'story'
+});
+
+Projects.hasMany(Activities, {
+	foreignKey: 'projectId',
+	targetKey: 'projectId',
+	as: 'activity'
 });

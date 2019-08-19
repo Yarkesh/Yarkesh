@@ -3,6 +3,7 @@ const ProjectMembers = require('../models/projectMembers');
 const Users = require('../models/users');
 const Sprints = require('../models/sprints');
 const Stories = require('../models/stories');
+const Activities = require('../models/activities');
 
 exports.getProjectsByCreatorId = (req, res) => {
 	// finding projects created by this certain user
@@ -97,7 +98,24 @@ module.exports.getPorjectSprints = (req, res) => {
 						as: 'stories'
 					}
 				]
+			},
+			{
+				model: Activities,
+				attributes: ['activityName'],
+				as: 'activity'
 			}
+			// {
+			// 	model: Sprints,
+			// 	attributes: ['sprintId'],
+			// 	as: 'sprints',
+			// 	include: [
+			// 		{
+			// 			model: Activities,
+			// 			attributes: ['activityName'],
+			// 			as: 'activities'
+			// 		}
+			// 	]
+			// }
 		]
 	})
 		.then((project) => {

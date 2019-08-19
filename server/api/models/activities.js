@@ -9,6 +9,10 @@ const Activities = dbConnection.define('activities', {
 		autoIncrement: true,
 		allowNull: false
 	},
+	projectId: {
+		type: Sequelize.INTEGER,
+		allowNull: false
+	},
 	activityName: {
 		type: Sequelize.STRING,
 		allowNull: false
