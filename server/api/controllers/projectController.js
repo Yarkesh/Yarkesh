@@ -60,6 +60,14 @@ exports.createProject = (req, res) => {
 				memberId: req.user.userId,
 				projectId: project.projectId
 			});
+			Sprints.create({
+				projectId: project.projectId,
+				sprintName: "Sprint #1",
+				status: "Open"
+			});
+			Activities.create({
+
+			})
 			return res.status(200).json({
 				title: project.title,
 				projectId: project.projectId,

@@ -25,7 +25,15 @@ router.delete(
 	passport.authenticate('jwt', {
 		session: false
 	}),
-	authenticateRoutes.isMember,
+	authenticateRoutes.isCreator,
 	projectMemberController.deleteMember
+);
+router.delete(
+	'/leaveproject',
+	passport.authenticate('jwt', {
+		session: false
+	}),
+	authenticateRoutes.isMember,
+	projectMemberController.leaveProject
 );
 module.exports = router;

@@ -24,6 +24,12 @@ app.use('/api', router);
 // ! ----------------------------------Database Sync--------------------------------
 require('./api/models/databaseRelations');
 
+//* for just creating the database
 sequelize.sync();
+
+//* For deleting database and creating again!
+// sequelize.sync({
+// 	force: true
+// });
 
 module.exports = app;
