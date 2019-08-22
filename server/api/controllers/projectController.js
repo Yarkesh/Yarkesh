@@ -95,18 +95,23 @@ module.exports.getPorjectSprints = (req, res) => {
 			attributes: ['projectId'],
 			include: [{
 					model: Sprints,
-					attributes: ['sprintId'],
+					attributes: ['sprintId', 'sprintName'],
 					as: 'sprints',
 					include: [{
 						model: Stories,
 						attributes: ['storyName'],
-						as: 'stories'
+						as: 'stories',
 					}]
 				},
 				{
 					model: Activities,
 					attributes: ['activityName'],
-					as: 'activity'
+					as: 'activity',
+					include: [{
+						model: Stories,
+						attributes: ['storyName'],
+						as: 'stories',
+					}]
 				}
 				// {
 				// 	model: Sprints,

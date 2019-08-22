@@ -21,7 +21,6 @@ Projects.belongsTo(Users, {
 ProjectMembers.belongsTo(Users, {
 	foreignKey: 'memberId',
 	targetKey: 'userId',
-	as: 'member',
 	onUpdate: 'cascade',
 	onDelete: 'cascade',
 	hooks: true
@@ -30,7 +29,6 @@ ProjectMembers.belongsTo(Users, {
 Users.hasMany(ProjectMembers, {
 	foreignKey: 'memberId',
 	targetKey: 'userId',
-	as: 'member',
 	onUpdate: 'cascade',
 	onDelete: 'cascade',
 	hooks: true
@@ -39,7 +37,6 @@ Users.hasMany(ProjectMembers, {
 ProjectMembers.belongsTo(Projects, {
 	foreignKey: 'projectId',
 	targetKey: 'projectId',
-	as: 'project',
 	onUpdate: 'cascade',
 	onDelete: 'cascade',
 	hooks: true
@@ -76,10 +73,10 @@ Sprints.hasMany(Stories, {
 	targetKey: 'sprintId',
 	as: 'stories'
 });
-Stories.belongsTo(Activities, {
+Activities.hasMany(Stories, {
 	foreignKey: 'activityId',
 	targetKey: 'activityId',
-	as: 'activity'
+	as: 'stories'
 });
 
 Dependencies.belongsTo(Stories, {
