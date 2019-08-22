@@ -1,6 +1,7 @@
 const Projects = require('../models/projects');
 const Users = require('../models/users');
 const Stories = require('../models/stories');
+const Sprints = require('../models/sprints');
 
 exports.getProjectStories = (req, res) => {
 	// finding projects created by this certain user
@@ -34,8 +35,13 @@ exports.getProjectStories = (req, res) => {
 			});
 		});
 };
-exports.createStory = (req, res) => {
-	// creating project with foreign key for user
+exports.createStory = async (req, res) => {
+
+
+
+	// if (req.body.sprintId != null) {
+	// 	foundSprintId = req.body.sprintId
+	// }
 	Stories.create({
 			storyName: req.body.storyName,
 			sprintId: req.body.sprintId,
@@ -43,11 +49,11 @@ exports.createStory = (req, res) => {
 			iWant: req.body.iWant,
 			soThat: req.body.soThat,
 			acceptance: req.body.acceptance,
-			// foreign key to user : creatorId given from the jwt
 			creatorId: req.user.userId,
 			projectId: req.body.projectId
 		})
 		.then((story) => {
+
 			return res.status(200).json({
 				message: `story created!`,
 				story
@@ -59,7 +65,10 @@ exports.createStory = (req, res) => {
 				err
 			});
 		});
+
+
 }
+
 module.exports.getStoryDetials = (req, res) => {
 	Stories.findAll({
 			where: {
