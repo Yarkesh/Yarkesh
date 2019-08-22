@@ -62,12 +62,29 @@ exports.searchMembers = (req, res) => {
 module.exports.deleteMember = (req, res) => {
 	ProjectMembers.destroy({
 			where: {
-				memberId: req.user.userId
+				memberId: req.body.memberId
 			}
 		})
 		.then(() => {
 			res.status(200).json({
 				message: 'Member Deleted'
+			});
+		})
+		.catch((err) => {
+			res.status(500).json({
+				err
+			});
+		});
+};
+module.exports.leaveProject = (req, res) => {
+	ProjectMembers.destroy({
+			where: {
+				memberId: req.user.userId
+			}
+		})
+		.then(() => {
+			res.status(200).json({
+				message: 'You have succesfully left this project'
 			});
 		})
 		.catch((err) => {

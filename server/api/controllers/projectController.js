@@ -3,6 +3,7 @@ const ProjectMembers = require('../models/projectMembers');
 const Users = require('../models/users');
 const Sprints = require('../models/sprints');
 const Stories = require('../models/stories');
+const Activities = require('../models/activities');
 
 exports.getProjectsByCreatorId = (req, res) => {
 	// finding projects created by this certain user
@@ -59,6 +60,14 @@ exports.createProject = (req, res) => {
 				memberId: req.user.userId,
 				projectId: project.projectId
 			});
+			Sprints.create({
+				projectId: project.projectId,
+				sprintName: "Sprint #1",
+				status: "Open"
+			});
+			Activities.create({
+
+			})
 			return res.status(200).json({
 				title: project.title,
 				projectId: project.projectId,

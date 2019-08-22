@@ -28,7 +28,8 @@ const Sprints = dbConnection.define('sprints', {
 	status: {
 		allowNull: true,
 		type: Sequelize.STRING
-	}
+	},
+
 });
 
 module.exports = Sprints;
