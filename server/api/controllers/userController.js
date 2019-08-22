@@ -39,6 +39,7 @@ exports.getUserProjects = (req, res) => {
 			},
 			include: [{
 				model: Projects,
+				as: 'project',
 				attributes: ['title', 'projectId', 'description', 'createdAt'],
 				include: [{
 					model: Users,

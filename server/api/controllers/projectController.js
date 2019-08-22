@@ -66,7 +66,8 @@ exports.createProject = (req, res) => {
 				status: "Open"
 			});
 			Activities.create({
-
+				activityName: 'Default Activity',
+				projectId: project.projectId
 			})
 			return res.status(200).json({
 				title: project.title,
@@ -93,36 +94,39 @@ module.exports.getPorjectSprints = (req, res) => {
 			},
 			attributes: ['projectId'],
 			include: [{
-				model: Sprints,
-				attributes: ['sprintId'],
-				as: 'sprints',
-				include: [
-					{
+					model: Sprints,
+					attributes: ['sprintId', 'sprintName'],
+					as: 'sprints',
+					include: [{
 						model: Stories,
 						attributes: ['storyName'],
-						as: 'stories'
-					}
-				]
-			},
-			{
-				model: Activities,
-				attributes: ['activityName'],
-				as: 'activity'
-			}
-			// {
-			// 	model: Sprints,
-			// 	attributes: ['sprintId'],
-			// 	as: 'sprints',
-			// 	include: [
-			// 		{
-			// 			model: Activities,
-			// 			attributes: ['activityName'],
-			// 			as: 'activities'
-			// 		}
-			// 	]
-			// }
-		]
-	})
+						as: 'stories',
+					}]
+				},
+				{
+					model: Activities,
+					attributes: ['activityName'],
+					as: 'activity',
+					include: [{
+						model: Stories,
+						attributes: ['storyName'],
+						as: 'stories',
+					}]
+				}
+				// {
+				// 	model: Sprints,
+				// 	attributes: ['sprintId'],
+				// 	as: 'sprints',
+				// 	include: [
+				// 		{
+				// 			model: Activities,
+				// 			attributes: ['activityName'],
+				// 			as: 'activities'
+				// 		}
+				// 	]
+				// }
+			]
+		})
 		.then((project) => {
 			return res.status(200).json({
 				project

@@ -12,10 +12,7 @@ exports.getProjectMembers = (req, res) => {
 				model: Users,
 				attributes: ['name', 'email', 'userName']
 			},
-			{
-				model: Projects,
-				attributes: ['title']
-			}
+
 		]
 	}).then((members) => {
 		return res.status(200).json({
@@ -29,11 +26,20 @@ exports.addMembers = (req, res) => {
 			memberId: req.body.userId,
 			projectId: req.body.projectId
 		})
-		.then((result) => {
-			return res.status(200).json({
-				message: 'member added to project',
-				projectId: result.projectId,
-				memberId: result.memberId
+		.then((member) => {
+			ProjectMembers.findAll({
+				where: {
+					projectId: req.body.projectId,
+					memberId: member.memberId
+				},
+				include: [{
+					model: Users,
+					attributes: ['name', 'email', 'userName']
+				}, ]
+			}).then((members) => {
+				return res.status(200).json({
+					members
+				});
 			});
 		})
 		.catch((err) => {

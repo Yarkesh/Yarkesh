@@ -6,7 +6,7 @@ const dataCreator = require('../controllers/databaseCreateFakeData')
 
 router.post(
     '/createdata',
-    // dataCreator.createUsers,
+    dataCreator.createUsers,
     dataCreator.createProjects,
 
 );
