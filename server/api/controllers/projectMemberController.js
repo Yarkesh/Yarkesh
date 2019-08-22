@@ -26,10 +26,11 @@ exports.addMembers = (req, res) => {
 			memberId: req.body.userId,
 			projectId: req.body.projectId
 		})
-		.then((result) => {
+		.then((member) => {
 			ProjectMembers.findAll({
 				where: {
-					projectId: req.body.projectId
+					projectId: req.body.projectId,
+					memberId: member.memberId
 				},
 				include: [{
 					model: Users,
