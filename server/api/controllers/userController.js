@@ -4,6 +4,7 @@ const config = require('config');
 const {
 	validationResult
 } = require('express-validator');
+const Sequelize = require('sequelize');
 const randomstring = require('randomstring');
 const ProjectMembers = require('../models/projectMembers');
 const Projects = require('../models/projects');
@@ -13,6 +14,8 @@ const NotConfirmedUsers = require('../models/notConfirmedUsers');
 const mail = require('../controllers/mailController');
 
 const jwtSecret = config.get('app.webServer.jwtSecret');
+const Op = Sequelize.Op;
+
 // ! FOR TEST ONLY
 exports.getUserInfo = (req, res) => {
 	Users.findAll({
@@ -380,6 +383,28 @@ module.exports.changePassword = (req, res) => {
 		}
 	});
 };
+
+module.exports.searchUsers = (req, res) => {
+	var searchTerm = req.body.userName;
+	Users.findAll({
+			where: {
+				userName: {
+					[Op.like]: '%' + searchTerm + '%'
+				}
+
+			},
+			attributes: ['userId', 'userName', 'email', 'name'],
+			limit: 6,
+			subQuery: false
+		})
+		.then((users) => {
+			return res.status(200).json({
+				users
+			});
+		})
+		.catch();
+};
+
 module.exports.deleteUser = (req, res) => {
 	Users.destroy({
 			where: {
