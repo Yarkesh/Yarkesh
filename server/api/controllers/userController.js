@@ -385,10 +385,10 @@ module.exports.changePassword = (req, res) => {
 };
 
 module.exports.searchUsers = (req, res) => {
-	var searchTerm = req.body.userName;
+	var searchTerm = req.body.email;
 	Users.findAll({
 			where: {
-				userName: {
+				email: {
 					[Op.like]: '%' + searchTerm + '%'
 				}
 
