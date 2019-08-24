@@ -5,15 +5,26 @@ const authenticateRoutes = require('../middlewares/authentication');
 
 router.post(
 	'/createSprint',
-	passport.authenticate('jwt', { session: false }),
+	passport.authenticate('jwt', {
+		session: false
+	}),
 	authenticateRoutes.isCreator,
 	sprintController.createSprint
 );
 router.post(
 	'/getSprintStories',
-	passport.authenticate('jwt', { session: false }),
+	passport.authenticate('jwt', {
+		session: false
+	}),
 	authenticateRoutes.isMember,
 	sprintController.getSprintStories
 );
-
+router.post(
+	'/getprojectsprints',
+	passport.authenticate('jwt', {
+		session: false
+	}),
+	authenticateRoutes.isMember,
+	sprintController.getProjectSprints
+);
 module.exports = router;

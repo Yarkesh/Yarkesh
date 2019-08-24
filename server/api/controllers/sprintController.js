@@ -4,15 +4,16 @@ const Project = require('../models/projects');
 
 module.exports.createSprint = (req, res) => {
 	Sprint.create({
-		projectId: req.body.projectId,
-		sprintName: req.body.sprintName,
-		status: req.body.status,
-		duration: req.body.duration,
-		dueDate: req.body.dueDate
-	})
-		.then(() => {
+			projectId: req.body.projectId,
+			sprintName: req.body.sprintName,
+			status: req.body.status,
+			duration: req.body.duration,
+			dueDate: req.body.dueDate
+		})
+		.then((sprint) => {
 			return res.status(200).json({
-				message: 'sprint created'
+				sprintId: sprint.sprintId,
+				sprintName: sprint.sprintName
 			});
 		})
 		.catch((err) => {
@@ -24,17 +25,15 @@ module.exports.createSprint = (req, res) => {
 
 module.exports.getSprintStories = (req, res) => {
 	Sprint.findAll({
-		where: {
-			sprintId: req.body.sprintId
-		},
-		include: [
-			{
+			where: {
+				sprintId: req.body.sprintId
+			},
+			include: [{
 				model: Story,
 				attributes: ['storyName'],
 				as: 'stories'
-			}
-		]
-	})
+			}]
+		})
 		.then((sprints) => {
 			return res.status(200).json({
 				sprints
@@ -42,8 +41,28 @@ module.exports.getSprintStories = (req, res) => {
 		})
 		.catch((err) => {
 			return res.status(500).json({
-				message: 'lskdfjlksadf',
-				err
+				message: 'Couldnt find sprints',
+
+			});
+		});
+};
+
+module.exports.getProjectSprints = (req, res) => {
+	Sprint.findAll({
+			where: {
+				projectId: req.body.projectId
+			},
+			attributes: ['sprintId', 'sprintName']
+		})
+		.then((sprints) => {
+			return res.status(200).json({
+				sprints
+			});
+		})
+		.catch((err) => {
+			return res.status(500).json({
+				message: 'Couldn\'t find sprints',
+
 			});
 		});
 };
