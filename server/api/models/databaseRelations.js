@@ -79,16 +79,11 @@ Activities.hasMany(Stories, {
 	as: 'stories'
 });
 
-Dependencies.belongsTo(Stories, {
+Stories.hasMany(Dependencies, {
 	foreignKey: 'storyId',
-	targetKey: 'storyId',
-	as: 'story'
+	targetKey: 'storyId'
 });
-Dependencies.belongsTo(Stories, {
-	foreignKey: 'dependsOn',
-	targetKey: 'storyId',
-	as: 'dependencies'
-});
+
 // Assignment.belongsTo(Users, {
 // 	foreignKey: 'userId',
 // 	targetKey: 'userId',

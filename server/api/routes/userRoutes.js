@@ -33,4 +33,12 @@ router.delete(
     userController.deleteUser
 );
 
+router.post(
+    '/searchuser',
+    passport.authenticate('jwt', {
+        session: false
+    }),
+    userController.searchUsers
+);
+
 module.exports = router

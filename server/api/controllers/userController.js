@@ -4,6 +4,7 @@ const config = require('config');
 const {
 	validationResult
 } = require('express-validator');
+const Sequelize = require('sequelize');
 const randomstring = require('randomstring');
 const ProjectMembers = require('../models/projectMembers');
 const Projects = require('../models/projects');
@@ -13,21 +14,23 @@ const NotConfirmedUsers = require('../models/notConfirmedUsers');
 const mail = require('../controllers/mailController');
 
 const jwtSecret = config.get('app.webServer.jwtSecret');
+const Op = Sequelize.Op;
+
 // ! FOR TEST ONLY
 exports.getUserInfo = (req, res) => {
-	Users.findAll({
+	Users.findOne({
 			where: {
 				userId: req.user.userId
 			}
 		})
 		.then((user) => {
 			return res.status(200).json({
-				userInfo: user[0]
+				userInfo: user
 			});
 		})
 		.catch((err) => {
 			return res.status(500).json({
-				err
+				error: "User not found"
 			});
 		});
 };
@@ -57,7 +60,7 @@ exports.getUserProjects = (req, res) => {
 		})
 		.catch((err) => {
 			return res.status(500).json({
-				err
+				error: "Can't find user projects"
 			});
 		});
 };
@@ -380,16 +383,48 @@ module.exports.changePassword = (req, res) => {
 		}
 	});
 };
+
+module.exports.searchUsers = (req, res) => {
+	var searchTerm = req.body.userName;
+	Users.findAll({
+			where: {
+				userName: {
+					[Op.like]: '%' + searchTerm + '%'
+				}
+
+			},
+			attributes: ['userId', 'userName', 'email', 'name'],
+			limit: 6,
+			subQuery: false
+		})
+		.then((users) => {
+			return res.status(200).json({
+				users
+			});
+		})
+		.catch(() => {
+			return res.status(500).json({
+				message: 'error finding users'
+			})
+		});
+};
+
 module.exports.deleteUser = (req, res) => {
 	Users.destroy({
 			where: {
 				userId: req.user.userId
 			}
 		})
-		.then(() => {
-			res.status(200).json({
-				message: 'User Deleted'
-			});
+		.then((done) => {
+			if (done == 1) {
+				res.status(200).json({
+					message: 'User Deleted'
+				});
+			} else {
+				res.status(500).json({
+					error: "user couldn't be found"
+				})
+			}
 		})
 		.catch((err) => {
 			res.status(500).json({
