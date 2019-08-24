@@ -3,6 +3,7 @@ const Users = require('../models/users');
 const Stories = require('../models/stories');
 const Sprints = require('../models/sprints');
 const Activities = require('../models/activities');
+const Dependency = require('../models/dependencies');
 
 exports.getProjectStories = (req, res) => {
 	// finding projects created by this certain user
@@ -98,7 +99,11 @@ module.exports.getStoryDetials = (req, res) => {
 	Stories.findAll({
 			where: {
 				storyId: req.body.storyId
-			}
+			},
+			include: [{
+				model: Dependency,
+				attributes: ['dependsOn']
+			}]
 		})
 		.then((storyDetails) => {
 			return res.status(200).json({
