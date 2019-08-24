@@ -11,7 +11,7 @@ exports.getProjectMembers = (req, res) => {
 		attributes: [],
 		include: [{
 			model: Users,
-			attributes: ['name', 'email', 'userName']
+			attributes: ['name', 'email', 'userName', 'userId']
 		}]
 	}).then((members) => {
 		return res.status(200).json({
@@ -34,7 +34,7 @@ exports.addMembers = (req, res, next) => {
 					},
 					include: [{
 						model: Users,
-						attributes: ['name', 'email', 'userName']
+						attributes: ['name', 'email', 'userName', 'userId']
 					}]
 				})
 				.then((member) => {
@@ -43,7 +43,8 @@ exports.addMembers = (req, res, next) => {
 							error: 'This member is already a part of this project',
 							name: user.name,
 							email: user.email,
-							userName: user.userName
+							userName: user.userName,
+							userId: user.userId
 						});
 					} else {
 						ProjectMembers.create({
@@ -55,7 +56,8 @@ exports.addMembers = (req, res, next) => {
 									message: "member added to project",
 									name: user.name,
 									email: user.email,
-									userName: user.userName
+									userName: user.userName,
+									userId: user.userId
 								})
 
 

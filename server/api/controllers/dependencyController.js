@@ -5,11 +5,6 @@ const {
 const errorHandler = require('./errorHandler');
 
 module.exports.createDependency = (req, res) => {
-    const errorsList = validationResult(req).errors;
-    const handledErrorsList = errorHandler.handler(errorsList);
-    if (Object.keys(handledErrorsList).length > 0) {
-        return res.status(422).json(handledErrorsList);
-    }
     Dependency.findOne({
         where: {
             storyId: req.body.storyId,
@@ -18,7 +13,7 @@ module.exports.createDependency = (req, res) => {
     }).then((depended) => {
         if (depended) {
             return res.status(500).json({
-                error: "This dependency already exists",
+                error: 'This dependency already exists',
                 depended
             });
         } else {
@@ -37,10 +32,7 @@ module.exports.createDependency = (req, res) => {
                     });
                 });
         }
-    })
-
-
-
+    });
 };
 
 module.exports.getStoryDependencies = (req, res) => {
@@ -59,4 +51,43 @@ module.exports.getStoryDependencies = (req, res) => {
                 err
             });
         });
+};
+
+module.exports.createDependencyFromList = (dependsOnList, storyId) => {
+    // console.log('numba 1', req.body);
+    dependsOnList.forEach((dependsOn) => {
+        // console.log('numba2', req.body);
+        Dependency.findOne({
+            where: {
+                storyId: storyId,
+                dependsOn: dependsOn
+            }
+        }).then((depended) => {
+            if (depended) {
+                // return res.status(500).json({
+                // 	error: 'This dependency already exists',
+                // 	depended
+                // });
+                console.log('This dependency already exists', depended.dataValues);
+            } else {
+                Dependency.create({
+                        storyId: storyId,
+                        dependsOn: dependsOn
+                    })
+                    .then((dependency) => {
+                        // return res.status(200).json({
+                        // 	message: 'dependency created'
+                        // });
+                        console.log('dependency created', dependency.dataValues);
+                    })
+                    .catch((err) => {
+                        // return res.status(500).json({
+                        // 	err
+                        // });
+                        console.log('Error', err);
+                    });
+            }
+        });
+    });
+    return;
 };

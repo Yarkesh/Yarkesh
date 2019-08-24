@@ -45,19 +45,21 @@ const Stories = dbConnection.define('stories', {
 	},
 	// * Foreign key to statuses table
 	status: {
+		//TODO add 3 filters only in validation
 		allowNull: true,
 		type: Sequelize.STRING
 	},
 	// * Foreign key to User table
 	storyPoint: {
+		//TODO add 3 filters only in validation
 		type: Sequelize.INTEGER,
-		allowNull: true
+		allowNull: false
 	},
 	// * Foreign key to project table
 
 	priority: {
 		type: Sequelize.STRING,
-		allowNull: true
+		allowNull: false
 	},
 	// * Foreign key to sprints table
 	sprintId: {

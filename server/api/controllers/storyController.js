@@ -1,36 +1,23 @@
-const Projects = require('../models/projects');
-const Users = require('../models/users');
 const Stories = require('../models/stories');
 const Sprints = require('../models/sprints');
 const Activities = require('../models/activities');
 const Dependency = require('../models/dependencies');
+const DependencyController = require('./dependencyController');
 
 exports.getProjectStories = (req, res) => {
 	// finding projects created by this certain user
-	Story.findAll({
+	Stories.findAll({
 			where: {
 				projectId: req.body.projectId
 			},
-			order: [
-				["storyPoint", 'DESC']
-			],
-			include: [{
-					model: User,
-					attributes: ['name'],
-					as: 'creator'
-				},
-				{
-					model: Project,
-					attributes: ['title']
-				}
-			]
+			attributes: ['storyId', 'storyName']
 		})
-		.then(stories => {
+		.then((stories) => {
 			return res.status(200).json({
 				stories
 			});
 		})
-		.catch(err => {
+		.catch((err) => {
 			return res.status(500).json({
 				message: 'finding story failed',
 				err
@@ -38,7 +25,7 @@ exports.getProjectStories = (req, res) => {
 		});
 };
 exports.createStory = async (req, res) => {
-	var sprintFoundId, activityFoundId
+	var sprintFoundId, activityFoundId;
 
 	Sprints.findAll({
 		where: {
@@ -52,15 +39,15 @@ exports.createStory = async (req, res) => {
 				activityName: 'Default Activity'
 			}
 		}).then((activityFound) => {
-			sprintFoundId = sprintFound[0].sprintId
+			sprintFoundId = sprintFound[0].sprintId;
 			if (req.body.sprintId != null) {
-				foundSprintId = req.body.sprintId
+				foundSprintId = req.body.sprintId;
 			}
-			activityFoundId = activityFound[0].activityId
+			activityFoundId = activityFound[0].activityId;
 			if (req.body.activityId != null) {
-				activityFoundId = req.body.activityId
+				activityFoundId = req.body.activityId;
 			}
-
+			// TODO sheet
 			Stories.create({
 					storyName: req.body.storyName,
 					sprintId: sprintFoundId,
@@ -68,32 +55,32 @@ exports.createStory = async (req, res) => {
 					as: req.body.as,
 					iWant: req.body.iWant,
 					soThat: req.body.soThat,
-					acceptance: req.body.acceptance,
+					acceptanceTest: req.body.acceptanceTest,
+					status: "ToDo",
+					storyPoint: req.body.storyPoint,
+					priority: req.body.priority,
+					isEpic: req.body.isEpic,
 					creatorId: req.user.userId,
 					projectId: req.body.projectId
 				})
 				.then((story) => {
-
+					DependencyController.createDependencyFromList(
+						req.body.dependency,
+						story.storyId
+					);
 					return res.status(200).json({
-						message: `story created!`,
 						story
 					});
 				})
-				.catch(err => {
+				.catch((err) => {
 					return res.status(500).json({
 						message: 'story FAILED !',
 						err
 					});
 				});
-
-		})
-	})
-
-
-
-
-
-}
+		});
+	});
+};
 
 module.exports.getStoryDetials = (req, res) => {
 	Stories.findAll({
