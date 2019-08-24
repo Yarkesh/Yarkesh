@@ -13,7 +13,7 @@ const Assignments = dbConnection.define('assignments', {
 		type: Sequelize.INTEGER,
 		allowNull: false
 	},
-	projectId: {
+	storyId: {
 		type: Sequelize.INTEGER,
 		allowNull: false
 	}
