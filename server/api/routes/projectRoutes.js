@@ -44,4 +44,13 @@ router.delete(
 	projectController.deleteProject
 );
 
+router.post(
+	'/setActiveSprint',
+	passport.authenticate('jwt', {
+		session: false
+	}),
+	authenticateRoutes.isCreator,
+	projectController.setActiveSprint
+);
+
 module.exports = router;

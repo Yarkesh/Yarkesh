@@ -5,21 +5,35 @@ const authenticateRoutes = require('../middlewares/authentication');
 
 router.post(
 	'/createStory',
-	passport.authenticate('jwt', { session: false }),
+	passport.authenticate('jwt', {
+		session: false
+	}),
 	authenticateRoutes.isMember,
 	storyController.createStory
 );
 
 router.post(
 	'/getProjectStories',
-	passport.authenticate('jwt', { session: false }),
+	passport.authenticate('jwt', {
+		session: false
+	}),
 	authenticateRoutes.isMember,
 	storyController.getProjectStories
+);
+router.post(
+	'/getProjectStoriesWithDetail',
+	passport.authenticate('jwt', {
+		session: false
+	}),
+	authenticateRoutes.isMember,
+	storyController.getProjectStoriesWithDetail
 );
 
 router.post(
 	'/getStoryDetails',
-	passport.authenticate('jwt', { session: false }),
+	passport.authenticate('jwt', {
+		session: false
+	}),
 	authenticateRoutes.isMember,
 	storyController.getStoryDetials
 );

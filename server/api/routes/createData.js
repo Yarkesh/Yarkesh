@@ -8,6 +8,11 @@ router.post(
     '/createdata',
     dataCreator.createUsers,
     dataCreator.createProjects,
+    dataCreator.createMembers,
+    dataCreator.createSprints,
+    dataCreator.createActivities,
+    dataCreator.createStories,
+    dataCreator.createDependency
 
 );
 

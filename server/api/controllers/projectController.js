@@ -60,24 +60,35 @@ exports.createProject = (req, res) => {
 				memberId: req.user.userId,
 				projectId: project.projectId
 			});
+
+			Activities.create({
+				activityName: 'Default Activity',
+				projectId: project.projectId
+			});
 			Sprints.create({
 				projectId: project.projectId,
 				sprintName: "Sprint #1",
 				status: "Open"
+			}).then((sprint) => {
+				Projects.update({
+					activeSprint: sprint.sprintId
+				}, {
+					where: {
+						projectId: project.projectId
+					}
+				});
+				return res.status(200).json({
+					title: project.title,
+					projectId: project.projectId,
+					description: project.description,
+					activeSprint: sprint.sprintName,
+					createdAt: project.createdAt,
+					creator: {
+						name: req.user.name
+					}
+				});
 			});
-			Activities.create({
-				activityName: 'Default Activity',
-				projectId: project.projectId
-			})
-			return res.status(200).json({
-				title: project.title,
-				projectId: project.projectId,
-				description: project.description,
-				createdAt: project.createdAt,
-				creator: {
-					name: req.user.name
-				}
-			});
+
 		})
 		.catch((err) => {
 			return res.status(500).json({
@@ -158,3 +169,43 @@ module.exports.deleteProject = (req, res) => {
 			});
 		});
 };
+
+
+module.exports.setActiveSprint = (req, res) => {
+	Sprints.findOne({
+		where: {
+			sprintId: req.body.activeSprint,
+			projectId: req.body.projectId
+		}
+	}).then((sprint) => {
+		if (sprint) {
+			Projects.update({
+					activeSprint: req.body.activeSprint
+				}, {
+					where: {
+						projectId: req.body.projectId
+					}
+				}).then((updated) => {
+					return res.status(200).json({
+						updated
+					});
+				})
+				.catch((err) => {
+					return res.status(500).json({
+						message: 'cant change activesprint',
+						err
+
+					});
+				});
+		} else {
+			return res.status(500).json({
+				message: 'sprint not found',
+
+
+			});
+		}
+	})
+
+
+
+}

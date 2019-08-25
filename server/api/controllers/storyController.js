@@ -24,6 +24,25 @@ exports.getProjectStories = (req, res) => {
 			});
 		});
 };
+exports.getProjectStoriesWithDetail = (req, res) => {
+	// finding projects created by this certain user
+	Stories.findAll({
+			where: {
+				projectId: req.body.projectId
+			},
+		})
+		.then((stories) => {
+			return res.status(200).json({
+				stories
+			});
+		})
+		.catch((err) => {
+			return res.status(500).json({
+				message: 'finding story failed',
+				err
+			});
+		});
+};
 exports.createStory = async (req, res) => {
 	var sprintFoundId, activityFoundId;
 

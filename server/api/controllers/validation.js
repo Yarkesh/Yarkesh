@@ -47,6 +47,7 @@ exports.signUp = [
 	})
 	.withMessage('username must be  between 2 and 32 characters long')
 	.custom((userName) => {
+		//TODO add NOT CONFIRMED USERS HERE TOO . 
 		return Users.findAll({
 			where: {
 				userName: userName

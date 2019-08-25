@@ -54,9 +54,7 @@ module.exports.getStoryDependencies = (req, res) => {
 };
 
 module.exports.createDependencyFromList = (dependsOnList, storyId) => {
-    // console.log('numba 1', req.body);
     dependsOnList.forEach((dependsOn) => {
-        // console.log('numba2', req.body);
         Dependency.findOne({
             where: {
                 storyId: storyId,
