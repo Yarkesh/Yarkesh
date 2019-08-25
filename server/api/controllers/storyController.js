@@ -3,6 +3,7 @@ const Sprints = require('../models/sprints');
 const Activities = require('../models/activities');
 const Dependency = require('../models/dependencies');
 const DependencyController = require('./dependencyController');
+const AssignmentController = require('./assignmentController');
 
 exports.getProjectStories = (req, res) => {
 	// finding projects created by this certain user
@@ -43,6 +44,7 @@ exports.getProjectStoriesWithDetail = (req, res) => {
 			});
 		});
 };
+
 exports.createStory = async (req, res) => {
 	var sprintFoundId, activityFoundId;
 
@@ -87,6 +89,10 @@ exports.createStory = async (req, res) => {
 						req.body.dependency,
 						story.storyId
 					);
+					AssignmentController.createAssignmentFromList(
+						req.body.assignment,
+						story.storyId
+					);
 					return res.status(200).json({
 						story
 					});
@@ -119,6 +125,42 @@ module.exports.getStoryDetials = (req, res) => {
 		.catch((error) => {
 			return res.status(500).json({
 				error
+			});
+		});
+};
+
+exports.getProjectStoriesBacklog = (req, res) => {
+	// finding projects created by this certain user
+	Stories.findAll({
+			where: {
+				projectId: req.body.projectId
+			},
+			attributes: ['storyId', 'storyName', 'as', 'iWant', 'soThat',
+				'status', 'storyPoint', 'priority', 'isEpic'
+			],
+
+			include: [{
+					model: Sprints,
+					attributes: ['sprintName'],
+					as: 'sprint'
+				},
+				{
+					model: Activities,
+					attributes: ['activityName'],
+					as: 'activity'
+				}
+			],
+
+		})
+		.then((stories) => {
+			return res.status(200).json({
+				stories
+			});
+		})
+		.catch((err) => {
+			return res.status(500).json({
+				message: 'finding story failed',
+				err
 			});
 		});
 };

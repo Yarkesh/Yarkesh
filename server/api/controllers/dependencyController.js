@@ -54,6 +54,7 @@ module.exports.getStoryDependencies = (req, res) => {
 };
 
 module.exports.createDependencyFromList = (dependsOnList, storyId) => {
+    //TODO check if story or dependsOn do not exist
     dependsOnList.forEach((dependsOn) => {
         Dependency.findOne({
             where: {

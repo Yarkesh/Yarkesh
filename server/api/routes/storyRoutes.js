@@ -38,4 +38,14 @@ router.post(
 	storyController.getStoryDetials
 );
 
+router.post(
+	'/getProjectStoriesBacklog',
+	passport.authenticate('jwt', {
+		session: false
+	}),
+	authenticateRoutes.isMember,
+	storyController.getProjectStoriesBacklog
+);
+
+
 module.exports = router;

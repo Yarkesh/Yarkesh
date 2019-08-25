@@ -73,12 +73,21 @@ Sprints.hasMany(Stories, {
 	targetKey: 'sprintId',
 	as: 'stories'
 });
+Stories.belongsTo(Sprints, {
+	foreignKey: 'sprintId',
+	targetKey: 'sprintId',
+	as: 'sprint'
+})
 Activities.hasMany(Stories, {
 	foreignKey: 'activityId',
 	targetKey: 'activityId',
 	as: 'stories'
 });
-
+Stories.belongsTo(Activities, {
+	foreignKey: 'activityId',
+	targetKey: 'activityId',
+	as: 'activity'
+})
 Stories.hasMany(Dependencies, {
 	foreignKey: 'storyId',
 	targetKey: 'storyId'

@@ -61,3 +61,42 @@ module.exports.getStoryAssignments = (req, res) => {
             });
         });
 };
+
+
+module.exports.createAssignmentFromList = (assignmentList, storyId) => {
+    //TODO check if user or story does not exist 
+    assignmentList.forEach((assignment) => {
+        Assignment.findOne({
+            where: {
+                storyId: storyId,
+                userId: assignment
+            }
+        }).then((assigned) => {
+            if (assigned) {
+                // return res.status(500).json({
+                // 	error: 'This dependency already exists',
+                // 	depended
+                // });
+                console.log('This assignment already exists', assigned.dataValues);
+            } else {
+                Assignment.create({
+                        storyId: storyId,
+                        userId: assignment
+                    })
+                    .then((assigned) => {
+                        // return res.status(200).json({
+                        // 	message: 'dependency created'
+                        // });
+                        console.log('assignment created', assigned.dataValues);
+                    })
+                    .catch((err) => {
+                        // return res.status(500).json({
+                        // 	err
+                        // });
+                        console.log('Error', err);
+                    });
+            }
+        });
+    });
+    return;
+};
