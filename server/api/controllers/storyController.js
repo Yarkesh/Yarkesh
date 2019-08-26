@@ -51,7 +51,7 @@ exports.createStory = async (req, res) => {
 	Sprints.findAll({
 		where: {
 			projectId: req.body.projectId,
-			sprintName: 'Sprint #1'
+			sprintName: 'Story Pool'
 		}
 	}).then((sprintFound) => {
 		Activities.findAll({

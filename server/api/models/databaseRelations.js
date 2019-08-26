@@ -58,6 +58,11 @@ Projects.hasMany(Sprints, {
 	onDelete: 'cascade',
 	hooks: true
 });
+Projects.hasOne(Sprints, {
+	foreignKey: 'projectId',
+	targetKey: 'projectId',
+	as: 'currentSprint'
+})
 // Projects.belongsTo(Sprints, {
 // 	foreignKey: 'activeSprint',
 // 	targetKey: 'sprintId',

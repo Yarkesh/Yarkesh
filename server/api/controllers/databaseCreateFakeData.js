@@ -110,17 +110,17 @@ exports.createMembers = (req, res, next) => {
 exports.createSprints = (req, res, next) => {
     Sprints.create({
         projectId: "1",
-        sprintName: "Sprint #1",
+        sprintName: "Story Pool",
         status: "Open"
     });
     Sprints.create({
         projectId: "2",
-        sprintName: "Sprint #1",
+        sprintName: "Story Pool",
         status: "Open"
     });
     Sprints.create({
         projectId: "3",
-        sprintName: "Sprint #1",
+        sprintName: "Story Pool",
         status: "Open"
     });
     Sprints.create({

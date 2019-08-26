@@ -52,5 +52,16 @@ router.post(
 	authenticateRoutes.isCreator,
 	projectController.setActiveSprint
 );
+router.post(
+	'/getprojectsprintsdetails',
+	passport.authenticate('jwt', {
+		session: false
+	}),
+	authenticateRoutes.isMember,
+	projectController.getPorjectSprintsDetails2
+);
+
+
+
 
 module.exports = router;
