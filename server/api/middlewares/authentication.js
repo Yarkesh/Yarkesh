@@ -2,7 +2,9 @@ const ProjectMembers = require('../models/projectMembers');
 const Projects = require('../models/projects');
 const Stories = require('../models/stories');
 const Sequelize = require('sequelize');
-const Op = Sequelize.Op
+const Sprints = require('../models/sprints');
+const Activities = require('../models/activities');
+
 module.exports.isMember = (req, res, next) => {
 	ProjectMembers.findAll({
 			where: {
@@ -51,39 +53,70 @@ module.exports.isCreator = (req, res, next) => {
 
 module.exports.isStoryInProject = (req, res, next) => {
 	Stories.findOne({
-			where: {
-				storyId: req.body.storyId,
-				projectId: req.body.projectId
-			}
-		})
-		.then((story) => {
-			console.log(story)
-			if (story) {
-				Stories.findOne({
-					where: {
-						storyId: req.body.dependsOn,
-						projectId: req.body.projectId
-					}
-				}).then((story2) => {
-					if (story2) {
-						return next();
-					} else {
-						return res.status(500).json({
-							error: "this depender is not in this project"
-						})
-					}
-				})
+		where: {
+			storyId: req.body.storyId,
+			projectId: req.body.projectId
+		}
+	}).then((story) => {
+		if (!story) {
+			return res.status(404).json({
+				error: "story not found"
+			})
 
-			} else {
-				return res.status(500).json({
-					error: "this story is not in this project"
-				})
-			}
-		})
-		.catch((error) => {
-			return res.status(500).json({
-				message: "Error",
-				error
-			});
-		});
+		} else {
+			return next()
+		}
+	})
+};
+module.exports.isDependencyInProject = (req, res, next) => {
+	Stories.findOne({
+		where: {
+			storyId: req.body.dependsOn,
+			projectId: req.body.projectId
+		}
+	}).then((story) => {
+		if (!story) {
+			return res.status(404).json({
+				error: "story dependsOn not found"
+			})
+
+		} else {
+			return next()
+		}
+	})
+};
+module.exports.isSprintInProject = (req, res, next) => {
+	Sprints.findOne({
+		where: {
+			sprintId: req.body.sprintId,
+			projectId: req.body.projectId
+		}
+	}).then((sprint) => {
+		if (!sprint) {
+			return res.status(404).json({
+				error: "sprint not found"
+			})
+
+		} else {
+			return next()
+		}
+	})
+};
+
+module.exports.isActivityInProject = (req, res, next) => {
+	Activities.findOne({
+		where: {
+			activityId: req.body.activityId,
+			projectId: req.body.projectId
+		}
+	}).then((activity) => {
+		if (!activity) {
+			return res.status(404).json({
+				error: "activity not found"
+			})
+
+		} else {
+			return next()
+		}
+	})
 };

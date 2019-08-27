@@ -48,4 +48,15 @@ router.post(
 );
 
 
+router.post(
+	'/changesprint',
+	passport.authenticate('jwt', {
+		session: false
+	}),
+	authenticateRoutes.isMember,
+	authenticateRoutes.isSprintInProject,
+	authenticateRoutes.isStoryInProject,
+	storyController.changeSprint
+);
+
 module.exports = router;

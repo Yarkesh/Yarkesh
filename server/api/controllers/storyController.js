@@ -30,7 +30,7 @@ exports.getProjectStoriesWithDetail = (req, res) => {
 	Stories.findAll({
 			where: {
 				projectId: req.body.projectId
-			},
+			}
 		})
 		.then((stories) => {
 			return res.status(200).json({
@@ -77,7 +77,7 @@ exports.createStory = async (req, res) => {
 					iWant: req.body.iWant,
 					soThat: req.body.soThat,
 					acceptanceTest: req.body.acceptanceTest,
-					status: "ToDo",
+					status: 'ToDo',
 					storyPoint: req.body.storyPoint,
 					priority: req.body.priority,
 					isEpic: req.body.isEpic,
@@ -135,8 +135,16 @@ exports.getProjectStoriesBacklog = (req, res) => {
 			where: {
 				projectId: req.body.projectId
 			},
-			attributes: ['storyId', 'storyName', 'as', 'iWant', 'soThat',
-				'status', 'storyPoint', 'priority', 'isEpic'
+			attributes: [
+				'storyId',
+				'storyName',
+				'as',
+				'iWant',
+				'soThat',
+				'status',
+				'storyPoint',
+				'priority',
+				'isEpic'
 			],
 
 			include: [{
@@ -149,8 +157,7 @@ exports.getProjectStoriesBacklog = (req, res) => {
 					attributes: ['activityName'],
 					as: 'activity'
 				}
-			],
-
+			]
 		})
 		.then((stories) => {
 			return res.status(200).json({
@@ -163,4 +170,24 @@ exports.getProjectStoriesBacklog = (req, res) => {
 				err
 			});
 		});
+};
+
+module.exports.changeSprint = (req, res, next) => {
+
+	Stories.update({
+		sprintId: req.body.sprintId
+	}, {
+		where: {
+			storyId: req.body.storyId,
+			projectId: req.body.projectId
+		}
+	}).then(updated => {
+		return res.status(200).json({
+			message: "updated sprintId"
+		})
+	}).catch(err => {
+		return res.status(500).json({
+			err
+		})
+	})
 };
