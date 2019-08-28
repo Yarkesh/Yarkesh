@@ -1,7 +1,9 @@
 const router = require('express').Router();
 const passport = require('passport');
 const authenticateRoutes = require('../middlewares/authentication');
-const dependencyController = require('../controllers/dependencyController');
+// const dependencyController = require('../controllers/dependencyController');
+const createDependencyController = require('../controllers/dependency/create');
+const infoDependencyController = require('../controllers/dependency/info');
 // const Validation = require('../controllers/validation');
 
 router.post(
@@ -11,7 +13,7 @@ router.post(
     }),
     authenticateRoutes.isMember,
     // Validation.dependency,
-    dependencyController.createDependency
+    createDependencyController.createDependency
 );
 
 router.post(
@@ -21,7 +23,7 @@ router.post(
     }),
     authenticateRoutes.isMember,
 
-    dependencyController.getStoryDependencies
+    infoDependencyController.getStoryDependencies
 );
 
 

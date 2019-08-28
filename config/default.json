@@ -3,12 +3,16 @@
 		"webServer": {
 			"port": 8585,
 			"jwtSecret": "X*FC^F&XF7xGD*X&DG@#$#@%$#%$#@#$#@$#@"
+		},
+		"mail": {
+			"mail": "hoosht101@gmail.com",
+			"password": "mahdi76talebi"
 		}
 	},
 	"sql": {
 		"name": "Yarkesh",
 		"userName": "postgres",
-		"password": "123",
+		"password": "0123456789",
 		"host": "localhost"
 	}
 }

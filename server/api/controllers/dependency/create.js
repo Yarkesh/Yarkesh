@@ -1,8 +1,4 @@
-const Dependency = require('../models/dependencies');
-const {
-    validationResult
-} = require('express-validator');
-const errorHandler = require('./errorHandler');
+const Dependency = require('../../models/dependencies');
 
 module.exports.createDependency = (req, res) => {
     Dependency.findOne({
@@ -18,9 +14,9 @@ module.exports.createDependency = (req, res) => {
             });
         } else {
             Dependency.create({
-                    storyId: req.body.storyId,
-                    dependsOn: req.body.dependsOn
-                })
+                storyId: req.body.storyId,
+                dependsOn: req.body.dependsOn
+            })
                 .then(() => {
                     return res.status(200).json({
                         message: 'dependency created'
@@ -33,24 +29,6 @@ module.exports.createDependency = (req, res) => {
                 });
         }
     });
-};
-
-module.exports.getStoryDependencies = (req, res) => {
-    Dependency.findAll({
-            where: {
-                storyId: req.body.storyId
-            }
-        })
-        .then((depends) => {
-            return res.status(200).json({
-                depends
-            });
-        })
-        .catch((err) => {
-            return res.status(500).json({
-                err
-            });
-        });
 };
 
 module.exports.createDependencyFromList = (dependsOnList, storyId) => {
@@ -70,9 +48,9 @@ module.exports.createDependencyFromList = (dependsOnList, storyId) => {
                 console.log('This dependency already exists', depended.dataValues);
             } else {
                 Dependency.create({
-                        storyId: storyId,
-                        dependsOn: dependsOn
-                    })
+                    storyId: storyId,
+                    dependsOn: dependsOn
+                })
                     .then((dependency) => {
                         // return res.status(200).json({
                         // 	message: 'dependency created'

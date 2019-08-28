@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const dbConnection = require('./database-connection');
+const dbConnection = require('./databaseConnection');
 
 // ! INITIALIZING THE PROEJCT MEMBER PROPERTY IN DATABASE
 const ProjectMembers = dbConnection.define('projectmembers', {

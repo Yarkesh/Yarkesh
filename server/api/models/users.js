@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const dbConnection = require('./database-connection');
+const dbConnection = require('./databaseConnection');
 
 // !-------------------User definition in database------------------------
 const Users = dbConnection.define('users', {

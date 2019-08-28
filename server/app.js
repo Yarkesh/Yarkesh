@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
-const sequelize = require('./api/models/database-connection');
+const sequelize = require('./api/models/databaseConnection');
 require('./api/middlewares/passportJWTConfig')(passport);
 const router = require('./api/routes/router');
 

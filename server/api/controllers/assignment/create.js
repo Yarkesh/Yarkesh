@@ -1,5 +1,5 @@
-const User = require('../models/users');
-const Assignment = require('../models/assignments');
+
+const Assignment = require('../../models/assignments');
 
 module.exports.createAssignment = (req, res) => {
     Assignment.findOne({
@@ -16,9 +16,9 @@ module.exports.createAssignment = (req, res) => {
             });
         } else {
             Assignment.create({
-                    storyId: req.body.storyId,
-                    userId: req.body.userId
-                })
+                storyId: req.body.storyId,
+                userId: req.body.userId
+            })
                 .then((assigning) => {
                     return res.status(200).json({
                         assignmentId: assigning.assignmentId,
@@ -36,30 +36,6 @@ module.exports.createAssignment = (req, res) => {
 
 
 
-};
-
-module.exports.getStoryAssignments = (req, res) => {
-    Assignment.findAll({
-            where: {
-                storyId: req.body.storyId
-            },
-            include: [{
-                model: User,
-                attributes: ['userId', 'userName'],
-                as: 'assignedTo'
-            }],
-            attributes: []
-        })
-        .then((assigned) => {
-            return res.status(200).json({
-                assigned
-            });
-        })
-        .catch((err) => {
-            return res.status(500).json({
-                err
-            });
-        });
 };
 
 
@@ -80,9 +56,9 @@ module.exports.createAssignmentFromList = (assignmentList, storyId) => {
                 console.log('This assignment already exists', assigned.dataValues);
             } else {
                 Assignment.create({
-                        storyId: storyId,
-                        userId: assignment
-                    })
+                    storyId: storyId,
+                    userId: assignment
+                })
                     .then((assigned) => {
                         // return res.status(200).json({
                         // 	message: 'dependency created'

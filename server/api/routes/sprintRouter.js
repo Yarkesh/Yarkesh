@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const passport = require('passport');
-const sprintController = require('../controllers/sprintController');
+// const sprintController = require('../controllers/sprintController');
+const createSprintController = require('../controllers/sprint/create');
+const infoSprintController = require('../controllers/sprint/info');
+const editSprintController = require('../controllers/sprint/edit');
 const authenticateRoutes = require('../middlewares/authentication');
 
 router.post(
@@ -9,7 +12,7 @@ router.post(
 		session: false
 	}),
 	authenticateRoutes.isCreator,
-	sprintController.createSprint
+	createSprintController.createSprint
 );
 router.post(
 	'/getSprintStories',
@@ -17,7 +20,7 @@ router.post(
 		session: false
 	}),
 	authenticateRoutes.isMember,
-	sprintController.getSprintStories
+	infoSprintController.getSprintStories
 );
 router.post(
 	'/getprojectsprints',
@@ -25,6 +28,6 @@ router.post(
 		session: false
 	}),
 	authenticateRoutes.isMember,
-	sprintController.getProjectSprints
+	infoSprintController.getProjectSprints
 );
 module.exports = router;

@@ -1,5 +1,6 @@
 'use strict';
 const nodemailer = require('nodemailer');
+const config = require('config');
 
 // async..await is not allowed in global scope, must use a wrapper
 module.exports.emailVerification = async (email, confirmationCode) => {
@@ -13,9 +14,10 @@ module.exports.emailVerification = async (email, confirmationCode) => {
 		service: 'gmail',
 		secure: false,
 		auth: {
-			user: 'hoosht101@gmail.com',
+
+			user: config.get('app.mail.mail'),
 			// generated ethereal user
-			pass: 'mahdi76talebi'
+			pass: config.get('app.mail.password')
 			// generated ethereal password
 		},
 		tls: {

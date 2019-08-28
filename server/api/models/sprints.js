@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const dbConnection = require('./database-connection');
+const dbConnection = require('./databaseConnection');
 
 // !-------------------sprint definition in database------------------------
 const Sprints = dbConnection.define('sprints', {

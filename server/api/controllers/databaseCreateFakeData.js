@@ -3,10 +3,7 @@ const Projects = require('../models/projects');
 const Users = require('../models/users');
 const Sprints = require('../models/sprints');
 const Activities = require('../models/activities');
-const Assignments = require('../models/assignments');
-const Dependencies = require('../models/dependencies');
-const NotConfirmedUsers = require('../models/notConfirmedUsers');
-const DependencyController = require('./dependencyController');
+const createDependencyController = require('./dependency/create');
 const Stories = require('../models/stories');
 
 exports.createUsers = (req, res, next) => {
@@ -185,17 +182,17 @@ exports.createStories = (req, res, next) => {
         soThat: "people can have peace",
         acceptanceTest: {
             "test": [{
-                    "text": "test 1",
-                    "done": "true"
-                },
-                {
-                    "text": "test 2",
-                    "done": "false"
-                },
-                {
-                    "text": "test 3",
-                    "done": "false"
-                }
+                "text": "test 1",
+                "done": "true"
+            },
+            {
+                "text": "test 2",
+                "done": "false"
+            },
+            {
+                "text": "test 3",
+                "done": "false"
+            }
             ]
         },
         status: "ToDo",
@@ -215,17 +212,17 @@ exports.createStories = (req, res, next) => {
         soThat: "people can have peace",
         acceptanceTest: {
             "test": [{
-                    "text": "test 1",
-                    "done": "true"
-                },
-                {
-                    "text": "test 2",
-                    "done": "false"
-                },
-                {
-                    "text": "test 3",
-                    "done": "false"
-                }
+                "text": "test 1",
+                "done": "true"
+            },
+            {
+                "text": "test 2",
+                "done": "false"
+            },
+            {
+                "text": "test 3",
+                "done": "false"
+            }
             ]
         },
         status: "ToDo",
@@ -245,17 +242,17 @@ exports.createStories = (req, res, next) => {
         soThat: "people can have peace",
         acceptanceTest: {
             "test": [{
-                    "text": "test 1",
-                    "done": "true"
-                },
-                {
-                    "text": "test 2",
-                    "done": "false"
-                },
-                {
-                    "text": "test 3",
-                    "done": "false"
-                }
+                "text": "test 1",
+                "done": "true"
+            },
+            {
+                "text": "test 2",
+                "done": "false"
+            },
+            {
+                "text": "test 3",
+                "done": "false"
+            }
             ]
         },
         status: "ToDo",
@@ -275,17 +272,17 @@ exports.createStories = (req, res, next) => {
         soThat: "people can have peace",
         acceptanceTest: {
             "test": [{
-                    "text": "test 1",
-                    "done": "true"
-                },
-                {
-                    "text": "test 2",
-                    "done": "false"
-                },
-                {
-                    "text": "test 3",
-                    "done": "false"
-                }
+                "text": "test 1",
+                "done": "true"
+            },
+            {
+                "text": "test 2",
+                "done": "false"
+            },
+            {
+                "text": "test 3",
+                "done": "false"
+            }
             ]
         },
         status: "ToDo",
@@ -305,17 +302,17 @@ exports.createStories = (req, res, next) => {
         soThat: "people can have peace",
         acceptanceTest: {
             "test": [{
-                    "text": "test 1",
-                    "done": "true"
-                },
-                {
-                    "text": "test 2",
-                    "done": "false"
-                },
-                {
-                    "text": "test 3",
-                    "done": "false"
-                }
+                "text": "test 1",
+                "done": "true"
+            },
+            {
+                "text": "test 2",
+                "done": "false"
+            },
+            {
+                "text": "test 3",
+                "done": "false"
+            }
             ]
         },
         status: "ToDo",
@@ -330,7 +327,7 @@ exports.createStories = (req, res, next) => {
 }
 
 exports.createDependency = (req, res, next) => {
-    DependencyController.createDependencyFromList(
+    createDependencyController.createDependencyFromList(
         ["4", "3"],
         "5"
     )

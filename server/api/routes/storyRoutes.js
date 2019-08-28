@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const passport = require('passport');
-const storyController = require('../controllers/storyController');
+// const storyController = require('../controllers/story');
+const createStoryController = require('../controllers/story/create');
+const editStoryController = require('../controllers/story/edit');
+const infoStoryController = require('../controllers/story/info');
 const authenticateRoutes = require('../middlewares/authentication');
 
 router.post(
@@ -9,7 +12,7 @@ router.post(
 		session: false
 	}),
 	authenticateRoutes.isMember,
-	storyController.createStory
+	createStoryController.createStory
 );
 
 router.post(
@@ -18,7 +21,7 @@ router.post(
 		session: false
 	}),
 	authenticateRoutes.isMember,
-	storyController.getProjectStories
+	infoStoryController.getProjectStories
 );
 router.post(
 	'/getProjectStoriesWithDetail',
@@ -26,7 +29,7 @@ router.post(
 		session: false
 	}),
 	authenticateRoutes.isMember,
-	storyController.getProjectStoriesWithDetail
+	infoStoryController.getProjectStoriesWithDetail
 );
 
 router.post(
@@ -35,7 +38,7 @@ router.post(
 		session: false
 	}),
 	authenticateRoutes.isMember,
-	storyController.getStoryDetials
+	infoStoryController.getStoryDetials
 );
 
 router.post(
@@ -44,7 +47,7 @@ router.post(
 		session: false
 	}),
 	authenticateRoutes.isMember,
-	storyController.getProjectStoriesBacklog
+	infoStoryController.getProjectStoriesBacklog
 );
 
 
@@ -56,7 +59,7 @@ router.post(
 	authenticateRoutes.isMember,
 	authenticateRoutes.isSprintInProject,
 	authenticateRoutes.isStoryInProject,
-	storyController.changeSprint
+	editStoryController.changeSprint
 );
 
 module.exports = router;
