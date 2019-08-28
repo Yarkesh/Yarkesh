@@ -9,7 +9,9 @@ exports.createProject = (req, res) => {
         title: req.body.title,
         description: req.body.description,
         // foreign key to user : creatorId given from the jwt
-        creatorId: req.user.userId
+        creatorId: req.user.userId,
+        activeSprint: req.body.activeSprint,
+        sprintDuration: req.body.sprintDuration
     })
         .then((project) => {
             ProjectMembers.create({
