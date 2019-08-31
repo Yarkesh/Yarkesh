@@ -232,6 +232,7 @@ module.exports.getPorjectSprintsDetails2 = (req, res) => {
 			projectId: req.body.projectId
 		},
 		attributes: ['sprintId', 'sprintName'],
+		order: ['createdAt'],
 		include: [{
 			model: Stories,
 			attributes: ['storyId', 'storyName'],
