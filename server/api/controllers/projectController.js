@@ -8,10 +8,10 @@ const sequelize = require('sequelize');
 exports.getProjectsByCreatorId = (req, res) => {
 	// finding projects created by this certain user
 	Projects.findAll({
-		where: {
-			creatorId: req.user.userId
-		}
-	})
+			where: {
+				creatorId: req.user.userId
+			}
+		})
 		.then((projects) => {
 			return res.status(200).json({
 				projects
@@ -26,22 +26,21 @@ exports.getProjectsByCreatorId = (req, res) => {
 
 exports.getProjectDetails = (req, res) => {
 	Projects.findAll({
-		where: {
-			projectId: req.body.projectId
-		},
-		include: [
-			{
-				model: Users,
-				attributes: ['name'],
-				as: 'creator'
+			where: {
+				projectId: req.body.projectId
 			},
-			{
-				model: Sprints,
-				attributes: ['sprintName'],
-				as: 'currentSprint'
-			}
-		]
-	})
+			include: [{
+					model: Users,
+					attributes: ['name'],
+					as: 'creator'
+				},
+				{
+					model: Sprints,
+					attributes: ['sprintName'],
+					as: 'currentSprint'
+				}
+			]
+		})
 		.then((projectInfo) => {
 			return res.status(200).json({
 				projectInfo: projectInfo[0]
@@ -57,11 +56,11 @@ exports.getProjectDetails = (req, res) => {
 exports.createProject = (req, res) => {
 	// creating project with foreign key for user
 	Projects.create({
-		title: req.body.title,
-		description: req.body.description,
-		// foreign key to user : creatorId given from the jwt
-		creatorId: req.user.userId
-	})
+			title: req.body.title,
+			description: req.body.description,
+			// foreign key to user : creatorId given from the jwt
+			creatorId: req.user.userId
+		})
 		.then((project) => {
 			ProjectMembers.create({
 				memberId: req.user.userId,
@@ -77,16 +76,13 @@ exports.createProject = (req, res) => {
 				sprintName: 'Story Pool',
 				status: 'Open'
 			}).then((sprint) => {
-				Projects.update(
-					{
-						activeSprint: sprint.sprintId
-					},
-					{
-						where: {
-							projectId: project.projectId
-						}
+				Projects.update({
+					activeSprint: sprint.sprintId
+				}, {
+					where: {
+						projectId: project.projectId
 					}
-				);
+				});
 				return res.status(200).json({
 					title: project.title,
 					projectId: project.projectId,
@@ -109,37 +105,27 @@ exports.createProject = (req, res) => {
 
 module.exports.getPorjectSprints = (req, res) => {
 	Projects.findAll({
-		where: {
-			projectId: req.body.projectId
-		},
-		attributes: ['projectId'],
-		include: [
-			{
-				model: Sprints,
-				attributes: ['sprintId', 'sprintName'],
-				as: 'sprints',
-				include: [
-					{
-						model: Stories,
-						attributes: ['storyName'],
-						as: 'stories'
-					}
-				]
+			where: {
+				projectId: req.body.projectId
 			},
-			{
-				model: Activities,
-				attributes: ['activityName'],
-				as: 'activity',
-				include: [
-					{
+			attributes: ['projectId'],
+			include: [{
+					model: Sprints,
+					attributes: ['sprintId', 'sprintName'],
+					as: 'sprints',
+					include: [{
 						model: Stories,
-						attributes: ['storyName'],
+						attributes: ['storyName', 'storyId', 'activityId'],
 						as: 'stories'
-					}
-				]
-			}
-		]
-	})
+					}]
+				},
+				{
+					model: Activities,
+					attributes: ['activityName', 'activityId'],
+					as: 'activity'
+				}
+			]
+		})
 		.then((project) => {
 			return res.status(200).json({
 				project
@@ -147,7 +133,6 @@ module.exports.getPorjectSprints = (req, res) => {
 		})
 		.catch((err) => {
 			return res.status(500).json({
-				message: 'lskdfjlksadf',
 				err
 			});
 		});
@@ -155,10 +140,10 @@ module.exports.getPorjectSprints = (req, res) => {
 
 module.exports.deleteProject = (req, res) => {
 	Projects.destroy({
-		where: {
-			projectId: req.body.projectId
-		}
-	})
+			where: {
+				projectId: req.body.projectId
+			}
+		})
 		.then(() => {
 			res.status(200).json({
 				message: 'Project Deleted'
@@ -179,16 +164,13 @@ module.exports.setActiveSprint = (req, res) => {
 		}
 	}).then((sprint) => {
 		if (sprint) {
-			Projects.update(
-				{
+			Projects.update({
 					activeSprint: req.body.activeSprint
-				},
-				{
+				}, {
 					where: {
 						projectId: req.body.projectId
 					}
-				}
-			)
+				})
 				.then((updated) => {
 					return res.status(200).json({
 						updated
@@ -216,13 +198,11 @@ module.exports.getPorjectSprintsDetails = (req, res) => {
 			sprintName: 'Story Pool'
 		},
 		attributes: ['sprintId', 'sprintName'],
-		include: [
-			{
-				model: Stories,
-				attributes: ['storyId', 'storyName'],
-				as: 'stories'
-			}
-		]
+		include: [{
+			model: Stories,
+			attributes: ['storyId', 'storyName'],
+			as: 'stories'
+		}]
 	}).then((pool) => {
 		Sprints.findAll({
 			where: {
@@ -232,13 +212,11 @@ module.exports.getPorjectSprintsDetails = (req, res) => {
 				}
 			},
 			attributes: ['sprintId', 'sprintName'],
-			include: [
-				{
-					model: Stories,
-					attributes: ['storyId', 'storyName'],
-					as: 'stories'
-				}
-			]
+			include: [{
+				model: Stories,
+				attributes: ['storyId', 'storyName'],
+				as: 'stories'
+			}]
 		}).then((sprints) => {
 			return res.status(200).json({
 				pool,
@@ -254,13 +232,11 @@ module.exports.getPorjectSprintsDetails2 = (req, res) => {
 			projectId: req.body.projectId
 		},
 		attributes: ['sprintId', 'sprintName'],
-		include: [
-			{
-				model: Stories,
-				attributes: ['storyId', 'storyName'],
-				as: 'stories'
-			}
-		]
+		include: [{
+			model: Stories,
+			attributes: ['storyId', 'storyName'],
+			as: 'stories'
+		}]
 	}).then((sprints) => {
 		pool = sprints[0];
 		sprints.splice(0, 1);
