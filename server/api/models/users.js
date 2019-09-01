@@ -30,7 +30,10 @@ const Users = dbConnection.define('users', {
 	forgotPasswordCode: {
 		allowNull: true,
 		type: Sequelize.STRING
-	}
+	},
+	// avatar: {
+
+	// }
 	// ,
 	// verified: {
 	// 	allowNull: true,

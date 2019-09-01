@@ -6,6 +6,7 @@ const Activities = require('../models/activities');
 const Dependencies = require('../models/dependencies');
 const Sprints = require('../models/sprints');
 const Assignment = require('../models/assignments');
+const StorySprints = require('../models/storySprints');
 
 Projects.belongsTo(Users, {
 	foreignKey: 'creatorId',
@@ -63,16 +64,11 @@ Projects.hasOne(Sprints, {
 	targetKey: 'projectId',
 	as: 'currentSprint'
 })
-// Projects.belongsTo(Sprints, {
-// 	foreignKey: 'activeSprint',
-// 	targetKey: 'sprintId',
-// 	as: 'currentSprint'
-// });
-// Projects.hasOne(Sprints, {
-// 	foreignKey: 'activeSprint',
-// 	targetKey: 'sprintId',
-// 	as: 'currentSprint'
-// });
+Projects.hasOne(Sprints, {
+	foreignKey: 'defaultSprintId',
+	targetKey: 'sprintId',
+	as: 'defaultSprint'
+})
 Sprints.hasMany(Stories, {
 	foreignKey: 'sprintId',
 	targetKey: 'sprintId',
@@ -111,4 +107,19 @@ Projects.hasMany(Activities, {
 	foreignKey: 'projectId',
 	targetKey: 'projectId',
 	as: 'activity'
+});
+Projects.hasOne(Activities, {
+	foreignKey: 'defaultActivityId',
+	targetKey: 'activityId',
+	as: 'defaultActivity'
+})
+
+Sprints.hasMany(StorySprints, {
+	foreignKey: 'sprintId',
+	targetKey: 'sprintId'
+});
+
+Stories.hasMany(StorySprints, {
+	foreignKey: 'storyId',
+	targetKey: 'storyId'
 });

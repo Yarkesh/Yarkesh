@@ -14,9 +14,9 @@ module.exports.createDependency = (req, res) => {
             });
         } else {
             Dependency.create({
-                storyId: req.body.storyId,
-                dependsOn: req.body.dependsOn
-            })
+                    storyId: req.body.storyId,
+                    dependsOn: req.body.dependsOn
+                })
                 .then(() => {
                     return res.status(200).json({
                         message: 'dependency created'
@@ -32,8 +32,9 @@ module.exports.createDependency = (req, res) => {
 };
 
 module.exports.createDependencyFromList = (dependsOnList, storyId) => {
-    //TODO check if story or dependsOn do not exist
-    dependsOnList.forEach((dependsOn) => {
+    let depRes = true
+    for (let dependsOn in dependsOnList) {
+
         Dependency.findOne({
             where: {
                 storyId: storyId,
@@ -41,30 +42,21 @@ module.exports.createDependencyFromList = (dependsOnList, storyId) => {
             }
         }).then((depended) => {
             if (depended) {
-                // return res.status(500).json({
-                // 	error: 'This dependency already exists',
-                // 	depended
-                // });
                 console.log('This dependency already exists', depended.dataValues);
             } else {
                 Dependency.create({
-                    storyId: storyId,
-                    dependsOn: dependsOn
-                })
+                        storyId: storyId,
+                        dependsOn: dependsOn
+                    })
                     .then((dependency) => {
-                        // return res.status(200).json({
-                        // 	message: 'dependency created'
-                        // });
                         console.log('dependency created', dependency.dataValues);
                     })
                     .catch((err) => {
-                        // return res.status(500).json({
-                        // 	err
-                        // });
+                        depRes = false;
                         console.log('Error', err);
                     });
             }
         });
-    });
+    }
     return;
 };

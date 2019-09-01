@@ -25,7 +25,7 @@ const Projects = dbConnection.define('projects', {
 	},
 	activeSprint: {
 		type: Sequelize.INTEGER,
-		allowNull: false
+		allowNull: true
 	},
 	projectState: {
 		type: Sequelize.JSON,
@@ -34,6 +34,14 @@ const Projects = dbConnection.define('projects', {
 	sprintDuration: {
 		type: Sequelize.INTEGER,
 		allowNull: false
+	},
+	defaultSprintId: {
+		type: Sequelize.INTEGER,
+		allowNull: true
+	},
+	defaultActivityId: {
+		type: Sequelize.INTEGER,
+		allowNull: true
 	}
 });
 

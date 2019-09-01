@@ -10,10 +10,10 @@ const sequelize = require('sequelize');
 exports.getProjectsByCreatorId = (req, res) => {
     // finding projects created by this certain user
     Projects.findAll({
-        where: {
-            creatorId: req.user.userId
-        }
-    })
+            where: {
+                creatorId: req.user.userId
+            }
+        })
         .then((projects) => {
             return res.status(200).json({
                 projects
@@ -30,22 +30,21 @@ exports.getProjectsByCreatorId = (req, res) => {
 
 exports.getProjectDetails = (req, res) => {
     Projects.findAll({
-        where: {
-            projectId: req.body.projectId
-        },
-        include: [
-            {
-                model: Users,
-                attributes: ['name'],
-                as: 'creator'
+            where: {
+                projectId: req.body.projectId
             },
-            {
-                model: Sprints,
-                attributes: ['sprintName'],
-                as: 'currentSprint'
-            }
-        ]
-    })
+            include: [{
+                    model: Users,
+                    attributes: ['name'],
+                    as: 'creator'
+                },
+                {
+                    model: Sprints,
+                    attributes: ['sprintName'],
+                    as: 'currentSprint'
+                }
+            ]
+        })
         .then((projectInfo) => {
             return res.status(200).json({
                 projectInfo: projectInfo[0]
@@ -57,91 +56,42 @@ exports.getProjectDetails = (req, res) => {
             });
         });
 };
-
+//storymap
 module.exports.getPorjectSprints = (req, res) => {
-    Projects.findAll({
-        where: {
-            projectId: req.body.projectId
-        },
-        attributes: ['projectId'],
-        include: [
-            {
-                model: Sprints,
-                attributes: ['sprintId', 'sprintName'],
-                as: 'sprints',
-                include: [
-                    {
-                        model: Stories,
-                        attributes: ['storyName'],
-                        as: 'stories'
-                    }
-                ]
+    Projects.findOne({
+            where: {
+                projectId: req.body.projectId
             },
-            {
-                model: Activities,
-                attributes: ['activityName'],
-                as: 'activity',
-                include: [
-                    {
+            attributes: ['projectId'],
+            include: [{
+                    model: Sprints,
+                    attributes: ['sprintId', 'sprintName'],
+                    as: 'sprints',
+                    include: [{
                         model: Stories,
-                        attributes: ['storyName'],
+                        attributes: ['storyName', 'storyId', 'activityId'],
                         as: 'stories'
-                    }
-                ]
-            }
-        ]
-    })
-        .then((project) => {
+                    }]
+                },
+                {
+                    model: Activities,
+                    attributes: ['activityName', 'activityId'],
+                    as: 'activity'
+                }
+            ]
+        })
+        .then((storymap) => {
             return res.status(200).json({
-                project
+                sprints: storymap.sprints,
+                activities: storymap.activity
             });
         })
         .catch((err) => {
             return res.status(500).json({
-                message: 'lskdfjlksadf',
                 err
             });
         });
 };
-module.exports.getPorjectSprintsDetails = (req, res) => {
-    Sprints.findOne({
-        where: {
-            projectId: req.body.projectId,
-            sprintName: 'Story Pool'
-        },
-        attributes: ['sprintId', 'sprintName'],
-        include: [
-            {
-                model: Stories,
-                attributes: ['storyId', 'storyName'],
-                as: 'stories'
-            }
-        ]
-    }).then((pool) => {
-        Sprints.findAll({
-            where: {
-                projectId: req.body.projectId,
-                sprintName: {
-                    [sequelize.Op.not]: 'Story Pool'
-                }
-            },
-            attributes: ['sprintId', 'sprintName'],
-            include: [
-                {
-                    model: Stories,
-                    attributes: ['storyId', 'storyName'],
-                    as: 'stories'
-                }
-            ]
-        }).then((sprints) => {
-            return res.status(200).json({
-                pool,
-                sprints
-            });
-        });
-    });
-};
-
 
 module.exports.getPorjectSprintsDetails2 = (req, res) => {
     Sprints.findAll({
@@ -149,13 +99,12 @@ module.exports.getPorjectSprintsDetails2 = (req, res) => {
             projectId: req.body.projectId
         },
         attributes: ['sprintId', 'sprintName'],
-        include: [
-            {
-                model: Stories,
-                attributes: ['storyId', 'storyName'],
-                as: 'stories'
-            }
-        ]
+        order: ['createdAt'],
+        include: [{
+            model: Stories,
+            attributes: ['storyId', 'storyName'],
+            as: 'stories'
+        }]
     }).then((sprints) => {
         pool = sprints[0];
         sprints.splice(0, 1);

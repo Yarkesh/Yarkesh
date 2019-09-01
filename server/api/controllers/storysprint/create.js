@@ -3,12 +3,12 @@ const Sprint = require('../../models/sprints');
 
 module.exports.createSprint = (req, res) => {
     Sprint.create({
-            projectId: req.body.projectId,
-            sprintName: req.body.sprintName,
-            status: req.body.status,
-            duration: req.body.duration,
-            dueDate: req.body.dueDate
-        })
+        projectId: req.body.projectId,
+        sprintName: req.body.sprintName,
+        status: req.body.status,
+        duration: req.body.duration,
+        dueDate: req.body.dueDate
+    })
         .then((sprint) => {
             return res.status(200).json({
                 sprintId: sprint.sprintId,
