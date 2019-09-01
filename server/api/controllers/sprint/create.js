@@ -9,8 +9,9 @@ module.exports.createSprint = (req, res) => {
                 projectId: req.body.projectId
             }
         }).then(project => {
-            const start = new Date(lastSprint);
-            let due = new Date(lastSprint.setDate(start.getDate() + project.sprintDuration))
+            const start = new Date(lastSprint.getTime() + 2)
+            const end = new Date(lastSprint.getTime())
+            let due = new Date(end.setDate(start.getDate() + project.sprintDuration))
             Sprint.create({
                     projectId: req.body.projectId,
                     sprintName: req.body.sprintName,

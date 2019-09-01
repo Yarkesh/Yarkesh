@@ -4,8 +4,7 @@ const Sprints = require('../../models/sprints');
 const Activities = require('../../models/activities');
 
 exports.createProject = (req, res) => {
-    var now = new Date(Date.now());
-    var now2 = new Date(Date.now());
+
     // creating project with foreign key for user
     Projects.create({
             title: req.body.title,
@@ -15,11 +14,12 @@ exports.createProject = (req, res) => {
             sprintDuration: req.body.sprintDuration
         })
         .then((project) => {
+            var now = new Date(project.createdAt.getTime() + 2)
+            var now2 = new Date(project.createdAt);
             ProjectMembers.create({
                 memberId: req.user.userId,
                 projectId: project.projectId
             });
-
             Activities.create({
                 activityName: 'Default Activity',
                 projectId: project.projectId

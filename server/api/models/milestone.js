@@ -13,7 +13,7 @@ const milestone = dbConnection.define('milestone', {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    deadline: {
+    dueDate: {
         type: Sequelize.DATE,
         allowNull: false
     },
