@@ -3,17 +3,17 @@ const Users = require('../../models/users');
 const Sprints = require('../../models/sprints');
 const Stories = require('../../models/stories');
 const Activities = require('../../models/activities');
-const sequelize = require('sequelize');
+const Milestone = require('../../models/milestone');
 
 
 
 exports.getProjectsByCreatorId = (req, res) => {
     // finding projects created by this certain user
     Projects.findAll({
-        where: {
-            creatorId: req.user.userId
-        }
-    })
+            where: {
+                creatorId: req.user.userId
+            }
+        })
         .then((projects) => {
             return res.status(200).json({
                 projects
@@ -30,21 +30,21 @@ exports.getProjectsByCreatorId = (req, res) => {
 
 exports.getProjectDetails = (req, res) => {
     Projects.findAll({
-        where: {
-            projectId: req.body.projectId
-        },
-        include: [{
-            model: Users,
-            attributes: ['name'],
-            as: 'creator'
-        },
-        {
-            model: Sprints,
-            attributes: ['sprintName'],
-            as: 'currentSprint'
-        }
-        ]
-    })
+            where: {
+                projectId: req.body.projectId
+            },
+            include: [{
+                    model: Users,
+                    attributes: ['name'],
+                    as: 'creator'
+                },
+                {
+                    model: Sprints,
+                    attributes: ['sprintName'],
+                    as: 'currentSprint'
+                }
+            ]
+        })
         .then((projectInfo) => {
             return res.status(200).json({
                 projectInfo: projectInfo[0]
@@ -59,27 +59,27 @@ exports.getProjectDetails = (req, res) => {
 //storymap
 module.exports.getPorjectSprints = (req, res) => {
     Projects.findOne({
-        where: {
-            projectId: req.body.projectId
-        },
-        attributes: ['projectId'],
-        include: [{
-            model: Sprints,
-            attributes: ['sprintId', 'sprintName'],
-            as: 'sprints',
+            where: {
+                projectId: req.body.projectId
+            },
+            attributes: ['projectId'],
             include: [{
-                model: Stories,
-                attributes: ['storyName', 'storyId', 'activityId', 'storyPoint'],
-                as: 'stories'
-            }]
-        },
-        {
-            model: Activities,
-            attributes: ['activityName', 'activityId'],
-            as: 'activity'
-        }
-        ]
-    })
+                    model: Sprints,
+                    attributes: ['sprintId', 'sprintName'],
+                    as: 'sprints',
+                    include: [{
+                        model: Stories,
+                        attributes: ['storyName', 'storyId', 'activityId', 'storyPoint'],
+                        as: 'stories'
+                    }]
+                },
+                {
+                    model: Activities,
+                    attributes: ['activityName', 'activityId'],
+                    as: 'activity'
+                }
+            ]
+        })
         .then((storymap) => {
             return res.status(200).json({
                 sprints: storymap.sprints,
@@ -112,5 +112,36 @@ module.exports.getPorjectSprintsDetails2 = (req, res) => {
             Pool: pool,
             Others: sprints
         });
+    });
+};
+
+module.exports.getProjectTimeline = (req, res) => {
+    Sprints.findAll({
+        where: {
+            projectId: req.body.projectId
+        },
+        attributes: ['sprintId', 'sprintName', 'startDate', 'duration', 'dueDate'],
+        order: ['startDate'],
+        include: [{
+            model: Stories,
+            attributes: ['storyId', 'storyName', 'storyPoint'],
+            as: 'stories'
+        }]
+    }).then((sprints) => {
+        Milestone.findAll({
+            where: {
+                projectId: req.body.projectId
+            },
+            attributes: ['milestoneId', 'description', 'dueDate']
+        }).then(milestone => {
+            return res.status(200).json({
+                sprints: sprints,
+                milestone: milestone
+            })
+        }).catch(err => {
+            return res.status(500).json({
+                err
+            })
+        })
     });
 };

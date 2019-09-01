@@ -65,7 +65,13 @@ router.post(
 	infoProjectController.getPorjectSprintsDetails2
 );
 
-
-
+router.post(
+	'/getprojecttimeline',
+	passport.authenticate('jwt', {
+		session: false
+	}),
+	authenticateRoutes.isMember,
+	infoProjectController.getProjectTimeline
+);
 
 module.exports = router;

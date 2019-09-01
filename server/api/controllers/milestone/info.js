@@ -2,7 +2,10 @@ const Milestone = require('../../models/milestone');
 
 module.exports.getMilestones = (req, res) => {
     Milestone.findAll({
-            attributes: ['milestoneId', 'deadline', 'description']
+            where: {
+                projectId: req.body.projectId
+            },
+            attributes: ['milestoneId', 'dueDate', 'description']
         })
         .then((milestones) => {
             return res.status(200).json({

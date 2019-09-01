@@ -3,15 +3,15 @@ const Story = require('../../models/stories');
 
 module.exports.getSprintStories = (req, res) => {
     Sprint.findAll({
-        where: {
-            sprintId: req.body.sprintId
-        },
-        include: [{
-            model: Story,
-            attributes: ['storyName'],
-            as: 'stories'
-        }]
-    })
+            where: {
+                sprintId: req.body.sprintId
+            },
+            include: [{
+                model: Story,
+                attributes: ['storyName'],
+                as: 'stories'
+            }]
+        })
         .then((sprints) => {
             return res.status(200).json({
                 sprints
@@ -29,11 +29,11 @@ module.exports.getSprintStories = (req, res) => {
 
 module.exports.getProjectSprints = (req, res) => {
     Sprint.findAll({
-        where: {
-            projectId: req.body.projectId
-        },
-        attributes: ['sprintId', 'sprintName']
-    })
+            where: {
+                projectId: req.body.projectId
+            },
+            attributes: ['sprintId', 'sprintName', 'startDate', 'duration', 'dueDate']
+        })
         .then((sprints) => {
             return res.status(200).json({
                 sprints

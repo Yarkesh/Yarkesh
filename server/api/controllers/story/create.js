@@ -27,7 +27,7 @@ exports.createStory = async (req, res) => {
             }).then((activityFound) => {
                 sprintFoundId = sprintFound.sprintId;
                 if (req.body.sprintId != null) {
-                    foundSprintId = req.body.sprintId;
+                    sprintFoundId = req.body.sprintId;
                 }
                 activityFoundId = activityFound.activityId;
                 if (req.body.activityId != null) {
