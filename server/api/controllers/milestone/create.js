@@ -2,6 +2,7 @@ const Sprint = require('../../models/sprints');
 // const Story = require('../models/stories');
 
 module.exports.createSprint = (req, res) => {
+
     Sprint.create({
         projectId: req.body.projectId,
         sprintName: req.body.sprintName,

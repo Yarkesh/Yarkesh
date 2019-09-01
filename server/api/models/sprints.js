@@ -19,7 +19,11 @@ const Sprints = dbConnection.define('sprints', {
 	},
 	duration: {
 		allowNull: true,
-		type: Sequelize.TIME
+		type: Sequelize.INTEGER
+	},
+	startDate: {
+		allowNull: true,
+		type: Sequelize.DATE
 	},
 	dueDate: {
 		allowNull: true,

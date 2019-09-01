@@ -4,14 +4,16 @@ const Sprints = require('../../models/sprints');
 const Activities = require('../../models/activities');
 
 exports.createProject = (req, res) => {
+    var now = new Date(Date.now());
+    var now2 = new Date(Date.now());
     // creating project with foreign key for user
     Projects.create({
-            title: req.body.title,
-            description: req.body.description,
-            creatorId: req.user.userId,
-            // activeSprint: req.body.activeSprint,
-            sprintDuration: req.body.sprintDuration
-        })
+        title: req.body.title,
+        description: req.body.description,
+        creatorId: req.user.userId,
+        // activeSprint: req.body.activeSprint,
+        sprintDuration: req.body.sprintDuration
+    })
         .then((project) => {
             ProjectMembers.create({
                 memberId: req.user.userId,
@@ -22,20 +24,24 @@ exports.createProject = (req, res) => {
                 activityName: 'Default Activity',
                 projectId: project.projectId
             }).then((activity) => {
+
                 Sprints.create({
                     projectId: project.projectId,
                     sprintName: 'Story Pool',
-                    status: 'Open'
+                    status: 'Open',
+                    startDate: now,
+                    duration: project.sprintDuration,
+                    dueDate: now2.setDate(now2.getDate() + project.sprintDuration)
                 }).then((sprint) => {
                     Projects.update({
                         activeSprint: sprint.sprintId,
                         defaultSprintId: sprint.sprintId,
                         defaultActivityId: activity.activityId
                     }, {
-                        where: {
-                            projectId: project.projectId
-                        }
-                    });
+                            where: {
+                                projectId: project.projectId
+                            }
+                        });
                     return res.status(200).json({
                         title: project.title,
                         projectId: project.projectId,

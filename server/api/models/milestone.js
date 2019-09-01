@@ -12,6 +12,10 @@ const milestone = dbConnection.define('milestone', {
     deadline: {
         type: Sequelize.DATE,
         allowNull: false
+    },
+    description: {
+        type: Sequelize.STRING,
+        allowNull: true
     }
 
 });

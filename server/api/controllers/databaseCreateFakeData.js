@@ -37,7 +37,9 @@ exports.createUsers = (req, res, next) => {
         name: 'alij',
         password: '$2b$10$kMvKfmtilo4KbZqzIHPg8uBB33jZlj1Bpt9Eid.u7R2FprQ4BRIje'
     })
-    next()
+    return res.json({
+        mess: "done"
+    })
 };
 
 
