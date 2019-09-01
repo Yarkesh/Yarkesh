@@ -7,6 +7,7 @@ const Dependencies = require('../models/dependencies');
 const Sprints = require('../models/sprints');
 const Assignment = require('../models/assignments');
 const StorySprints = require('../models/storySprints');
+const Milestones = require('../models/milestone');
 
 Projects.belongsTo(Users, {
 	foreignKey: 'creatorId',
@@ -122,4 +123,10 @@ Sprints.hasMany(StorySprints, {
 Stories.hasMany(StorySprints, {
 	foreignKey: 'storyId',
 	targetKey: 'storyId'
+});
+
+Projects.hasMany(Milestones, {
+	foreignKey: 'projectId',
+	targetKey: 'projectId',
+	as: 'milestone'
 });

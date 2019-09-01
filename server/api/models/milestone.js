@@ -1,12 +1,16 @@
 const Sequelize = require('sequelize');
 const dbConnection = require('./databaseConnection');
 
-// !-------------------sprint definition in database------------------------
+// !-------------------milestone definition in database------------------------
 const milestone = dbConnection.define('milestone', {
     milestoneId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+        allowNull: false
+    },
+    projectId: {
+        type: Sequelize.INTEGER,
         allowNull: false
     },
     deadline: {

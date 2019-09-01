@@ -8,12 +8,12 @@ exports.createProject = (req, res) => {
     var now2 = new Date(Date.now());
     // creating project with foreign key for user
     Projects.create({
-        title: req.body.title,
-        description: req.body.description,
-        creatorId: req.user.userId,
-        // activeSprint: req.body.activeSprint,
-        sprintDuration: req.body.sprintDuration
-    })
+            title: req.body.title,
+            description: req.body.description,
+            creatorId: req.user.userId,
+            // activeSprint: req.body.activeSprint,
+            sprintDuration: req.body.sprintDuration
+        })
         .then((project) => {
             ProjectMembers.create({
                 memberId: req.user.userId,
@@ -38,10 +38,10 @@ exports.createProject = (req, res) => {
                         defaultSprintId: sprint.sprintId,
                         defaultActivityId: activity.activityId
                     }, {
-                            where: {
-                                projectId: project.projectId
-                            }
-                        });
+                        where: {
+                            projectId: project.projectId
+                        }
+                    });
                     return res.status(200).json({
                         title: project.title,
                         projectId: project.projectId,

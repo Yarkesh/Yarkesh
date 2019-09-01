@@ -1,19 +1,16 @@
-const Sprint = require('../../models/sprints');
+const Milestone = require('../../models/milestone');
 // const Story = require('../models/stories');
 
-module.exports.createSprint = (req, res) => {
+module.exports.createMilestone = (req, res) => {
 
-    Sprint.create({
-        projectId: req.body.projectId,
-        sprintName: req.body.sprintName,
-        status: req.body.status,
-        duration: req.body.duration,
-        dueDate: req.body.dueDate
-    })
-        .then((sprint) => {
+    Milestone.create({
+            projectId: req.body.projectId,
+            deadline: req.body.deadline,
+            description: req.body.description,
+        })
+        .then((milestone) => {
             return res.status(200).json({
-                sprintId: sprint.sprintId,
-                sprintName: sprint.sprintName
+                milestone
             });
         })
         .catch((err) => {
