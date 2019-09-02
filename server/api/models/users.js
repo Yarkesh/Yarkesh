@@ -31,9 +31,10 @@ const Users = dbConnection.define('users', {
 		allowNull: true,
 		type: Sequelize.STRING
 	},
-	// avatar: {
-
-	// }
+	avatar: {
+		allowNull: true,
+		type: Sequelize.STRING
+	}
 	// ,
 	// verified: {
 	// 	allowNull: true,
