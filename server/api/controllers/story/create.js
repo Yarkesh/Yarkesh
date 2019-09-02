@@ -2,6 +2,7 @@ const Stories = require('../../models/stories');
 const Sprints = require('../../models/sprints');
 const Activities = require('../../models/activities');
 const DependencyController = require('../dependency/create');
+
 const AssignmentController = require('../assignment/create');
 const Projects = require('../../models/projects');
 
@@ -50,20 +51,29 @@ exports.createStory = async (req, res) => {
                         projectId: req.body.projectId
                     })
                     .then((story) => {
-                        DependencyController.createDependencyFromList(
-                            req.body.dependency,
-                            story.storyId
-                        );
-                        AssignmentController.createAssignmentFromList(
-                            req.body.assignment,
-                            story.storyId
-                        );
-                        return res.status(200).json({
+                        DependencyController.createDependencyFromList(req)
+                            .then(result => {
+                                console.log("HERE IN STORY THEN")
+                                if (result) {
+                                    AssignmentController.createAssignmentFromList(
+                                        req.body.assignment,
+                                        story.storyId
+                                    );
+                                    return res.status(200).json({
+                                        story
+                                    });
+                                } else if (!result) {
+                                    console.log("HERE IN STORY CATCH")
+                                    return res.status(500).json({
+                                        err: "this dependency is not in this project"
+                                    })
+                                }
 
-                            story
-                        });
+                            })
+
                     })
                     .catch((err) => {
+                        console.log(err);
                         return res.status(500).json({
                             message: 'story FAILED !',
                             err
@@ -71,8 +81,6 @@ exports.createStory = async (req, res) => {
                     });
             });
         });
-    }).catch(err => {
-
     })
 
 };

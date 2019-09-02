@@ -1,4 +1,3 @@
-
 const Assignment = require('../../models/assignments');
 
 module.exports.createAssignment = (req, res) => {
@@ -16,9 +15,9 @@ module.exports.createAssignment = (req, res) => {
             });
         } else {
             Assignment.create({
-                storyId: req.body.storyId,
-                userId: req.body.userId
-            })
+                    storyId: req.body.storyId,
+                    userId: req.body.userId
+                })
                 .then((assigning) => {
                     return res.status(200).json({
                         assignmentId: assigning.assignmentId,
@@ -53,23 +52,23 @@ module.exports.createAssignmentFromList = (assignmentList, storyId) => {
                 // 	error: 'This dependency already exists',
                 // 	depended
                 // });
-                console.log('This assignment already exists', assigned.dataValues);
+                // console.log('This assignment already exists', assigned.dataValues);
             } else {
                 Assignment.create({
-                    storyId: storyId,
-                    userId: assignment
-                })
+                        storyId: storyId,
+                        userId: assignment
+                    })
                     .then((assigned) => {
                         // return res.status(200).json({
                         // 	message: 'dependency created'
                         // });
-                        console.log('assignment created', assigned.dataValues);
+                        // console.log('assignment created', assigned.dataValues);
                     })
                     .catch((err) => {
                         // return res.status(500).json({
                         // 	err
                         // });
-                        console.log('Error', err);
+                        // console.log('Error', err);
                     });
             }
         });
