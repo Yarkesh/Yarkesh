@@ -7,12 +7,12 @@ exports.createProject = (req, res) => {
 
     // creating project with foreign key for user
     Projects.create({
-            title: req.body.title,
-            description: req.body.description,
-            creatorId: req.user.userId,
-            // activeSprint: req.body.activeSprint,
-            sprintDuration: req.body.sprintDuration
-        })
+        title: req.body.title,
+        description: req.body.description,
+        creatorId: req.user.userId,
+        // activeSprint: req.body.activeSprint,
+        sprintDuration: req.body.sprintDuration
+    })
         .then((project) => {
             var now = new Date(project.createdAt.getTime() + 2)
             var now2 = new Date(project.createdAt);
@@ -31,17 +31,17 @@ exports.createProject = (req, res) => {
                     status: 'Open',
                     startDate: now,
                     duration: project.sprintDuration,
-                    dueDate: now2.setDate(now2.getDate() + project.sprintDuration)
+                    dueDate: now2.setDate(now2.getDate())
                 }).then((sprint) => {
                     Projects.update({
                         activeSprint: sprint.sprintId,
                         defaultSprintId: sprint.sprintId,
                         defaultActivityId: activity.activityId
                     }, {
-                        where: {
-                            projectId: project.projectId
-                        }
-                    });
+                            where: {
+                                projectId: project.projectId
+                            }
+                        });
                     return res.status(200).json({
                         title: project.title,
                         projectId: project.projectId,
