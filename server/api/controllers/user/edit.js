@@ -3,6 +3,8 @@ const randomstring = require('randomstring');
 const Users = require('../../models/users');
 const NotConfirmedUsers = require('../../models/notConfirmedUsers');
 const mail = require('../mailController');
+// const multer = require('multer');
+// const upload = multer({ dest: '../../../../pictures/' })
 
 module.exports.forgotPassword = (req, res) => {
     Users.findAll({
@@ -134,3 +136,11 @@ module.exports.changePassword = (req, res) => {
         }
     });
 };
+
+
+module.exports.editProfile = (req, res) => {
+    console.log(req.file)
+    return res.status(200).json({
+        what: req.file
+    })
+}
