@@ -1,6 +1,10 @@
 const router = require('express').Router();
 const passport = require('passport');
-const projectMemberController = require('../controllers/projectMemberController');
+// const projectMemberController = require('../controllers/projectMemberController');
+const createProjectMemberController = require('../controllers/projectMember/create');
+const deleteProjectMemberController = require('../controllers/projectMember/delete');
+const editProjectMemberController = require('../controllers/projectMember/edit');
+const infoProjectMemberController = require('../controllers/projectMember/info');
 const authenticateRoutes = require('../middlewares/authentication');
 
 router.post(
@@ -9,7 +13,7 @@ router.post(
 		session: false
 	}),
 	authenticateRoutes.isCreator,
-	projectMemberController.addMembers
+	createProjectMemberController.addMembers
 );
 
 router.post(
@@ -18,7 +22,7 @@ router.post(
 		session: false
 	}),
 	authenticateRoutes.isMember,
-	projectMemberController.getProjectMembers
+	infoProjectMemberController.getProjectMembers
 );
 router.delete(
 	'/deletemember',
@@ -26,7 +30,7 @@ router.delete(
 		session: false
 	}),
 	authenticateRoutes.isCreator,
-	projectMemberController.deleteMember
+	deleteProjectMemberController.deleteMember
 );
 router.delete(
 	'/leaveproject',
@@ -34,6 +38,6 @@ router.delete(
 		session: false
 	}),
 	authenticateRoutes.isMember,
-	projectMemberController.leaveProject
+	editProjectMemberController.leaveProject
 );
 module.exports = router;

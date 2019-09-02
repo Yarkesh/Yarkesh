@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const dbConnection = require('./database-connection');
+const dbConnection = require('./databaseConnection');
 
 // !-------------------User definition in database------------------------
 const Users = dbConnection.define('users', {
@@ -30,7 +30,10 @@ const Users = dbConnection.define('users', {
 	forgotPasswordCode: {
 		allowNull: true,
 		type: Sequelize.STRING
-	}
+	},
+	// avatar: {
+
+	// }
 	// ,
 	// verified: {
 	// 	allowNull: true,

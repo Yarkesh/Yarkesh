@@ -1,7 +1,6 @@
 const ProjectMembers = require('../models/projectMembers');
 const Projects = require('../models/projects');
 const Stories = require('../models/stories');
-const Sequelize = require('sequelize');
 const Sprints = require('../models/sprints');
 const Activities = require('../models/activities');
 
@@ -46,7 +45,7 @@ module.exports.isCreator = (req, res, next) => {
 		})
 		.catch((error) => {
 			return res.status(500).json({
-				error
+				error: "user or project not found"
 			});
 		});
 };

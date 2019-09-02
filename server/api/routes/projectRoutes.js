@@ -1,6 +1,10 @@
 const router = require('express').Router();
 const passport = require('passport');
-const projectController = require('../controllers/projectController');
+// const projectController = require('../controllers/projectController');
+const createProjectController = require('../controllers/project/create');
+const deleteProjectController = require('../controllers/project/delete');
+const editProjectController = require('../controllers/project/edit');
+const infoProjectController = require('../controllers/project/info');
 const authenticateRoutes = require('../middlewares/authentication');
 
 router.get(
@@ -8,14 +12,14 @@ router.get(
 	passport.authenticate('jwt', {
 		session: false
 	}),
-	projectController.getProjectsByCreatorId
+	infoProjectController.getProjectsByCreatorId
 );
 router.post(
 	'/createProject',
 	passport.authenticate('jwt', {
 		session: false
 	}),
-	projectController.createProject
+	createProjectController.createProject
 );
 
 router.post(
@@ -24,7 +28,7 @@ router.post(
 		session: false
 	}),
 	authenticateRoutes.isMember,
-	projectController.getProjectDetails
+	infoProjectController.getProjectDetails
 );
 
 router.post(
@@ -33,7 +37,7 @@ router.post(
 		session: false
 	}),
 	authenticateRoutes.isMember,
-	projectController.getPorjectSprints
+	infoProjectController.getPorjectSprints
 );
 router.delete(
 	'/deleteproject',
@@ -41,7 +45,7 @@ router.delete(
 		session: false
 	}),
 	authenticateRoutes.isCreator,
-	projectController.deleteProject
+	deleteProjectController.deleteProject
 );
 
 router.post(
@@ -50,7 +54,7 @@ router.post(
 		session: false
 	}),
 	authenticateRoutes.isCreator,
-	projectController.setActiveSprint
+	editProjectController.setActiveSprint
 );
 router.post(
 	'/getprojectsprintsdetails',
@@ -58,10 +62,16 @@ router.post(
 		session: false
 	}),
 	authenticateRoutes.isMember,
-	projectController.getPorjectSprintsDetails2
+	infoProjectController.getPorjectSprintsDetails2
 );
 
-
-
+router.post(
+	'/getprojecttimeline',
+	passport.authenticate('jwt', {
+		session: false
+	}),
+	authenticateRoutes.isMember,
+	infoProjectController.getProjectTimeline
+);
 
 module.exports = router;
