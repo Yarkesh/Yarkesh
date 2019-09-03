@@ -63,7 +63,7 @@ Projects.hasMany(Sprints, {
 Projects.hasOne(Sprints, {
 	foreignKey: 'projectId',
 	targetKey: 'projectId',
-	as: 'currentSprint'
+	as: 'activeSprint'
 })
 Projects.hasOne(Sprints, {
 	foreignKey: 'defaultSprintId',

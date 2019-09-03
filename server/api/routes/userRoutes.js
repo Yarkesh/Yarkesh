@@ -45,4 +45,10 @@ router.post(
     infoUserController.searchUsers
 );
 
+router.get(
+    '/findlatenotconfirmedusers',
+    deleteUserController.findLateNotConfirmedUsers
+);
+
+
 module.exports = router
