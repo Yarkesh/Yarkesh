@@ -1,6 +1,5 @@
 const Sprint = require('../../models/sprints');
 const Project = require('../../models/projects');
-// const Story = require('../models/stories');
 
 module.exports.createSprint = (req, res) => {
     getLastDueDate(req).then(lastSprint => {

@@ -2,11 +2,13 @@
 	"app": {
 		"webServer": {
 			"port": 8585,
-			"jwtSecret": "X*FC^F&XF7xGD*X&DG@#$#@%$#%$#@#$#@$#@"
+			"jwtSecret": "X*FC^F&XF7xGD*X&DG@#$#@%$#%$#@#$#@$#@",
+			"baseUrl": "http://localhost:8585"
 		},
 		"mail": {
 			"mail": "hoosht101@gmail.com",
-			"password": "mahdi76talebi"
+			"password": "mahdi76talebi",
+			"servise": "gmail"
 		}
 	},
 	"sql": {

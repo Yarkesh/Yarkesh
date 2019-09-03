@@ -10,7 +10,6 @@ exports.createProject = (req, res) => {
         title: req.body.title,
         description: req.body.description,
         creatorId: req.user.userId,
-        // activeSprint: req.body.activeSprint,
         sprintDuration: req.body.sprintDuration
     })
         .then((project) => {

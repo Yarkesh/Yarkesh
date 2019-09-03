@@ -10,8 +10,7 @@ module.exports.emailVerification = async (email, confirmationCode) => {
 
 	// create reusable transporter object using the default SMTP transport
 	let transporter = nodemailer.createTransport({
-		// host: 'gmail',
-		service: 'gmail',
+		service: config.get('app.mail.servise'),
 		secure: false,
 		auth: {
 
@@ -28,7 +27,7 @@ module.exports.emailVerification = async (email, confirmationCode) => {
 	// TODO: fix this
 	let info = await transporter
 		.sendMail({
-			from: 'hoosht101@gmail.com',
+			from: config.get('app.mail.mail'),
 			// sender address
 			to: email,
 			// list of receivers
@@ -44,11 +43,11 @@ module.exports.emailVerification = async (email, confirmationCode) => {
 			console.log(err);
 		});
 	// console.log('Message sent: %s', info.messageId);
-	// // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+	// Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
-	// // Preview only available when sending through an Ethereal account
+	// Preview only available when sending through an Ethereal account
 	// console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-	// // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+	// Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 };
 
 module.exports.forgotPassword = async (email, forgotPasswordCode) => {
@@ -91,9 +90,9 @@ module.exports.forgotPassword = async (email, forgotPasswordCode) => {
 			console.log(err);
 		});
 	// console.log('Message sent: %s', info.messageId);
-	// // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+	// Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
-	// // Preview only available when sending through an Ethereal account
+	// Preview only available when sending through an Ethereal account
 	// console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-	// // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+	// Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 };

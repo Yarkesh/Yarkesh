@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const passport = require('passport');
-// const projectMemberController = require('../controllers/projectMemberController');
 const createProjectMemberController = require('../controllers/projectMember/create');
 const deleteProjectMemberController = require('../controllers/projectMember/delete');
 const editProjectMemberController = require('../controllers/projectMember/edit');

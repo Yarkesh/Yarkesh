@@ -1,12 +1,11 @@
 const express = require('express');
+const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
 const sequelize = require('./api/models/databaseConnection');
 require('./api/middlewares/passportJWTConfig')(passport);
 const router = require('./api/routes/router');
-const configuration = require('./api/models/configuration')
-const app = express();
 // ! --------------------------- MIDDLEWARES ---------------------------------------
 app.use(passport.initialize());
 app.use(
@@ -16,6 +15,9 @@ app.use(
 );
 app.use(bodyParser.json());
 app.use(cors());
+
+
+app.use("/pictures", express.static(__dirname + '/pictures'));
 
 // ? ---------------------- ROUTES ------------------------------
 

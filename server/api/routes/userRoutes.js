@@ -1,12 +1,11 @@
 const router = require('express').Router();
 const passport = require('passport');
-// const userController = require('../controllers/userController');
 const createUserController = require('../controllers/user/create');
 const deleteUserController = require('../controllers/user/delete');
 const editUserController = require('../controllers/user/edit');
 const infoUserController = require('../controllers/user/info');
 const validation = require('../controllers/validation');
-
+const upload = require('../middlewares/uploadMiddleware');
 router.post('/signup', validation.signUp, createUserController.signUp);
 router.post('/signin', createUserController.signIn);
 
@@ -50,5 +49,12 @@ router.get(
     deleteUserController.findLateNotConfirmedUsers
 );
 
-
+router.post(
+    '/editProfile',
+    passport.authenticate('jwt', {
+        session: false
+    }),
+    upload.single('avatar'),
+    editUserController.editProfile
+);
 module.exports = router

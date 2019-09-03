@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const passport = require('passport');
-// const activityController = require('../controllers/activityController');
 const createActivityController = require('../controllers/activity/create');
 const infoActivityController = require('../controllers/activity/info');
 const authenticateRoutes = require('../middlewares/authentication');

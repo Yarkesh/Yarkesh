@@ -4,7 +4,7 @@ const Dependencies = require('../../models/dependencies');
 const AssignmentController = require('../../controllers/assignment/create');
 const DependencyController = require('../../controllers/dependency/create');
 
-module.exports.changeSprint = (req, res, next) => {
+module.exports.changeSprint = (req, res) => {
 
     Stories.update({
         sprintId: req.body.sprintId

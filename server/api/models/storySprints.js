@@ -21,7 +21,6 @@ const StorySprints = dbConnection.define('storySprints', {
         allowNull: false,
         type: Sequelize.INTEGER
     }
-
 });
 
 module.exports = StorySprints;
