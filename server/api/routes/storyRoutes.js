@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const passport = require('passport');
-// const storyController = require('../controllers/story');
 const createStoryController = require('../controllers/story/create');
 const editStoryController = require('../controllers/story/edit');
 const infoStoryController = require('../controllers/story/info');

@@ -17,7 +17,6 @@ class Resize {
                 withoutEnlargement: true
             })
             .toFile(filepath);
-
         return filename;
     }
     static filename(info) {

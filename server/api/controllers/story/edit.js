@@ -1,6 +1,6 @@
 const Stories = require('../../models/stories');
 
-module.exports.changeSprint = (req, res, next) => {
+module.exports.changeSprint = (req, res) => {
 
     Stories.update({
         sprintId: req.body.sprintId

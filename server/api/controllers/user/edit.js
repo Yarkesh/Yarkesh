@@ -4,10 +4,8 @@ const Users = require('../../models/users');
 const NotConfirmedUsers = require('../../models/notConfirmedUsers');
 const mail = require('../mailController');
 const config = require('config')
-// const multer = require('multer');
-// const upload = multer({ dest: '../../../../pictures/' })
 const path = require('path');
-const Resize = require('../../routes/Resize');
+const Resize = require('../image/Resize');
 module.exports.forgotPassword = (req, res) => {
     Users.findAll({
         where: {
@@ -141,10 +139,11 @@ module.exports.changePassword = (req, res) => {
 
 
 module.exports.editProfile = (req, res) => {
-    const imagePath = path.join(__dirname, '../../../pictures');
+    const imagePath = path.join(__dirname, '../../../pictures/users');
     const info = `${req.user.userId}__${req.user.userName}.jpg`;
     const fileUpload = new Resize(imagePath, info);
     let imageUrl;
+    console.log(req.body.name)
     Users.update({
         name: req.body.name
     }, {
@@ -154,7 +153,7 @@ module.exports.editProfile = (req, res) => {
         }).then(async () => {
             if (req.file) {
                 const filename = await fileUpload.save(req.file.buffer);
-                imageUrl = config.get('app.webServer.baseUrl') + '/pictures/' + filename;
+                imageUrl = config.get('app.webServer.baseUrl') + '/pictures/users/' + filename;
             }
             return res.status(200).json({
                 name: req.body.name,

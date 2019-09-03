@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const passport = require('passport');
 const authenticateRoutes = require('../middlewares/authentication');
-// const assignmentController = require('../controllers/assignmentController');
 const createAssignmentController = require('../controllers/assignment/create');
 const infoAssignmentController = require('../controllers/assignment/info');
 

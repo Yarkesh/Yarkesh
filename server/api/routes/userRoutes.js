@@ -5,7 +5,7 @@ const deleteUserController = require('../controllers/user/delete');
 const editUserController = require('../controllers/user/edit');
 const infoUserController = require('../controllers/user/info');
 const validation = require('../controllers/validation');
-const upload = require('./uploadMiddleware');
+const upload = require('../middlewares/uploadMiddleware');
 router.post('/signup', validation.signUp, createUserController.signUp);
 router.post('/signin', createUserController.signIn);
 
@@ -49,7 +49,8 @@ router.post(
     passport.authenticate('jwt', {
         session: false
     }),
-    upload.single('avatar'), editUserController.editProfile
+    upload.single('avatar'),
+    editUserController.editProfile
 );
 
 module.exports = router

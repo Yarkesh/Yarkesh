@@ -1,48 +1,80 @@
 // {
-// 	"extends": ["airbnb-base", "prettier", "eslint:recommended"],
-// 	"plugins": ["prettier"],
-// 	"rules": {
-// 		// "camelcase": "error",
-// 		"handle-callback-err": "warn",
-// 		"global-require": "error",
-// 		"callback-return": "error",
-// 		"brace-style": "error",
-// 		"max-lines-per-function": ["error", 200],
-// 		"max-nested-callbacks": ["error", 3],
-// 		"max-lines": ["error", 500],
-// 		"arrow-body-style": ["error", "always"],
-// 		"arrow-spacing": "error",
-// 		"no-lonely-if": "error",
-// 		"no-multi-assign": "error",
-// 		"keyword-spacing": ["error", { "before": true, "after": true }],
-// 		"no-inline-comments": "error",
-// 		"space-before-blocks": "error",
-// 		"spaced-comment": ["error", "always"],
-// 		"comma-spacing": "error",
-// 		"max-len": ["error", { "code": 90 }],
-// 		"no-unused-vars": "warn",
-// 		"prettier/prettier": "warn",
-// 		"no-console": "warn",
-// 		"no-constant-condition": "warn",
-// 		"no-duplicate-case": "error",
-// 		"no-empty": "warn",
-// 		"no-extra-semi": "error",
-// 		"no-inner-declarations": "warn",
-// 		"no-irregular-whitespace": "warn",
-// 		"no-empty-function": "error",
-// 		"no-continue": "warn",
-// 		"no-undef": "off" // ? maybe later???
-// 	},
-// 	"env": {
-// 		"browser": true,
-// 		"commonjs": true,
-// 		"es6": true
-// 	},
-// 	"globals": {
-// 		"Atomics": "readonly",
-// 		"SharedArrayBuffer": "readonly"
-// 	},
-// 	"parserOptions": {
-// 		"ecmaVersion": 2018
-// 	}
+//     "extends": [
+//         "airbnb-base",
+//         "prettier",
+//         "eslint:recommended"
+//     ],
+//     "plugins": [
+//         "prettier"
+//     ],
+//     "rules": {
+//         // "camelcase": "error",
+//         "handle-callback-err": "warn",
+//         "global-require": "error",
+//         "callback-return": "error",
+//         "brace-style": "error",
+//         "max-lines-per-function": [
+//             "error",
+//             200
+//         ],
+//         "max-nested-callbacks": [
+//             "error",
+//             3
+//         ],
+//         "max-lines": [
+//             "error",
+//             500
+//         ],
+//         "arrow-body-style": [
+//             "error",
+//             "always"
+//         ],
+//         "arrow-spacing": "error",
+//         "no-lonely-if": "error",
+//         "no-multi-assign": "error",
+//         "keyword-spacing": [
+//             "error",
+//             {
+//                 "before": true,
+//                 "after": true
+//             }
+//         ],
+//         "no-inline-comments": "error",
+//         "space-before-blocks": "error",
+//         "spaced-comment": [
+//             "error",
+//             "always"
+//         ],
+//         "comma-spacing": "error",
+//         "max-len": [
+//             "error",
+//             {
+//                 "code": 90
+//             }
+//         ],
+//         "no-unused-vars": "warn",
+//         "prettier/prettier": "warn",
+//         "no-console": "warn",
+//         "no-constant-condition": "warn",
+//         "no-duplicate-case": "error",
+//         "no-empty": "warn",
+//         "no-extra-semi": "error",
+//         "no-inner-declarations": "warn",
+//         "no-irregular-whitespace": "warn",
+//         "no-empty-function": "error",
+//         "no-continue": "warn",
+//         "no-undef": "off" // ? maybe later???
+//     },
+//     "env": {
+//         "browser": true,
+//         "commonjs": true,
+//         "es6": true
+//     },
+//     "globals": {
+//         "Atomics": "readonly",
+//         "SharedArrayBuffer": "readonly"
+//     },
+//     "parserOptions": {
+//         "ecmaVersion": 2018
+//     }
 // }

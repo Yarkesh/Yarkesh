@@ -35,12 +35,6 @@ const Users = dbConnection.define('users', {
 		allowNull: true,
 		type: Sequelize.STRING
 	}
-	// ,
-	// verified: {
-	// 	allowNull: true,
-	// 	type: Sequelize.BOOLEAN,
-	// 	defaultValue: false
-	// }
 });
 
 module.exports = Users;

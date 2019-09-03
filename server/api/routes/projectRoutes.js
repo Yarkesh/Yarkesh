@@ -1,12 +1,12 @@
 const router = require('express').Router();
 const passport = require('passport');
-// const projectController = require('../controllers/projectController');
 const createProjectController = require('../controllers/project/create');
 const deleteProjectController = require('../controllers/project/delete');
 const editProjectController = require('../controllers/project/edit');
 const infoProjectController = require('../controllers/project/info');
 const authenticateRoutes = require('../middlewares/authentication');
 
+const upload = require('../middlewares/uploadMiddleware');
 router.get(
 	'/getProjectsByCreator',
 	passport.authenticate('jwt', {
@@ -72,6 +72,16 @@ router.post(
 	}),
 	authenticateRoutes.isMember,
 	infoProjectController.getProjectTimeline
+);
+
+router.post(
+	'/editproject',
+	passport.authenticate('jwt', {
+		session: false
+	}),
+	upload.single('avatar'),
+	authenticateRoutes.isMember,
+	editProjectController.editProject
 );
 
 module.exports = router;
