@@ -45,17 +45,29 @@ module.exports.editStory = (req, res, next) => {
             projectId: req.body.projectId
         }
     }).then(updated => {
-        if (req.body.dependency.length != 0) {
-            Dependencies.destroy({
+        Dependencies.destroy({
+            where: {
+                projectId: req.body.projectId,
+                storyId: req.body.storyId
+            }
+        }).then(dependencyDestroyed => {
+            Assignments.destroy({
                 where: {
                     projectId: req.body.projectId,
                     storyId: req.body.storyId
                 }
-            }).then(destroyed => {
+            }).then(assignmentDestroyed => {
                 DependencyController.createDependencyFromList(req, req.body.storyId).then(newDepencency => {
                     AssignmentController.createAssignmentFromList(req, req.body.storyId).then(newAssignment => {
-                        return res.status(200).json({
-                            message: "updated story"
+                        Stories.findOne({
+                            where: {
+                                projectId: req.body.projectId,
+                                storyId: req.body.storyId
+                            }
+                        }).then(story => {
+                            return res.status(200).json({
+                                story
+                            })
                         })
                     }).catch(errAssignment => {
                         Assignments.destroy({
@@ -84,12 +96,11 @@ module.exports.editStory = (req, res, next) => {
                         })
                 })
             })
-        }
-
-
-    }).catch(err => {
+        })
+    }).catch(errUpdate => {
         return res.status(500).json({
-            err
+            errUpdate
         })
     })
+
 };
