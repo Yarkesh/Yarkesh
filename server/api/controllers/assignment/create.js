@@ -1,78 +1,91 @@
-
 const Assignment = require('../../models/assignments');
+const ProjectMembers = require('../../models/projectMembers');
 
 module.exports.createAssignment = (req, res) => {
     Assignment.findOne({
         where: {
-            userId: req.body.userId,
-            storyId: req.body.storyId
-
+            storyId: req.body.storyId,
+            userId: req.user.userId
         }
     }).then((assigned) => {
         if (assigned) {
             return res.status(500).json({
-                error: "This assignment already exists",
+                error: 'This assignment already exists',
                 assigned
             });
         } else {
             Assignment.create({
-                storyId: req.body.storyId,
-                userId: req.body.userId
-            })
-                .then((assigning) => {
+                    projectId: req.body.projectId,
+                    storyId: req.body.storyId,
+                    userId: req.user.userId
+                })
+                .then(() => {
                     return res.status(200).json({
-                        assignmentId: assigning.assignmentId,
-                        userId: assigning.userId,
-                        storyId: assigning.storyId
+                        message: 'assignment created'
                     });
                 })
                 .catch((err) => {
                     return res.status(500).json({
-                        error: "story not found"
+                        err
                     });
                 });
         }
+    });
+};
+
+const isUserInProject = (projectId, userId) => {
+    return new Promise((respond, reject) => {
+        ProjectMembers.findOne({
+            where: {
+                memberId: userId,
+                projectId: projectId
+            }
+        }).then((user) => {
+            if (!user) {
+                reject()
+            } else {
+                respond(user)
+            }
+        })
+    })
+};
+module.exports.createAssignmentFromList = (req, storyId) => {
+    return new Promise((respond, reject) => {
+        if (req.body.assignment.length == 0) {
+            respond()
+        }
+        for (let assUser of req.body.assignment) {
+            isUserInProject(req.body.projectId, assUser)
+                .then(isInProject => {
+                    Assignment.findOne({
+                        where: {
+                            storyId: storyId,
+                            userId: assUser
+                        }
+                    }).then((assigned) => {
+                        if (assigned) {
+                            respond(assigned)
+                        } else {
+                            Assignment.create({
+                                    projectId: req.body.projectId,
+                                    storyId: storyId,
+                                    userId: assUser
+                                })
+                                .then((assignment) => {
+                                    respond(assignment)
+                                })
+                                .catch((err2) => {
+                                    reject(err2)
+                                });
+                        }
+                    });
+                }).catch(err => {
+                    reject(err)
+                })
+
+        }
     })
 
-
-
 };
 
-
-module.exports.createAssignmentFromList = (assignmentList, storyId) => {
-    //TODO check if user or story does not exist 
-    assignmentList.forEach((assignment) => {
-        Assignment.findOne({
-            where: {
-                storyId: storyId,
-                userId: assignment
-            }
-        }).then((assigned) => {
-            if (assigned) {
-                // return res.status(500).json({
-                // 	error: 'This dependency already exists',
-                // 	depended
-                // });
-                console.log('This assignment already exists', assigned.dataValues);
-            } else {
-                Assignment.create({
-                    storyId: storyId,
-                    userId: assignment
-                })
-                    .then((assigned) => {
-                        // return res.status(200).json({
-                        // 	message: 'dependency created'
-                        // });
-                        console.log('assignment created', assigned.dataValues);
-                    })
-                    .catch((err) => {
-                        // return res.status(500).json({
-                        // 	err
-                        // });
-                        console.log('Error', err);
-                    });
-            }
-        });
-    });
-    return;
-};
+module.export = isUserInProject

@@ -29,4 +29,13 @@ router.post(
 	authenticateRoutes.isMember,
 	infoSprintController.getProjectSprints
 );
+
+router.post(
+	'/findactivesprint',
+	passport.authenticate('jwt', {
+		session: false
+	}),
+	authenticateRoutes.isMember,
+	infoSprintController.findActiveSprint
+);
 module.exports = router;

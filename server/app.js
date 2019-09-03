@@ -32,12 +32,18 @@ require('./api/models/databaseRelations');
 // configuration.create({
 // 	key: 'config',
 // 	value: {
-// 		status: [
-// 			"Todo", "In Progress", "Done", "Done Done"
-// 		],
-// 		priority: [
-// 			"Could", "Should", "Must"
-// 		]
+// 		story: {
+// 			status: [
+// 				"Todo", "In Progress", "Done", "Done Done"
+// 			],
+// 			priority: [
+// 				"Could", "Should", "Must"
+// 			]
+// 		},
+// 		sprint: {
+// 			status: ['Done', 'Active', 'Future']
+// 		}
+
 // 	}
 // })
 sequelize.sync();

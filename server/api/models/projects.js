@@ -23,10 +23,10 @@ const Projects = dbConnection.define('projects', {
 		type: Sequelize.INTEGER,
 		allowNull: false
 	},
-	// activeSprint: {
-	// 	type: Sequelize.INTEGER,
-	// 	allowNull: true
-	// },
+	activeSprintId: {
+		type: Sequelize.INTEGER,
+		allowNull: true
+	},
 	projectState: {
 		type: Sequelize.JSON,
 		allowNull: true

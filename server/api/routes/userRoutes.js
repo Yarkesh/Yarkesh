@@ -44,6 +44,11 @@ router.post(
     infoUserController.searchUsers
 );
 
+router.get(
+    '/findlatenotconfirmedusers',
+    deleteUserController.findLateNotConfirmedUsers
+);
+
 router.post(
     '/editProfile',
     passport.authenticate('jwt', {
@@ -52,5 +57,4 @@ router.post(
     upload.single('avatar'),
     editUserController.editProfile
 );
-
 module.exports = router

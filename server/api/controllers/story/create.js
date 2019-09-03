@@ -2,10 +2,11 @@ const Stories = require('../../models/stories');
 const Sprints = require('../../models/sprints');
 const Activities = require('../../models/activities');
 const DependencyController = require('../dependency/create');
+const ProjectMembers = require('../../models/projectMembers');
 const AssignmentController = require('../assignment/create');
 const Projects = require('../../models/projects');
-
-exports.createStory = async (req, res) => {
+const Assignments = require('../../models/assignments');
+exports.createStory = (req, res) => {
     var sprintFoundId, activityFoundId;
     Projects.findOne({
         where: {
@@ -33,7 +34,6 @@ exports.createStory = async (req, res) => {
                 if (req.body.activityId != null) {
                     activityFoundId = req.body.activityId;
                 }
-                // TODO sheet
                 Stories.create({
                         storyName: req.body.storyName,
                         sprintId: sprintFoundId,
@@ -42,7 +42,7 @@ exports.createStory = async (req, res) => {
                         iWant: req.body.iWant,
                         soThat: req.body.soThat,
                         acceptanceTest: req.body.acceptanceTest,
-                        status: 'ToDo',
+                        status: 'Todo',
                         storyPoint: req.body.storyPoint,
                         priority: req.body.priority,
                         isEpic: req.body.isEpic,
@@ -50,18 +50,41 @@ exports.createStory = async (req, res) => {
                         projectId: req.body.projectId
                     })
                     .then((story) => {
-                        DependencyController.createDependencyFromList(
-                            req.body.dependency,
-                            story.storyId
-                        );
-                        AssignmentController.createAssignmentFromList(
-                            req.body.assignment,
-                            story.storyId
-                        );
-                        return res.status(200).json({
+                        DependencyController.createDependencyFromList(req, story.storyId)
+                            .then(dependencyResult => {
+                                AssignmentController.createAssignmentFromList(req, story.storyId)
+                                    .then(assignmentResult => {
+                                        return res.status(200).json({
+                                            story
+                                        });
+                                    }).catch(err => {
+                                        Stories.destroy({
+                                            where: {
+                                                projectId: req.body.projectId,
+                                                storyId: story.storyId
+                                            }
+                                        }).then(() => {
+                                            return res.status(500).json({
+                                                err: "this user you want to assign is not in this project"
+                                            })
+                                        })
+                                    })
 
-                            story
-                        });
+                            }).catch(err => {
+                                Stories.destroy({
+                                        where: {
+                                            projectId: req.body.projectId,
+                                            storyId: story.storyId
+                                        }
+                                    })
+                                    .then(() => {
+                                        return res.status(500).json({
+                                            err: "this dependency is not in this project"
+                                        })
+                                    })
+
+                            })
+
                     })
                     .catch((err) => {
                         return res.status(500).json({
@@ -71,8 +94,6 @@ exports.createStory = async (req, res) => {
                     });
             });
         });
-    }).catch(err => {
-
     })
 
 };

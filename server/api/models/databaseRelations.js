@@ -63,7 +63,7 @@ Projects.hasMany(Sprints, {
 Projects.hasOne(Sprints, {
 	foreignKey: 'projectId',
 	targetKey: 'projectId',
-	as: 'currentSprint'
+	as: 'activeSprint'
 })
 Projects.hasOne(Sprints, {
 	foreignKey: 'defaultSprintId',
@@ -92,7 +92,10 @@ Stories.belongsTo(Activities, {
 })
 Stories.hasMany(Dependencies, {
 	foreignKey: 'storyId',
-	targetKey: 'storyId'
+	targetKey: 'storyId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade',
+	hooks: true
 });
 
 Assignment.belongsTo(Users, {
@@ -103,7 +106,10 @@ Assignment.belongsTo(Users, {
 Stories.hasMany(Assignment, {
 	foreignKey: 'storyId',
 	targetKey: 'storyId',
-	as: 'member'
+	as: 'member',
+	onUpdate: 'cascade',
+	onDelete: 'cascade',
+	hooks: true
 });
 Projects.hasMany(Activities, {
 	foreignKey: 'projectId',
