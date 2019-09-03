@@ -4,6 +4,7 @@ const passport = require('passport');
 const createStoryController = require('../controllers/story/create');
 const editStoryController = require('../controllers/story/edit');
 const infoStoryController = require('../controllers/story/info');
+const deleteStoryController = require('../controllers/story/delete');
 const authenticateRoutes = require('../middlewares/authentication');
 
 router.post(
@@ -60,6 +61,16 @@ router.post(
 	authenticateRoutes.isSprintInProject,
 	authenticateRoutes.isStoryInProject,
 	editStoryController.changeSprint
+);
+
+router.delete(
+	'/deletestory',
+	passport.authenticate('jwt', {
+		session: false
+	}),
+	authenticateRoutes.isCreator,
+	authenticateRoutes.isStoryInProject,
+	deleteStoryController.deleteStory
 );
 
 module.exports = router;

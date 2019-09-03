@@ -1,4 +1,5 @@
 const Dependency = require('../../models/dependencies');
+const Stories = require('../../models/stories');
 
 module.exports.createDependency = (req, res) => {
     Dependency.findOne({
@@ -14,6 +15,7 @@ module.exports.createDependency = (req, res) => {
             });
         } else {
             Dependency.create({
+                    projectId: req.body.projectId,
                     storyId: req.body.storyId,
                     dependsOn: req.body.dependsOn
                 })
@@ -39,53 +41,50 @@ const isDependencyInProject = (projectId, dependsOnId) => {
                 projectId: projectId
             }
         }).then((story) => {
-            console.log("STORY : ", story.dataValues)
             if (!story) {
-                respond(false)
+                reject()
             } else {
-                respond(true)
+                respond(story)
             }
         })
     })
 };
-module.exports.createDependencyFromList = (req) => {
-    for (let dependsOn of req.body.dependency) {
-        return new Promise((respond, reject) => {
+module.exports.createDependencyFromList = (req, storyId) => {
+    return new Promise((respond, reject) => {
+        if (req.body.dependency.length == 0) {
+            respond()
+        }
+        for (let dependsOn of req.body.dependency) {
             isDependencyInProject(req.body.projectId, dependsOn)
                 .then(isInProject => {
-                    if (isInProject) {
-                        console.log("then", dependsOn)
-                        Dependency.findOne({
-                            where: {
-                                storyId: req.body.storyId,
-                                dependsOn: dependsOn
-                            }
-                        }).then((depended) => {
-                            if (depended) {
-                                // console.log('This dependency already exists', depended.dataValues);
-                            } else {
-                                Dependency.create({
-                                        storyId: req.body.storyId,
-                                        dependsOn: dependsOn
-                                    })
-                                    .then((dependency) => {
-                                        // console.log('dependency created', dependency.dataValues);
-                                    })
-                                    .catch((err2) => {
-                                        // console.log('Error', err);
-                                        respond(err2)
-                                    });
-                            }
-                        });
-                    } else if (!isInProject) {
-                        console.log("catch", dependsOn);
-                        respond(false)
-                    }
-
+                    Dependency.findOne({
+                        where: {
+                            storyId: storyId,
+                            dependsOn: dependsOn
+                        }
+                    }).then((depended) => {
+                        if (depended) {
+                            respond(depended)
+                        } else {
+                            Dependency.create({
+                                    projectId: req.body.projectId,
+                                    storyId: storyId,
+                                    dependsOn: dependsOn
+                                })
+                                .then((dependency) => {
+                                    respond(dependency)
+                                })
+                                .catch((err2) => {
+                                    reject(err2)
+                                });
+                        }
+                    });
+                }).catch(err => {
+                    reject(err)
                 })
-        })
-    }
 
+        }
+    })
 
 };
 

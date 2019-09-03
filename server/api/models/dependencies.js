@@ -9,6 +9,10 @@ const Dependencies = dbConnection.define('dependencies', {
 		autoIncrement: true,
 		allowNull: false
 	},
+	projectId: {
+		type: Sequelize.INTEGER,
+		allowNull: false
+	},
 	storyId: {
 		type: Sequelize.INTEGER,
 		allowNull: false
