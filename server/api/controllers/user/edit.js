@@ -167,3 +167,40 @@ module.exports.editProfile = (req, res) => {
             })
         })
 }
+module.exports.editPassword = (req, res) => {
+    Users.findOne({
+        where: {
+            userId: req.user.userId
+        }
+    }).then(user => {
+        bcrypt.compare(req.body.password, user.password, (err, same) => {
+            if (same) {
+                if (req.body.password == req.body.confirmPassword) {
+                    bcrypt.hash(req.body.password, 10, (err, hash) => {
+                        if (hash) {
+                            Users.update({
+                                password: hash
+                            }, {
+                                    where: {
+                                        userId: req.user.userId
+                                    }
+                                }).then(() => {
+                                    return res.status(200).json({
+                                        message: 'password has changed'
+                                    })
+                                })
+                        }
+                    })
+                }
+                else {
+                    return res.status(500).json({
+                        message: 'confirm password must match the password'
+                    })
+                }
+            }
+            else {
+                return res.status(500);
+            }
+        })
+    })
+}

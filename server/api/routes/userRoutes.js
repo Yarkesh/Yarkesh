@@ -57,4 +57,15 @@ router.post(
     upload.single('avatar'),
     editUserController.editProfile
 );
+
+
+
+router.post(
+    '/editproject',
+    passport.authenticate('jwt', {
+        session: false
+    }),
+    editUserController.editPassword
+);
+
 module.exports = router
