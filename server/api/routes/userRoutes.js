@@ -18,6 +18,14 @@ router.get(
 );
 
 router.get(
+    '/getavatar',
+    passport.authenticate('jwt', {
+        session: false
+    }),
+    infoUserController.getAvatar
+);
+
+router.get(
     '/getUserProjects',
     passport.authenticate('jwt', {
         session: false
