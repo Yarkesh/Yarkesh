@@ -40,12 +40,12 @@ exports.signUp = (req, res) => {
                 .emailVerification(req.body.email, confirmationCode)
                 .then((response) => {
                     NotConfirmedUsers.create({
-                        userName: req.body.userName,
-                        email: req.body.email,
-                        name: req.body.name,
-                        password: hash,
-                        confirmationCode
-                    })
+                            userName: req.body.userName,
+                            email: req.body.email,
+                            name: req.body.name,
+                            password: hash,
+                            confirmationCode
+                        })
 
                         // sign up success
                         .then((user) => {
@@ -71,10 +71,10 @@ exports.signUp = (req, res) => {
 exports.signIn = (req, res) => {
     // finding the user in database with given email
     NotConfirmedUsers.findAll({
-        where: {
-            email: req.body.email
-        }
-    })
+            where: {
+                email: req.body.email
+            }
+        })
         .then((unconfirmedUser) => {
             if (unconfirmedUser.length != 0) {
                 return res.status(500).json({
@@ -86,10 +86,10 @@ exports.signIn = (req, res) => {
         .catch();
 
     Users.findAll({
-        where: {
-            email: req.body.email
-        }
-    })
+            where: {
+                email: req.body.email
+            }
+        })
         .then((user) => {
             // if user with such email does not exist
             if (user.length == 0) {
@@ -115,7 +115,8 @@ exports.signIn = (req, res) => {
                                 name: firstuser.name,
                                 email: firstuser.email,
                                 userId: firstuser.userId,
-                                userName: firstuser.userName
+                                userName: firstuser.userName,
+                                avatar: firstuser.avatar
                             };
                             jwt.sign(
                                 jwtpayload,
@@ -150,10 +151,10 @@ exports.signIn = (req, res) => {
 
 module.exports.confirmEmail = (req, res) => {
     NotConfirmedUsers.findAll({
-        where: {
-            email: req.body.email
-        }
-    })
+            where: {
+                email: req.body.email
+            }
+        })
         .then((users) => {
             let confirmedUser = users[0];
             if (req.body.code == confirmedUser.confirmationCode) {

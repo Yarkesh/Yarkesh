@@ -30,7 +30,7 @@ exports.getProjectsByCreatorId = (req, res) => {
 
 
 exports.getProjectDetails = (req, res) => {
-    Projects.findAll({
+    Projects.findOne({
             where: {
                 projectId: req.body.projectId
             },
@@ -42,13 +42,13 @@ exports.getProjectDetails = (req, res) => {
                 {
                     model: Sprints,
                     attributes: ['sprintName'],
-                    as: 'currentSprint'
+                    as: 'activeSprint'
                 }
             ]
         })
         .then((projectInfo) => {
             return res.status(200).json({
-                projectInfo: projectInfo[0]
+                projectInfo
             });
         })
         .catch((err) => {

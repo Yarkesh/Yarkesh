@@ -5,37 +5,43 @@ const Sprints = require('../models/sprints');
 const Activities = require('../models/activities');
 const createDependencyController = require('./dependency/create');
 const Stories = require('../models/stories');
+const config = require('config');
 
 exports.createUsers = (req, res, next) => {
     Users.create({
         userName: 'ali',
         email: 'ali@ali.com',
         name: 'ali',
-        password: '$2b$10$kMvKfmtilo4KbZqzIHPg8uBB33jZlj1Bpt9Eid.u7R2FprQ4BRIje'
+        password: '$2b$10$kMvKfmtilo4KbZqzIHPg8uBB33jZlj1Bpt9Eid.u7R2FprQ4BRIje',
+        avatar: config.get('app.webServer.baseUrl') + '/pictures/users/defaultAvatar.jpg'
     });
     Users.create({
         userName: 'mamad',
         email: 'mamad@mamad.com',
         name: 'mamad',
-        password: '$2b$10$kMvKfmtilo4KbZqzIHPg8uBB33jZlj1Bpt9Eid.u7R2FprQ4BRIje'
+        password: '$2b$10$kMvKfmtilo4KbZqzIHPg8uBB33jZlj1Bpt9Eid.u7R2FprQ4BRIje',
+        avatar: config.get('app.webServer.baseUrl') + '/pictures/users/defaultAvatar.jpg'
     });
     Users.create({
         userName: 'jack',
         email: 'jack@jack.com',
         name: 'jack',
-        password: '$2b$10$kMvKfmtilo4KbZqzIHPg8uBB33jZlj1Bpt9Eid.u7R2FprQ4BRIje'
+        password: '$2b$10$kMvKfmtilo4KbZqzIHPg8uBB33jZlj1Bpt9Eid.u7R2FprQ4BRIje',
+        avatar: config.get('app.webServer.baseUrl') + '/pictures/users/defaultAvatar.jpg'
     });
     Users.create({
         userName: 'meti',
         email: 'meti@meti.com',
         name: 'meti',
-        password: '$2b$10$kMvKfmtilo4KbZqzIHPg8uBB33jZlj1Bpt9Eid.u7R2FprQ4BRIje'
+        password: '$2b$10$kMvKfmtilo4KbZqzIHPg8uBB33jZlj1Bpt9Eid.u7R2FprQ4BRIje',
+        avatar: config.get('app.webServer.baseUrl') + '/pictures/users/defaultAvatar.jpg'
     });
     Users.create({
         userName: 'alij',
         email: 'alij@alij.com',
         name: 'alij',
-        password: '$2b$10$kMvKfmtilo4KbZqzIHPg8uBB33jZlj1Bpt9Eid.u7R2FprQ4BRIje'
+        password: '$2b$10$kMvKfmtilo4KbZqzIHPg8uBB33jZlj1Bpt9Eid.u7R2FprQ4BRIje',
+        avatar: config.get('app.webServer.baseUrl') + '/pictures/users/defaultAvatar.jpg'
     })
     return res.json({
         mess: "done"
@@ -184,17 +190,17 @@ exports.createStories = (req, res, next) => {
         soThat: "people can have peace",
         acceptanceTest: {
             "test": [{
-                "text": "test 1",
-                "done": "true"
-            },
-            {
-                "text": "test 2",
-                "done": "false"
-            },
-            {
-                "text": "test 3",
-                "done": "false"
-            }
+                    "text": "test 1",
+                    "done": "true"
+                },
+                {
+                    "text": "test 2",
+                    "done": "false"
+                },
+                {
+                    "text": "test 3",
+                    "done": "false"
+                }
             ]
         },
         status: "ToDo",
@@ -214,17 +220,17 @@ exports.createStories = (req, res, next) => {
         soThat: "people can have peace",
         acceptanceTest: {
             "test": [{
-                "text": "test 1",
-                "done": "true"
-            },
-            {
-                "text": "test 2",
-                "done": "false"
-            },
-            {
-                "text": "test 3",
-                "done": "false"
-            }
+                    "text": "test 1",
+                    "done": "true"
+                },
+                {
+                    "text": "test 2",
+                    "done": "false"
+                },
+                {
+                    "text": "test 3",
+                    "done": "false"
+                }
             ]
         },
         status: "ToDo",
@@ -244,17 +250,17 @@ exports.createStories = (req, res, next) => {
         soThat: "people can have peace",
         acceptanceTest: {
             "test": [{
-                "text": "test 1",
-                "done": "true"
-            },
-            {
-                "text": "test 2",
-                "done": "false"
-            },
-            {
-                "text": "test 3",
-                "done": "false"
-            }
+                    "text": "test 1",
+                    "done": "true"
+                },
+                {
+                    "text": "test 2",
+                    "done": "false"
+                },
+                {
+                    "text": "test 3",
+                    "done": "false"
+                }
             ]
         },
         status: "ToDo",
@@ -274,17 +280,17 @@ exports.createStories = (req, res, next) => {
         soThat: "people can have peace",
         acceptanceTest: {
             "test": [{
-                "text": "test 1",
-                "done": "true"
-            },
-            {
-                "text": "test 2",
-                "done": "false"
-            },
-            {
-                "text": "test 3",
-                "done": "false"
-            }
+                    "text": "test 1",
+                    "done": "true"
+                },
+                {
+                    "text": "test 2",
+                    "done": "false"
+                },
+                {
+                    "text": "test 3",
+                    "done": "false"
+                }
             ]
         },
         status: "ToDo",
@@ -304,17 +310,17 @@ exports.createStories = (req, res, next) => {
         soThat: "people can have peace",
         acceptanceTest: {
             "test": [{
-                "text": "test 1",
-                "done": "true"
-            },
-            {
-                "text": "test 2",
-                "done": "false"
-            },
-            {
-                "text": "test 3",
-                "done": "false"
-            }
+                    "text": "test 1",
+                    "done": "true"
+                },
+                {
+                    "text": "test 2",
+                    "done": "false"
+                },
+                {
+                    "text": "test 3",
+                    "done": "false"
+                }
             ]
         },
         status: "ToDo",
