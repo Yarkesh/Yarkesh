@@ -44,13 +44,14 @@ module.exports.setActiveSprint = (req, res) => {
 
 module.exports.editProject = (req, res) => {
     const imagePath = path.join(__dirname, '../../../pictures/projects');
-    const info = `${req.user.userId}__${req.user.userName}.jpg`;
+    const info = `${req.body.projectId}__${req.body.title}.jpg`;
     const fileUpload = new Resize(imagePath, info);
-    let imageUrl;
+    let imageUrl = config.get('app.webServer.baseUrl') + '/pictures/projects/' + req.body.projectId + '__' + req.body.title + '.jpg';
     Projects.update({
         title: req.body.title,
         description: req.body.description,
         sprintDuration: req.body.sprintDuration,
+        logo: imageUrl
     }, {
             where: {
                 projectId: req.body.projectId
@@ -59,7 +60,7 @@ module.exports.editProject = (req, res) => {
 
             if (req.file) {
                 const filename = await fileUpload.save(req.file.buffer);
-                imageUrl = config.get('app.webServer.baseUrl') + '/pictures/projects/' + filename;
+                imageUrl
 
             }
             return res.status(200).json({

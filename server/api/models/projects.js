@@ -42,6 +42,10 @@ const Projects = dbConnection.define('projects', {
 	defaultActivityId: {
 		type: Sequelize.INTEGER,
 		allowNull: true
+	},
+	logo: {
+		type: Sequelize.STRING,
+		allowNull: true
 	}
 });
 

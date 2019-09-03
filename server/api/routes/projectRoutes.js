@@ -79,7 +79,7 @@ router.post(
 	passport.authenticate('jwt', {
 		session: false
 	}),
-	upload.single('avatar'),
+	upload.single('logo'),
 	authenticateRoutes.isMember,
 	editProjectController.editProject
 );

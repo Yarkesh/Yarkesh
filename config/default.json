@@ -14,7 +14,7 @@
 	"sql": {
 		"name": "Yarkesh",
 		"userName": "postgres",
-		"password": "123",
+		"password": "0123456789",
 		"host": "localhost"
 	}
 }

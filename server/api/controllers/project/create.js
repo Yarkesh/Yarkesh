@@ -2,7 +2,7 @@ const Projects = require('../../models/projects');
 const ProjectMembers = require('../../models/projectMembers');
 const Sprints = require('../../models/sprints');
 const Activities = require('../../models/activities');
-
+const config = require('config')
 exports.createProject = (req, res) => {
 
     // creating project with foreign key for user
@@ -10,7 +10,8 @@ exports.createProject = (req, res) => {
         title: req.body.title,
         description: req.body.description,
         creatorId: req.user.userId,
-        sprintDuration: req.body.sprintDuration
+        sprintDuration: req.body.sprintDuration,
+        logo: config.get('app.webServer.baseUrl') + "/pictures/projects/defaultLogo.jpg"
     })
         .then((project) => {
             var now = new Date(project.createdAt.getTime() + 2)

@@ -166,7 +166,8 @@ module.exports.confirmEmail = (req, res) => {
                     userName: confirmedUser.userName,
                     email: confirmedUser.email,
                     name: confirmedUser.name,
-                    password: confirmedUser.password
+                    password: confirmedUser.password,
+                    avatar: config.get('app.webServer.baseUrl') + '/pictures/users/defaultAvatar.jpg'
                 });
                 return res.status(200).json({
                     message: 'your account has been activated'

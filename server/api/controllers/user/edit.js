@@ -142,10 +142,11 @@ module.exports.editProfile = (req, res) => {
     const imagePath = path.join(__dirname, '../../../pictures/users');
     const info = `${req.user.userId}__${req.user.userName}.jpg`;
     const fileUpload = new Resize(imagePath, info);
-    let imageUrl;
+    let imageUrl = config.get('app.webServer.baseUrl') + '/pictures/users/' + req.user.userId + '__' + req.user.userName + '.jpg';
     console.log(req.body.name)
     Users.update({
-        name: req.body.name
+        name: req.body.name,
+        avatar: imageUrl
     }, {
             where: {
                 userId: req.user.userId
@@ -153,7 +154,6 @@ module.exports.editProfile = (req, res) => {
         }).then(async () => {
             if (req.file) {
                 const filename = await fileUpload.save(req.file.buffer);
-                imageUrl = config.get('app.webServer.baseUrl') + '/pictures/users/' + filename;
             }
             return res.status(200).json({
                 name: req.body.name,

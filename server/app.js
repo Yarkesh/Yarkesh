@@ -6,6 +6,7 @@ const passport = require('passport');
 const sequelize = require('./api/models/databaseConnection');
 require('./api/middlewares/passportJWTConfig')(passport);
 const router = require('./api/routes/router');
+const configuration = require('./api/models/configuration')
 // ! --------------------------- MIDDLEWARES ---------------------------------------
 app.use(passport.initialize());
 app.use(
@@ -27,7 +28,7 @@ app.use('/api', router);
 require('./api/models/databaseRelations');
 
 //* for just creating the database
-// 
+
 
 // configuration.create({
 // 	key: 'config',
@@ -46,6 +47,7 @@ require('./api/models/databaseRelations');
 
 // 	}
 // })
+
 sequelize.sync();
 //* For deleting database and creating again!
 
