@@ -73,4 +73,14 @@ router.delete(
 	deleteStoryController.deleteStory
 );
 
+router.post(
+	'/editstory',
+	passport.authenticate('jwt', {
+		session: false
+	}),
+	authenticateRoutes.isCreator,
+	authenticateRoutes.isStoryInProject,
+	editStoryController.editStory
+);
+
 module.exports = router;

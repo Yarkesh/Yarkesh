@@ -4,6 +4,7 @@ const passport = require('passport');
 const authenticateRoutes = require('../middlewares/authentication');
 const createMilestoneController = require('../controllers/milestone/create');
 const infoMilestoneController = require('../controllers/milestone/info');
+const editMilestoneController = require('../controllers/milestone/edit');
 
 router.post(
     '/createmilestone',
@@ -20,5 +21,13 @@ router.post(
     }),
     authenticateRoutes.isMember,
     infoMilestoneController.getMilestones,
+);
+router.post(
+    '/editmilestone',
+    passport.authenticate('jwt', {
+        session: false
+    }),
+    authenticateRoutes.isMember,
+    editMilestoneController.editMilestone,
 );
 module.exports = router;
