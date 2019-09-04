@@ -57,23 +57,16 @@ router.get(
     deleteUserController.findLateNotConfirmedUsers
 );
 
-router.post(
-    '/editProfile',
-    passport.authenticate('jwt', {
-        session: false
-    }),
-    upload.single('avatar'),
-    editUserController.editProfile
-);
+// router.post(
+//     '/editProfile',
+//     passport.authenticate('jwt', {
+//         session: false
+//     }),
+//     upload.single('avatar'),
+//     editUserController.editProfile
+// );
 
 
 
-router.post(
-    '/editproject',
-    passport.authenticate('jwt', {
-        session: false
-    }),
-    editUserController.editPassword
-);
 
 module.exports = router
