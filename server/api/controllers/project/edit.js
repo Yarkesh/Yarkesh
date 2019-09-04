@@ -61,7 +61,7 @@ module.exports.editProject = async (req, res) => {
                 }
             }).then(project => {
 
-                // console.log(project.title, '2');
+                console.log(project.title, '2');
                 title = project.title;
                 resolve(title);
             })
@@ -70,15 +70,14 @@ module.exports.editProject = async (req, res) => {
 
     promise1.then((value) => {
 
-        // console.log(title, "@")
+        console.log(title, "@")
         let lastImagePath = '/pictures/projects/' + req.body.projectId + '__' + value + '.jpg';
         let logo = config.get('app.webServer.baseUrl') + '/pictures/projects/' + req.body.projectId + '__' + value + '.jpg';
 
         Projects.update({
             title,
             description: req.body.description,
-            sprintDuration: req.body.sprintDuration,
-            logo
+            sprintDuration: req.body.sprintDuration
         }, {
                 where: {
                     projectId: req.body.projectId
@@ -87,7 +86,13 @@ module.exports.editProject = async (req, res) => {
 
                 if (req.file) {
                     const filename = await fileUpload.save(req.file.buffer);
-
+                    Projects.update({
+                        logo
+                    }, {
+                            where: {
+                                projectId: req.body.projectId
+                            }
+                        })
                     // try {
                     //     fs.unlinkSync(lastImagePath)
                     //     //file removed
