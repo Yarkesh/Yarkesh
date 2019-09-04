@@ -49,13 +49,13 @@ const isUserInProject = (projectId, userId) => {
         })
     })
 };
-module.exports.createAssignmentFromList = (req, storyId) => {
+module.exports.createAssignmentFromList = (projectId, assignment, storyId) => {
     return new Promise((respond, reject) => {
-        if (req.body.assignment.length == 0) {
+        if (assignment.length == 0) {
             respond()
         }
-        for (let assUser of req.body.assignment) {
-            isUserInProject(req.body.projectId, assUser)
+        for (let assUser of assignment) {
+            isUserInProject(projectId, assUser)
                 .then(isInProject => {
                     Assignment.findOne({
                         where: {
@@ -67,7 +67,7 @@ module.exports.createAssignmentFromList = (req, storyId) => {
                             respond(assigned)
                         } else {
                             Assignment.create({
-                                    projectId: req.body.projectId,
+                                    projectId: projectId,
                                     storyId: storyId,
                                     userId: assUser
                                 })
