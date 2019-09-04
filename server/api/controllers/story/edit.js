@@ -26,81 +26,172 @@ module.exports.changeSprint = (req, res) => {
 
 
 module.exports.editStory = (req, res, next) => {
-
-    Stories.update({
-        storyName: req.body.storyName,
-        sprintId: req.body.sprintId,
-        activityId: req.body.activityId,
-        as: req.body.as,
-        iWant: req.body.iWant,
-        soThat: req.body.soThat,
-        acceptanceTest: req.body.acceptanceTest,
-        status: req.body.status,
-        storyPoint: req.body.storyPoint,
-        priority: req.body.priority,
-        isEpic: req.body.isEpic,
-    }, {
+    Stories.findOne({
         where: {
-            storyId: req.body.storyId,
-            projectId: req.body.projectId
+            projectId: req.body.projectId,
+            storyId: req.body.storyId
         }
-    }).then(updated => {
-        Dependencies.destroy({
+    }).then(story => {
+        oldStory = story
+        Stories.update({
+            storyName: req.body.storyName,
+            sprintId: req.body.sprintId,
+            activityId: req.body.activityId,
+            as: req.body.as,
+            iWant: req.body.iWant,
+            soThat: req.body.soThat,
+            acceptanceTest: req.body.acceptanceTest,
+            status: req.body.status,
+            storyPoint: req.body.storyPoint,
+            priority: req.body.priority,
+            isEpic: req.body.isEpic,
+            dependency: req.body.dependency,
+            assignment: req.body.assignment
+        }, {
             where: {
-                projectId: req.body.projectId,
-                storyId: req.body.storyId
+                storyId: req.body.storyId,
+                projectId: req.body.projectId
             }
-        }).then(dependencyDestroyed => {
-            Assignments.destroy({
+        }).then(updated => {
+            Dependencies.destroy({
                 where: {
                     projectId: req.body.projectId,
                     storyId: req.body.storyId
                 }
-            }).then(assignmentDestroyed => {
-                DependencyController.createDependencyFromList(req, req.body.storyId).then(newDepencency => {
-                    AssignmentController.createAssignmentFromList(req, req.body.storyId).then(newAssignment => {
-                        Stories.findOne({
-                            where: {
-                                projectId: req.body.projectId,
-                                storyId: req.body.storyId
-                            }
-                        }).then(story => {
-                            return res.status(200).json({
-                                story
-                            })
-                        })
-                    }).catch(errAssignment => {
-                        Assignments.destroy({
-                                where: {
-                                    projectId: req.body.projectId,
-                                    storyId: req.body.storyId
-                                }
-                            })
-                            .then(() => {
-                                return res.status(500).json({
-                                    err: "this assignment is not in this project"
+            }).then(dependencyDestroyed => {
+                Assignments.destroy({
+                    where: {
+                        projectId: req.body.projectId,
+                        storyId: req.body.storyId
+                    }
+                }).then(assignmentDestroyed => {
+                    DependencyController.createDependencyFromList(req.body.projectId, req.body.dependency, req.body.storyId)
+                        .then(newDepencency => {
+                            AssignmentController.createAssignmentFromList(req.body.projectId, req.body.assignment, req.body.storyId)
+                                .then(newAssignment => {
+                                    //successfull edit
+                                    Stories.findOne({
+                                        where: {
+                                            projectId: req.body.projectId,
+                                            storyId: req.body.storyId
+                                        }
+                                    }).then(successUpdate => {
+                                        return res.status(200).json({
+                                            successUpdate
+                                        })
+                                    })
+                                }).catch(errAssignment => {
+                                    //assignment was wrong
+                                    Assignments.destroy({
+                                        where: {
+                                            projectId: req.body.projectId,
+                                            storyId: req.body.storyId
+                                        }
+                                    }).then(() => {
+                                        Dependencies.destroy({
+                                            where: {
+                                                projectId: req.body.projectId,
+                                                storyId: req.body.storyId
+                                            }
+                                        }).then(() => {
+                                            AssignmentController.createAssignmentFromList(req.body.projectId, oldStory.assignment, req.body.storyId)
+                                                .then(oldAssUp => {
+                                                    DependencyController.createDependencyFromList(req.body.projectId, oldStory.dependency, req.body.storyId)
+                                                        .then(() => {
+                                                            Stories.update({
+                                                                storyName: oldStory.storyName,
+                                                                sprintId: oldStory.sprintId,
+                                                                activityId: oldStory.activityId,
+                                                                as: oldStory.as,
+                                                                iWant: oldStory.iWant,
+                                                                soThat: oldStory.soThat,
+                                                                acceptanceTest: oldStory.acceptanceTest,
+                                                                status: oldStory.status,
+                                                                storyPoint: oldStory.storyPoint,
+                                                                priority: oldStory.priority,
+                                                                isEpic: oldStory.isEpic,
+                                                                dependency: oldStory.dependency,
+                                                                assignment: oldStory.assignment
+                                                            }, {
+                                                                where: {
+                                                                    projectId: req.body.projectId,
+                                                                    storyId: req.body.storyId
+                                                                }
+                                                            }).then(updatedtoOld2 => {
+                                                                return res.status(500).json({
+                                                                    err: "this assignment is not in this project",
+                                                                })
+
+                                                            })
+                                                        })
+
+
+                                                })
+                                        })
+                                    })
                                 })
-                            })
-                    })
-                }).catch(errDependency => {
-                    Dependencies.destroy({
-                            where: {
-                                projectId: req.body.projectId,
-                                storyId: req.body.storyId
-                            }
-                        })
-                        .then(() => {
-                            return res.status(500).json({
-                                err: "this dependency is not in this project"
-                            })
+                        }).catch(errDependency => {
+                            //dependency was wrong
+                            Dependencies.destroy({
+                                    where: {
+                                        projectId: req.body.projectId,
+                                        storyId: req.body.storyId
+                                    }
+                                })
+                                .then(() => {
+                                    DependencyController.createDependencyFromList(req.body.projectId, oldStory.dependency, req.body.storyId).then(newDep => {
+                                        Assignments.destroy({
+                                            where: {
+                                                projectId: req.body.projectId,
+                                                storyId: req.body.storyId
+                                            }
+                                        }).then(AssDes => {
+                                            AssignmentController.createAssignmentFromList(req.body.projectId, oldStory.assignment, req.body.storyId).then(newAss => {
+                                                Stories.update({
+                                                    storyName: oldStory.storyName,
+                                                    sprintId: oldStory.sprintId,
+                                                    activityId: oldStory.activityId,
+                                                    as: oldStory.as,
+                                                    iWant: oldStory.iWant,
+                                                    soThat: oldStory.soThat,
+                                                    acceptanceTest: oldStory.acceptanceTest,
+                                                    status: oldStory.status,
+                                                    storyPoint: oldStory.storyPoint,
+                                                    priority: oldStory.priority,
+                                                    isEpic: oldStory.isEpic,
+                                                    dependency: oldStory.dependency,
+                                                    assignment: oldStory.assignment
+                                                }, {
+                                                    where: {
+                                                        projectId: req.body.projectId,
+                                                        storyId: req.body.storyId
+                                                    }
+                                                }).then(updatedtoOld => {
+                                                    return res.status(500).json({
+                                                        err: "this dependency is not in this project",
+                                                    })
+
+                                                })
+
+
+                                            })
+
+                                        })
+                                    })
+
+
+
+                                })
                         })
                 })
             })
-        })
-    }).catch(errUpdate => {
-        return res.status(500).json({
-            errUpdate
+        }).catch(errUpdate => {
+            //error updating ! 
+            return res.status(500).json({
+                errUpdate
+            })
         })
     })
+
 
 };

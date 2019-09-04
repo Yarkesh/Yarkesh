@@ -1,4 +1,3 @@
-
 const ProjectMembers = require('../../models/projectMembers');
 const Users = require('../../models/users');
 
@@ -11,15 +10,15 @@ exports.addMembers = (req, res, next) => {
     }).then((user) => {
         if (user) {
             ProjectMembers.findOne({
-                where: {
-                    memberId: user.userId,
-                    projectId: req.body.projectId
-                },
-                include: [{
-                    model: Users,
-                    attributes: ['name', 'email', 'userName', 'userId']
-                }]
-            })
+                    where: {
+                        memberId: user.userId,
+                        projectId: req.body.projectId
+                    },
+                    include: [{
+                        model: Users,
+                        attributes: ['name', 'email', 'userName', 'userId', 'avatar']
+                    }]
+                })
                 .then((member) => {
                     if (member) {
                         return res.status(500).json({
@@ -27,20 +26,22 @@ exports.addMembers = (req, res, next) => {
                             name: user.name,
                             email: user.email,
                             userName: user.userName,
-                            userId: user.userId
+                            userId: user.userId,
+                            avatar: user.avatar
                         });
                     } else {
                         ProjectMembers.create({
-                            memberId: user.userId,
-                            projectId: req.body.projectId
-                        })
+                                memberId: user.userId,
+                                projectId: req.body.projectId
+                            })
                             .then((member) => {
                                 res.status(200).json({
                                     message: "member added to project",
                                     name: user.name,
                                     email: user.email,
                                     userName: user.userName,
-                                    userId: user.userId
+                                    userId: user.userId,
+                                    avatar: user.avatar
                                 })
 
 

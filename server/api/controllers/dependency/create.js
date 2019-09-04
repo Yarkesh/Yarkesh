@@ -49,13 +49,13 @@ const isDependencyInProject = (projectId, dependsOnId) => {
         })
     })
 };
-module.exports.createDependencyFromList = (req, storyId) => {
+module.exports.createDependencyFromList = (projectId, dependencyList, storyId) => {
     return new Promise((respond, reject) => {
-        if (req.body.dependency.length == 0) {
+        if (dependencyList.length == 0) {
             respond()
         }
-        for (let dependsOn of req.body.dependency) {
-            isDependencyInProject(req.body.projectId, dependsOn)
+        for (let dependsOn of dependencyList) {
+            isDependencyInProject(projectId, dependsOn)
                 .then(isInProject => {
                     Dependency.findOne({
                         where: {
@@ -67,7 +67,7 @@ module.exports.createDependencyFromList = (req, storyId) => {
                             respond(depended)
                         } else {
                             Dependency.create({
-                                    projectId: req.body.projectId,
+                                    projectId: projectId,
                                     storyId: storyId,
                                     dependsOn: dependsOn
                                 })

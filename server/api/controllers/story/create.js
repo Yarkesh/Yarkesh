@@ -47,12 +47,14 @@ exports.createStory = (req, res) => {
                         priority: req.body.priority,
                         isEpic: req.body.isEpic,
                         creatorId: req.user.userId,
-                        projectId: req.body.projectId
+                        projectId: req.body.projectId,
+                        dependency: req.body.dependency,
+                        assignment: req.body.assignment
                     })
                     .then((story) => {
-                        DependencyController.createDependencyFromList(req, story.storyId)
+                        DependencyController.createDependencyFromList(req.body.projectId, req.body.dependency, story.storyId)
                             .then(dependencyResult => {
-                                AssignmentController.createAssignmentFromList(req, story.storyId)
+                                AssignmentController.createAssignmentFromList(req.body.projectId, req.body.assignment, story.storyId)
                                     .then(assignmentResult => {
                                         return res.status(200).json({
                                             story
