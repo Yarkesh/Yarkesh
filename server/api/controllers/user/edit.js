@@ -185,6 +185,9 @@ module.exports.editProfile = (req, res) => {
 			});
 		});
 };
+
+
+
 module.exports.editPassword = (req, res) => {
 	Users.findOne({
 		where: {

@@ -50,29 +50,52 @@ module.exports.editProject = async (req, res) => {
     const fileUpload = new Resize(imagePath, info);
 
     var promise1 = new Promise((resolve, reject) => {
-        if (req.body.title) {
-            console.log(req.body.title, "1");
-            title = req.body.title;
-            resolve(title);
-        } else if (!req.body.title) {
-            Projects.findOne({
-                where: {
-                    projectId: req.body.projectId
-                }
-            }).then(project => {
 
-                console.log(project.title, '2');
+        Projects.findOne({
+            where: {
+                projectId: req.body.projectId
+            }
+        }).then(project => {
+            console.log(project, 'project in')
+            if (req.body.title) {
+                // console.log(req.body.title, "1");
+                title = req.body.title;
+                resolve([title, project]);
+            }
+            else if (!req.body.title) {
                 title = project.title;
-                resolve(title);
-            })
-        }
+                resolve([title, project]);
+            }
+
+            // console.log(project.title, '2');
+            // title = project.title;
+            // resolve(title);
+        })
+        // if (req.body.title) {
+        //     console.log(req.body.title, "1");
+        //     title = req.body.title;
+        //     resolve(title);
+        // } else if (!req.body.title) {
+        //     Projects.findOne({
+        //         where: {
+        //             projectId: req.body.projectId
+        //         }
+        //     }).then(project => {
+
+        //         console.log(project.title, '2');
+        //         title = project.title;
+        //         resolve(title);
+        //     })
+        // }
     });
 
     promise1.then((value) => {
+        // console.log(project, 'project')
+        // console.log(title, "@")
+        let lastImagePath = path.join(__dirname, '..', '..', '..', 'pictures', 'projects', req.body.projectId + '__' + value[1].title + '.jpg');
+        // console.log(lastImagePath, 'last');
 
-        console.log(title, "@")
-        let lastImagePath = '/pictures/projects/' + req.body.projectId + '__' + value + '.jpg';
-        let logo = config.get('app.webServer.baseUrl') + '/pictures/projects/' + req.body.projectId + '__' + value + '.jpg';
+        let logo = config.get('app.webServer.baseUrl') + '/pictures/projects/' + req.body.projectId + '__' + value[0] + '.jpg';
 
         Projects.update({
             title,
@@ -93,12 +116,19 @@ module.exports.editProject = async (req, res) => {
                                 projectId: req.body.projectId
                             }
                         })
-                    // try {
-                    //     fs.unlinkSync(lastImagePath)
-                    //     //file removed
-                    // } catch (err) {
-                    //     console.error(err)
-                    // }
+
+
+
+                    try {
+                        fs.unlinkSync(lastImagePath)
+                        //file removed
+                    } catch (err) {
+                        console.error(err)
+                    }
+
+
+
+
                     return res.status(200).json({
                         title: req.body.title,
                         description: req.body.description,
