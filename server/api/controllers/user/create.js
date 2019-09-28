@@ -8,9 +8,9 @@ const randomstring = require('randomstring');
 const Users = require('../../models/users');
 const errorHandler = require('../errorHandler');
 const NotConfirmedUsers = require('../../models/notConfirmedUsers');
-const mail = require('../mailController');
+const mailController = require('../mailController');
 
-const jwtSecret = config.get('app.webServer.jwtSecret');
+const jwtSecret = config.app.webServer.jwtSecret;
 
 exports.signUp = (req, res) => {
     // TODO FIX ERRORHANDLER
@@ -20,55 +20,100 @@ exports.signUp = (req, res) => {
     const errorsList = validationResult(req).errors;
     const handledErrorsList = errorHandler.handler(errorsList);
     if (Object.keys(handledErrorsList).length > 0) {
-        return res.status(422).json(handledErrorsList);
+        return res.status(422).json({
+            errorCode: '1',
+            errors: handledErrorsList
+        });
     }
     // hasing the password
     bcrypt.hash(req.body.password, 10, (err, hash) => {
+        // if hashing fails
         if (err) {
+            //hash fail
             return res.status(500).json({
                 message: 'sign up failed',
-                error: 'cannot hash',
-                err
+                errorCode: '20'
             });
         } else if (hash) {
+            //creating confirmation code
             let confirmationCode = randomstring.generate({
                 length: 4,
                 charset: 'numeric'
             });
-
-            mail
-                .emailVerification(req.body.email, confirmationCode)
-                .then((response) => {
-                    NotConfirmedUsers.create({
-                            userName: req.body.userName,
-                            email: req.body.email,
-                            name: req.body.name,
-                            password: hash,
-                            confirmationCode
-                        })
-
+            NotConfirmedUsers.create({
+                    userName: req.body.userName,
+                    email: req.body.email,
+                    name: req.body.name,
+                    password: hash,
+                    confirmationCode: confirmationCode
+                }).then((notConfirmeduser) => {
+                    //sending confirmation email
+                    mailController
+                        .emailVerification(req.body.email, confirmationCode)
+                    return res.status(200).json({
                         // sign up success
-                        .then((user) => {
-                            return res.status(200).json({
-                                message: 'sign up complete, email verfication sent',
-                                userName: user.userName,
-                                email: user.email,
-                                userId: user.userId
-                            });
-                        })
-                        // sign up failed
-                        .catch((err) => {
-                            return res.status(500).json({
-                                message: 'sign up failed',
-                                err
-                            });
-                        });
+                        message: 'sign up complete, email verfication sent',
+                        userName: notConfirmeduser.userName,
+                        email: notConfirmeduser.email,
+                        notConfirmedUserId: notConfirmeduser.userId
+                    });
+
+
+                })
+                .catch((err) => {
+                    //create fail
+                    return res.status(500).json({
+                        message: 'sign up failed',
+                        errorCode: '21',
+                        err
+                    });
                 });
+
         }
     });
 };
 
+module.exports.confirmEmail = (req, res) => {
+    const errorsList = validationResult(req).errors;
+    const handledErrorsList = errorHandler.handler(errorsList);
+    if (Object.keys(handledErrorsList).length > 0) {
+        return res.status(422).json(handledErrorsList);
+    }
+    NotConfirmedUsers.findAll({
+            where: {
+                email: req.body.email
+            }
+        })
+        .then((users) => {
+            let confirmedUser = users[0];
+            if (req.body.code == confirmedUser.confirmationCode) {
+                NotConfirmedUsers.destroy({
+                    where: {
+                        email: req.body.email
+                    }
+                });
+                Users.create({
+                    userName: confirmedUser.userName,
+                    email: confirmedUser.email,
+                    name: confirmedUser.name,
+                    password: confirmedUser.password,
+                    avatar: config.get('app.webServer.baseUrl') +
+                        '/pictures/users/defaultAvatar.jpg'
+                });
+                return res.status(200).json({
+                    message: 'your account has been activated'
+                });
+            }
+        })
+        .catch();
+};
+
 exports.signIn = (req, res) => {
+    const errorsList = validationResult(req).errors;
+    const handledErrorsList = errorHandler.handler(errorsList);
+    if (Object.keys(handledErrorsList).length > 0) {
+        return res.status(422).json(handledErrorsList);
+    }
     // finding the user in database with given email
     NotConfirmedUsers.findAll({
             where: {
@@ -145,35 +190,5 @@ exports.signIn = (req, res) => {
             }
         })
         // ! fix this shit
-        .catch();
-};
-
-
-module.exports.confirmEmail = (req, res) => {
-    NotConfirmedUsers.findAll({
-            where: {
-                email: req.body.email
-            }
-        })
-        .then((users) => {
-            let confirmedUser = users[0];
-            if (req.body.code == confirmedUser.confirmationCode) {
-                NotConfirmedUsers.destroy({
-                    where: {
-                        email: req.body.email
-                    }
-                });
-                Users.create({
-                    userName: confirmedUser.userName,
-                    email: confirmedUser.email,
-                    name: confirmedUser.name,
-                    password: confirmedUser.password,
-                    avatar: config.get('app.webServer.baseUrl') + '/pictures/users/defaultAvatar.jpg'
-                });
-                return res.status(200).json({
-                    message: 'your account has been activated'
-                });
-            }
-        })
         .catch();
 };

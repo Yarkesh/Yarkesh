@@ -76,11 +76,11 @@ const Stories = dbConnection.define('stories', {
 		allowNull: true
 	},
 	dependency: {
-		type: Sequelize.ARRAY(Sequelize.STRING),
+		type: Sequelize.ARRAY(Sequelize.INTEGER),
 		allowNull: true
 	},
 	assignment: {
-		type: Sequelize.ARRAY(Sequelize.STRING),
+		type: Sequelize.ARRAY(Sequelize.INTEGER),
 		allowNull: true
 	}
 

@@ -6,11 +6,11 @@ const Activities = require('../models/activities');
 
 module.exports.isMember = (req, res, next) => {
 	ProjectMembers.findAll({
-		where: {
-			memberId: req.user.userId,
-			projectId: req.body.projectId
-		}
-	})
+			where: {
+				memberId: req.user.userId,
+				projectId: req.body.projectId
+			}
+		})
 		.then((member) => {
 			if (member.length) {
 				return next();
@@ -30,11 +30,11 @@ module.exports.isMember = (req, res, next) => {
 
 module.exports.isCreator = (req, res, next) => {
 	Projects.findAll({
-		where: {
-			creatorId: req.user.userId,
-			projectId: req.body.projectId
-		}
-	})
+			where: {
+				creatorId: req.user.userId,
+				projectId: req.body.projectId
+			}
+		})
 		.then((creator) => {
 			if (creator.length) {
 				return next();

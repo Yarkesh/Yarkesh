@@ -12,7 +12,7 @@
 		}
 	},
 	"sql": {
-		"name": "Yarkesh",
+		"name": "Yarkesh DB",
 		"userName": "postgres",
 		"password": "123",
 		"host": "localhost"

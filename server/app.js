@@ -5,8 +5,15 @@ const cors = require('cors');
 const passport = require('passport');
 const sequelize = require('./api/models/databaseConnection');
 require('./api/middlewares/passportJWTConfig')(passport);
+var helmet = require('helmet')
 const router = require('./api/routes/router');
-const configuration = require('./api/models/configuration')
+const rateLimit = require("express-rate-limit");
+const limiter = rateLimit({
+	windowMs: 5 * 60 * 1000, // 5 minutes
+	max: 100 // limit each IP to 100 requests per windowMs
+});
+
+//  apply to all requests
 // ! --------------------------- MIDDLEWARES ---------------------------------------
 app.use(passport.initialize());
 app.use(
@@ -14,8 +21,10 @@ app.use(
 		extended: false
 	})
 );
+app.use(limiter);
 app.use(bodyParser.json());
 app.use(cors());
+app.use(helmet())
 
 
 app.use("/pictures", express.static(__dirname + '/pictures'));

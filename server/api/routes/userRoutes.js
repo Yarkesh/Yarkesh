@@ -4,10 +4,13 @@ const createUserController = require('../controllers/user/create');
 const deleteUserController = require('../controllers/user/delete');
 const editUserController = require('../controllers/user/edit');
 const infoUserController = require('../controllers/user/info');
-const validation = require('../controllers/validation');
+const signUpValidation = require('../validators/userValidator/signUpValidator');
+const signInValidation = require('../validators/userValidator/signInValidator');
 const upload = require('../middlewares/uploadMiddleware');
-router.post('/signup', validation.signUp, createUserController.signUp);
-router.post('/signin', createUserController.signIn);
+router.post('/signup',
+    signUpValidation.signUp,
+    createUserController.signUp);
+router.post('/signin', signInValidation.signIn, createUserController.signIn);
 
 router.get(
     '/singleUserInfo',
