@@ -21,8 +21,10 @@ module.exports.emailVerification = async (email, confirmationCode) => {
 			from: config.get('app.mail.mail'),
 			to: email,
 			subject: 'Kayer Confirmation Code',
-			text: `Hello , Please use this code to activate your account.
-			 code: ${confirmationCode}`
+			text: `Hello ,
+			Thanks for signing up.
+			Please use this code to activate your account.
+			code: ${confirmationCode}`
 		})
 		.then((result) => {
 			console.log(result);

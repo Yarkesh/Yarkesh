@@ -9,7 +9,6 @@ exports.signUp = [
 	// Email validation
 	check('email')
 	.custom((value) => !/\s/.test(value))
-	// .matches(!/\s/)
 	.withMessage('No spaces are allowed in the email')
 	.not()
 	.isEmpty()

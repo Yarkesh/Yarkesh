@@ -38,7 +38,6 @@ require('./api/models/databaseRelations');
 
 //* for just creating the database
 
-
 // configuration.create({
 // 	key: 'config',
 // 	value: {
@@ -58,6 +57,7 @@ require('./api/models/databaseRelations');
 // })
 
 sequelize.sync();
+
 //* For deleting database and creating again!
 
 // sequelize.sync({

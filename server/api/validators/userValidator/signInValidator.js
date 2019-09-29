@@ -6,85 +6,108 @@ const NotConfirmedUsers = require('../../models/notConfirmedUsers');
 const Stories = require('../../models/stories');
 const bcrypt = require('bcrypt');
 
-
-
 exports.signIn = [
     check('email')
+    .custom((value) => !/\s/.test(value))
+    .withMessage('No spaces are allowed in the email')
+    .not()
+    .isEmpty()
+    .withMessage('email cant be empty')
+    .isString()
+    .withMessage('email must be string')
     .isEmail()
     .normalizeEmail()
-    .withMessage(
-        'email is not valid'
-    )
+    .withMessage('email is not valid')
+    .isLength({
+        min: 7,
+        max: 50
+    })
+    .withMessage("email can't be more than 50 characters long")
     .custom((email) => {
-        return Users.findOne({
-            where: {
-                email: email
-            }
-        }).then((res) => {
-            if (!res) {
-                return NotConfirmedUsers.findOne({
-                    where: {
-                        email: email
-                    }
-                }).then((notConfirmed) => {
-                    if (notConfirmed) {
-                        return Promise.reject('email not confirmed , please confirm your email')
-                    } else {
+        return isConfirmed(email)
+            .catch(() => {
+                return isNotConfirmed(email)
+                    .catch(() => {
                         return Promise.reject('email not found');
-
-                    }
-                })
-
-
-            }
-        });
+                    })
+                    .then(() => {
+                        return Promise.reject(
+                            'email not activated. please confirm your email'
+                        );
+                    });
+            })
+            .then(() => {
+                return true;
+            });
     }),
+
     check('password')
     .custom((password, {
         req
     }) => {
+        return comparePassword(req.body.email, password).catch((err) => {
+            return Promise.reject(err)
+        }).then(() => {
+            return true
+        })
+    })
+
+];
+
+isConfirmed = (email) => {
+    return new Promise((resolve, reject) => {
         return Users.findOne({
             where: {
-                email: req.body.email
+                email: email
+            }
+        }).then((result) => {
+            if (result) {
+                return resolve();
+            } else {
+                return reject();
+            }
+        });
+    });
+};
+
+//this email exissts in notConfirmedUsers table
+isNotConfirmed = (email) => {
+    return new Promise((resolve, reject) => {
+        return NotConfirmedUsers.findOne({
+            where: {
+                email: email
+            }
+        }).then((result) => {
+            if (result) {
+                return resolve();
+            } else {
+                return reject();
+            }
+        });
+    });
+};
+
+comparePassword = (email, password) => {
+    return new Promise((resolve, reject) => {
+        return Users.findOne({
+            where: {
+                email: email
             }
         }).then((user) => {
             if (user) {
-                console.log(req.body)
-                bcrypt.compare(
-                    password,
-                    user.password,
-                    (err, check) => {
-                        if (err) {
-                            return Promise.reject('compare not successfull')
-                        } else
-                        if (!check) {
-                            return Promise.reject('password incorrect1')
-                        }
+                return bcrypt.compare(password, user.password, (error, correct) => {
+                    if (error) {
+                        return reject('compare not successfull');
+                    } else if (!correct) {
+                        return reject('password incorrect');
+                    } else if (correct) {
+                        return resolve();
                     }
-                );
+
+                });
             } else {
-                NotConfirmedUsers.findOne({
-                    where: {
-                        email: req.body.email
-                    }
-                }).then(notConfirmedUser => {
-                    if (notConfirmedUser) {
-                        bcrypt.compare(
-                            password,
-                            notConfirmedUser.password,
-                            (err, check) => {
-                                if (!check) {
-                                    Promise.reject('password incorrect2')
-                                }
-
-                            }
-                        );
-                    }
-
-                })
+                resolve()
             }
-        })
-
-    })
-
-]
+        });
+    });
+};

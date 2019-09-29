@@ -6,11 +6,17 @@ const editUserController = require('../controllers/user/edit');
 const infoUserController = require('../controllers/user/info');
 const signUpValidation = require('../validators/userValidator/signUpValidator');
 const signInValidation = require('../validators/userValidator/signInValidator');
+const confirmEmailValidation = require('../validators/userValidator/confirmEmailValidator');
+const forgotPasswordValidation = require('../validators/userValidator/forgotPasswordValidator');
+const changePasswordValidation = require('../validators/userValidator/changePasswordValidator');
+
 const upload = require('../middlewares/uploadMiddleware');
-router.post('/signup',
-    signUpValidation.signUp,
-    createUserController.signUp);
+
+router.post('/signup', signUpValidation.signUp, createUserController.signUp);
 router.post('/signin', signInValidation.signIn, createUserController.signIn);
+router.post('/confirmEmail', confirmEmailValidation.confirmEmail, createUserController.confirmEmail);
+router.post('/forgotpassword', forgotPasswordValidation.forgotPassword, editUserController.forgotPassword);
+router.post('/changepassword', changePasswordValidation.changePassword, editUserController.changePassword);
 
 router.get(
     '/singleUserInfo',
@@ -35,13 +41,10 @@ router.get(
     }),
     infoUserController.getUserProjects
 );
-router.post('/confirmEmail', createUserController.confirmEmail);
-router.post('/forgotpassword', editUserController.forgotPassword);
-router.post('/changepassword', editUserController.changePassword);
 
 router.delete(
     '/deleteuser',
-    passport.authenticate("jwt", {
+    passport.authenticate('jwt', {
         session: false
     }),
     deleteUserController.deleteUser
@@ -69,8 +72,6 @@ router.post(
     editUserController.editProfile
 );
 
-
-
 router.post(
     '/editproject',
     passport.authenticate('jwt', {
@@ -79,4 +80,4 @@ router.post(
     editUserController.editPassword
 );
 
-module.exports = router
+module.exports = router;

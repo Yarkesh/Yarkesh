@@ -93,10 +93,21 @@ Stories.belongsTo(Activities, {
 Stories.hasMany(Dependencies, {
 	foreignKey: 'storyId',
 	targetKey: 'storyId',
+	as: 'dependencies',
 	onUpdate: 'cascade',
 	onDelete: 'cascade',
-	hooks: true
+	constraints: false
+
 });
+
+Dependencies.belongsTo(Stories, {
+	foreignKey: 'dependsOn',
+	targetKey: 'storyId',
+	as: 'story',
+	onUpdate: 'cascade',
+	onDelete: 'cascade',
+	constraints: false
+})
 
 Assignment.belongsTo(Users, {
 	foreignKey: 'userId',
@@ -106,7 +117,7 @@ Assignment.belongsTo(Users, {
 Stories.hasMany(Assignment, {
 	foreignKey: 'storyId',
 	targetKey: 'storyId',
-	as: 'member',
+	as: 'assignedTo',
 	onUpdate: 'cascade',
 	onDelete: 'cascade',
 	hooks: true

@@ -1,7 +1,7 @@
 const configurationController = require('../controllers/configurationController');
 const router = require('express').Router();
 
-router.post(
+router.get(
     '/getconfiguration',
     configurationController.getConfiguration
 );
