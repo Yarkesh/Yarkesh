@@ -4,6 +4,8 @@ const moment = require('moment')
 const {
     Op
 } = require('sequelize')
+
+//why do we even have delete user ?
 module.exports.deleteUser = (req, res) => {
     Users.destroy({
             where: {
@@ -28,6 +30,7 @@ module.exports.deleteUser = (req, res) => {
         });
 };
 
+//TODO automate lateNotConfirmedUsers
 module.exports.findLateNotConfirmedUsers = (req, res) => {
     NotConfirmedUsers.destroy({
             where: {

@@ -9,6 +9,8 @@ const signInValidation = require('../validators/userValidator/signInValidator');
 const confirmEmailValidation = require('../validators/userValidator/confirmEmailValidator');
 const forgotPasswordValidation = require('../validators/userValidator/forgotPasswordValidator');
 const changePasswordValidation = require('../validators/userValidator/changePasswordValidator');
+const searchUserValidator = require('../validators/userValidator/userSearchValidator');
+const editPasswordValidator = require('../validators/userValidator/editPasswordValidator');
 
 const upload = require('../middlewares/uploadMiddleware');
 
@@ -17,6 +19,22 @@ router.post('/signin', signInValidation.signIn, createUserController.signIn);
 router.post('/confirmEmail', confirmEmailValidation.confirmEmail, createUserController.confirmEmail);
 router.post('/forgotpassword', forgotPasswordValidation.forgotPassword, editUserController.forgotPassword);
 router.post('/changepassword', changePasswordValidation.changePassword, editUserController.changePassword);
+router.post(
+    '/searchuser',
+    passport.authenticate('jwt', {
+        session: false
+    }),
+    searchUserValidator.userSearch,
+    infoUserController.searchUsers
+);
+router.post(
+    '/editpassword',
+    passport.authenticate('jwt', {
+        session: false
+    }),
+    editPasswordValidator.Validator,
+    editUserController.editPassword
+);
 
 router.get(
     '/singleUserInfo',
@@ -42,21 +60,7 @@ router.get(
     infoUserController.getUserProjects
 );
 
-router.delete(
-    '/deleteuser',
-    passport.authenticate('jwt', {
-        session: false
-    }),
-    deleteUserController.deleteUser
-);
 
-router.post(
-    '/searchuser',
-    passport.authenticate('jwt', {
-        session: false
-    }),
-    infoUserController.searchUsers
-);
 
 router.get(
     '/findlatenotconfirmedusers',
@@ -72,12 +76,5 @@ router.post(
     editUserController.editProfile
 );
 
-router.post(
-    '/editproject',
-    passport.authenticate('jwt', {
-        session: false
-    }),
-    editUserController.editPassword
-);
 
 module.exports = router;
