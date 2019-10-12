@@ -12,8 +12,8 @@ app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 app.listen(
-    process.env.PORT || 8585,
+    process.env.PORT || 3300,
     function () {
-        console.log(`Frontend start on http://localhost:8585`)
+        console.log(`Frontend start on http://localhost:3300`)
     }
 );
