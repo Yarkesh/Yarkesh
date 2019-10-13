@@ -135,7 +135,7 @@ module.exports.getProjectTimeline = (req, res) => {
             include: [{
                 model: Assignments,
                 attributes: ['userId'],
-                as: 'member'
+                as: 'assignedTo'
             }]
         }]
     }).then((sprints) => {
