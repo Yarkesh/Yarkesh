@@ -5,9 +5,10 @@ const cors = require('cors');
 const passport = require('passport');
 const sequelize = require('./api/models/databaseConnection');
 require('./api/middlewares/passportJWTConfig')(passport);
-var helmet = require('helmet')
+const helmet = require('helmet');
 const router = require('./api/routes/router');
-const rateLimit = require("express-rate-limit");
+const cron = require('node-cron');
+const rateLimit = require('express-rate-limit');
 const limiter = rateLimit({
 	windowMs: 5 * 60 * 1000, // 5 minutes
 	max: 100 // limit each IP to 100 requests per windowMs
@@ -24,10 +25,9 @@ app.use(
 app.use(limiter);
 app.use(bodyParser.json());
 app.use(cors());
-app.use(helmet())
+app.use(helmet());
 
-
-app.use("/pictures", express.static(__dirname + '/pictures'));
+app.use('/pictures', express.static(__dirname + '/pictures'));
 
 // ? ---------------------- ROUTES ------------------------------
 
@@ -37,26 +37,18 @@ app.use('/api', router);
 require('./api/models/databaseRelations');
 
 //* for just creating the database
-
-// configuration.create({
-// 	key: 'config',
-// 	value: {
-// 		story: {
-// 			status: [
-// 				"Todo", "In Progress", "Done", "Done Done"
-// 			],
-// 			priority: [
-// 				"Could", "Should", "Must"
-// 			]
-// 		},
-// 		sprint: {
-// 			status: ['Done', 'Active', 'Future']
-// 		}
-
-// 	}
-// })
-
 sequelize.sync();
+
+const job = cron.schedule(
+	'0 0 0 * * *',
+	() => {
+		console.log(new Date());
+		console.log('MESS');
+	}, {
+		timezone: 'Asia/Tehran'
+	}
+);
+job.start();
 
 //* For deleting database and creating again!
 
