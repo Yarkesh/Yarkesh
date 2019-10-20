@@ -8,6 +8,7 @@ require('./api/middlewares/passportJWTConfig')(passport);
 const helmet = require('helmet');
 const router = require('./api/routes/router');
 const cron = require('node-cron');
+const NotConfirmedUsers = require('./api/models/notConfirmedUsers');
 const rateLimit = require('express-rate-limit');
 const limiter = rateLimit({
 	windowMs: 5 * 60 * 1000, // 5 minutes
@@ -42,8 +43,16 @@ sequelize.sync();
 const job = cron.schedule(
 	'0 0 0 * * *',
 	() => {
-		console.log(new Date());
-		console.log('MESS');
+
+		NotConfirmedUsers.destroy({
+			where: {
+				createdAt: {
+					[Op.lt]: moment().subtract(1, 'seconds').toDate()
+				}
+			}
+		}).then(() => {
+			console.log("DESTROYED")
+		})
 	}, {
 		timezone: 'Asia/Tehran'
 	}

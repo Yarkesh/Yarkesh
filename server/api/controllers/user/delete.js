@@ -28,25 +28,13 @@ module.exports.deleteUser = (req, res) => {
         });
 };
 
-module.exports.findLateNotConfirmedUsers = (req, res) => {
+module.exports.findLateNotConfirmedUsers = () => {
     NotConfirmedUsers.destroy({
-            where: {
-                createdAt: {
-                    [Op.lt]: moment().subtract(1, 'days').toDate()
-                }
+        where: {
+            createdAt: {
+                [Op.lt]: moment().subtract(1, 'seconds').toDate()
             }
-        })
-        .then((lateUsers) => {
-            return res.status(200).json({
-                numberOfDestoryedUsers: lateUsers
-            });
+        }
+    })
 
-        })
-        .catch((err) => {
-            return res.status(500).json({
-                err
-            });
-        });
 };
-
-
