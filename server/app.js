@@ -7,9 +7,9 @@ const sequelize = require('./api/models/databaseConnection');
 require('./api/middlewares/passportJWTConfig')(passport);
 const helmet = require('helmet');
 const router = require('./api/routes/router');
-const cron = require('node-cron');
-const NotConfirmedUsers = require('./api/models/notConfirmedUsers');
+const scriptRunner = require('./api/scripts/scriptRunner');
 const rateLimit = require('express-rate-limit');
+const moment = require('moment')
 const limiter = rateLimit({
 	windowMs: 5 * 60 * 1000, // 5 minutes
 	max: 100 // limit each IP to 100 requests per windowMs
@@ -40,24 +40,7 @@ require('./api/models/databaseRelations');
 //* for just creating the database
 sequelize.sync();
 
-const job = cron.schedule(
-	'0 0 0 * * *',
-	() => {
-
-		NotConfirmedUsers.destroy({
-			where: {
-				createdAt: {
-					[Op.lt]: moment().subtract(1, 'seconds').toDate()
-				}
-			}
-		}).then(() => {
-			console.log("DESTROYED")
-		})
-	}, {
-		timezone: 'Asia/Tehran'
-	}
-);
-job.start();
+scriptRunner.runAllScripts()
 
 //* For deleting database and creating again!
 

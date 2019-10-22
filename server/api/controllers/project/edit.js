@@ -4,35 +4,23 @@ const Sprints = require('../../models/sprints');
 const config = require('config');
 const path = require('path');
 const Resize = require('../image/Resize');
+
 module.exports.setActiveSprint = (req, res) => {
     Sprints.findOne({
         where: {
-            sprintId: req.body.activeSprint,
+            sprintId: req.body.activeSprintId,
             projectId: req.body.projectId
         }
     }).then((sprint) => {
         if (sprint) {
-            Projects.update(
-                {
-                    activeSprint: req.body.activeSprint
-                },
-                {
-                    where: {
-                        projectId: req.body.projectId
-                    }
+            Projects.update({
+                activeSprintId: req.body.activeSprintId
+            }, {
+                where: {
+                    projectId: req.body.projectId
                 }
-            )
-                .then((updated) => {
-                    return res.status(200).json({
-                        updated
-                    });
-                })
-                .catch((err) => {
-                    return res.status(500).json({
-                        message: 'cant change activesprint',
-                        err
-                    });
-                });
+            })
+
         } else {
             return res.status(500).json({
                 message: 'sprint not found'
@@ -48,11 +36,11 @@ module.exports.editProject = (req, res) => {
     const fileUpload = new Resize(imagePath, info);
     let imageUrl = config.get('app.webServer.baseUrl') + '/pictures/projects/' + req.body.projectId + '__' + req.body.title + '.jpg';
     Projects.update({
-        title: req.body.title,
-        description: req.body.description,
-        sprintDuration: req.body.sprintDuration,
-        logo: imageUrl
-    }, {
+            title: req.body.title,
+            description: req.body.description,
+            sprintDuration: req.body.sprintDuration,
+            logo: imageUrl
+        }, {
             where: {
                 projectId: req.body.projectId
             }

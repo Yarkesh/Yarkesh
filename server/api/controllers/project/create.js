@@ -7,12 +7,12 @@ exports.createProject = (req, res) => {
 
     // creating project with foreign key for user
     Projects.create({
-        title: req.body.title,
-        description: req.body.description,
-        creatorId: req.user.userId,
-        sprintDuration: req.body.sprintDuration,
-        logo: config.get('app.webServer.baseUrl') + "/pictures/projects/defaultLogo.jpg"
-    })
+            title: req.body.title,
+            description: req.body.description,
+            creatorId: req.user.userId,
+            sprintDuration: req.body.sprintDuration,
+            logo: config.get('app.webServer.baseUrl') + "/pictures/projects/defaultLogo.jpg"
+        })
         .then((project) => {
             var now = new Date(project.createdAt.getTime() + 2)
             var now2 = new Date(project.createdAt);
@@ -34,19 +34,19 @@ exports.createProject = (req, res) => {
                     dueDate: now2.setDate(now2.getDate())
                 }).then((sprint) => {
                     Projects.update({
-                        activeSprint: sprint.sprintId,
+                        activeSprintId: sprint.sprintId,
                         defaultSprintId: sprint.sprintId,
                         defaultActivityId: activity.activityId
                     }, {
-                            where: {
-                                projectId: project.projectId
-                            }
-                        });
+                        where: {
+                            projectId: project.projectId
+                        }
+                    });
                     return res.status(200).json({
                         title: project.title,
                         projectId: project.projectId,
                         description: project.description,
-                        activeSprint: sprint.sprintName,
+                        activeSprintId: sprint.sprintId,
                         createdAt: project.createdAt,
                         creator: {
                             name: req.user.name
