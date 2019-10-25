@@ -6,8 +6,6 @@ const Activities = require('../../models/activities');
 const Milestone = require('../../models/milestone');
 const Assignments = require('../../models/assignments');
 
-
-
 exports.getProjectsByCreatorId = (req, res) => {
     // finding projects created by this certain user
     Projects.findAll({
@@ -22,11 +20,11 @@ exports.getProjectsByCreatorId = (req, res) => {
         })
         .catch((err) => {
             return res.status(500).json({
-                err
+                message: 'cant find project',
+                errorCode: '355'
             });
         });
 };
-
 
 
 exports.getProjectDetails = (req, res) => {
@@ -41,7 +39,7 @@ exports.getProjectDetails = (req, res) => {
                 },
                 {
                     model: Sprints,
-                    attributes: ['sprintName'],
+                    attributes: ['sprintName', 'sprintId'],
                     as: 'activeSprint'
                 }
             ]
@@ -51,12 +49,14 @@ exports.getProjectDetails = (req, res) => {
                 projectInfo
             });
         })
-        .catch((err) => {
+        .catch(() => {
             return res.status(500).json({
-                err
+                message: 'couldnt find project',
+                errorCode: '350'
             });
         });
 };
+
 //storymap
 module.exports.getPorjectSprints = (req, res) => {
     Projects.findOne({
@@ -94,65 +94,81 @@ module.exports.getPorjectSprints = (req, res) => {
         })
         .catch((err) => {
             return res.status(500).json({
-                err
+                message: 'couldnt find project',
+                errorCode: '351'
             });
         });
 };
 
+
 module.exports.getPorjectSprintsDetails2 = (req, res) => {
     Sprints.findAll({
-        where: {
-            projectId: req.body.projectId
-        },
-        attributes: ['sprintId', 'sprintName'],
-        order: ['createdAt'],
-        include: [{
-            model: Stories,
-            attributes: ['storyId', 'storyName'],
-            as: 'stories'
-        }]
-    }).then((sprints) => {
-        pool = sprints[0];
-        sprints.splice(0, 1);
-        return res.status(200).json({
-            Pool: pool,
-            Others: sprints
-        });
-    });
+            where: {
+                projectId: req.body.projectId
+            },
+            attributes: ['sprintId', 'sprintName'],
+            order: ['createdAt'],
+            include: [{
+                model: Stories,
+                attributes: ['storyId', 'storyName'],
+                as: 'stories'
+            }]
+        }).then((sprints) => {
+            //nice coding meti. nice job :))))))
+            pool = sprints[0];
+            sprints.splice(0, 1);
+            return res.status(200).json({
+                Pool: pool,
+                Others: sprints
+            });
+        })
+        .catch(() => {
+            return res.status(500).json({
+                message: 'couldnt find Sprints',
+                errorCode: '352'
+            });
+        })
 };
 
 module.exports.getProjectTimeline = (req, res) => {
     Sprints.findAll({
-        where: {
-            projectId: req.body.projectId
-        },
-        attributes: ['sprintId', 'sprintName', 'startDate', 'duration', 'dueDate'],
-        order: ['startDate'],
-        include: [{
-            model: Stories,
-            attributes: ['storyId', 'storyName', 'storyPoint'],
-            as: 'stories',
-            include: [{
-                model: Assignments,
-                attributes: ['userId'],
-                as: 'member'
-            }]
-        }]
-    }).then((sprints) => {
-        Milestone.findAll({
             where: {
                 projectId: req.body.projectId
             },
-            attributes: ['milestoneId', 'description', 'dueDate']
-        }).then(milestone => {
-            return res.status(200).json({
-                sprints: sprints,
-                milestone: milestone
-            })
-        }).catch(err => {
-            return res.status(500).json({
-                err
+            attributes: ['sprintId', 'sprintName', 'startDate', 'duration', 'dueDate'],
+            order: ['startDate'],
+            include: [{
+                model: Stories,
+                attributes: ['storyId', 'storyName', 'storyPoint'],
+                as: 'stories',
+                include: [{
+                    model: Assignments,
+                    attributes: ['userId'],
+                    as: 'assignedTo'
+                }]
+            }]
+        }).then((sprints) => {
+            Milestone.findAll({
+                where: {
+                    projectId: req.body.projectId
+                },
+                attributes: ['milestoneId', 'description', 'dueDate']
+            }).then(milestone => {
+                return res.status(200).json({
+                    sprints: sprints,
+                    milestone: milestone
+                })
+            }).catch(err => {
+                return res.status(500).json({
+                    message: 'couldnt find milestone',
+                    errorCode: '354'
+                });
             })
         })
-    });
+        .catch(() => {
+            return res.status(500).json({
+                message: 'couldnt find Sprints',
+                errorCode: '353'
+            });
+        })
 };

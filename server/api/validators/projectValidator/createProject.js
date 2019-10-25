@@ -15,7 +15,6 @@ exports.Validator = [
     })
     .withMessage('title must be  between 2 and 32 characters long'),
 
-    ,
     check('description')
     // .not()
     // .isEmpty()
@@ -27,7 +26,7 @@ exports.Validator = [
     })
     .withMessage('description cant be more than 500 characters long'),
 
-    ,
+
     check('sprintDuration')
     .isNumeric()
     .withMessage('sprintDuration must be a number')

@@ -29,25 +29,3 @@ module.exports.deleteUser = (req, res) => {
             });
         });
 };
-
-//TODO automate lateNotConfirmedUsers
-module.exports.findLateNotConfirmedUsers = (req, res) => {
-    NotConfirmedUsers.destroy({
-            where: {
-                createdAt: {
-                    [Op.lt]: moment().subtract(1, 'days').toDate()
-                }
-            }
-        })
-        .then((lateUsers) => {
-            return res.status(200).json({
-                numberOfDestoryedUsers: lateUsers
-            });
-
-        })
-        .catch((err) => {
-            return res.status(500).json({
-                err
-            });
-        });
-};

@@ -26,14 +26,14 @@ exports.Validator = [
     .withMessage('projectId must be a number'),
 
 
-    check('status')
-    //TODO fix this to get status from the status table
-    .isIn()
-    .not()
-    .isEmpty()
-    .withMessage('status cant be empty')
-    .isString()
-    .withMessage('status must be string')
+    // check('status')
+    // //TODO fix this to get status from the status table
+    // // .isIn()
+    // // .not()
+    // // .isEmpty()
+    // .withMessage('status cant be empty')
+    // .isString()
+    // .withMessage('status must be string')
 
 
 ]

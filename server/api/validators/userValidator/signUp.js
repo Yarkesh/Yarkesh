@@ -1,6 +1,8 @@
 const {
-	check
+	check,
+	validationResult
 } = require('express-validator');
+const errorHandler = require('../../controllers/errorHandler');
 const Users = require('../../models/users');
 const NotConfirmedUsers = require('../../models/notConfirmedUsers');
 
@@ -215,4 +217,17 @@ isUserNameAvailable = (userName) => {
 		});
 	}) //looking in confirmed users for email
 
+}
+
+module.exports.isValid = (req, res, next) => {
+	const errorsList = validationResult(req).errors;
+	const handledErrorsList = errorHandler.handler(errorsList);
+	if (Object.keys(handledErrorsList).length > 0) {
+		return res.status(422).json({
+			errorCode: '1',
+			errors: handledErrorsList
+		});
+	} else {
+		next()
+	}
 }

@@ -27,10 +27,10 @@ module.exports.emailVerification = async (email, confirmationCode) => {
 			code: ${confirmationCode}`
 		})
 		.then((result) => {
-			console.log(result);
+			// console.log(result);
 		})
 		.catch((err) => {
-			console.log(err);
+			// console.log(err);
 		});
 };
 
@@ -68,10 +68,10 @@ module.exports.forgotPassword = async (email, forgotPasswordCode) => {
 			// plain text body
 		})
 		.then((result) => {
-			console.log(result);
+			// console.log(result);
 		})
 		.catch((err) => {
-			console.log(err);
+			// console.log(err);
 		});
 	// console.log('Message sent: %s', info.messageId);
 	// Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>

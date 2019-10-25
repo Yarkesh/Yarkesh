@@ -4,27 +4,29 @@ const createUserController = require('../controllers/user/create');
 const deleteUserController = require('../controllers/user/delete');
 const editUserController = require('../controllers/user/edit');
 const infoUserController = require('../controllers/user/info');
-const signUpValidation = require('../validators/userValidator/signUpValidator');
-const signInValidation = require('../validators/userValidator/signInValidator');
-const confirmEmailValidation = require('../validators/userValidator/confirmEmailValidator');
-const forgotPasswordValidation = require('../validators/userValidator/forgotPasswordValidator');
-const changePasswordValidation = require('../validators/userValidator/changePasswordValidator');
-const searchUserValidator = require('../validators/userValidator/userSearchValidator');
-const editPasswordValidator = require('../validators/userValidator/editPasswordValidator');
+const signUpValidation = require('../validators/userValidator/signUp');
+const signInValidation = require('../validators/userValidator/signIn');
+const confirmEmailValidation = require('../validators/userValidator/confirmEmail');
+const forgotPasswordValidation = require('../validators/userValidator/forgotPassword');
+const changePasswordValidation = require('../validators/userValidator/changePassword');
+const searchUserValidator = require('../validators/userValidator/userSearch');
+const editPasswordValidator = require('../validators/userValidator/editPassword');
+const errorHandler = require('../controllers/errorHandler');
 
 const upload = require('../middlewares/uploadMiddleware');
 
-router.post('/signup', signUpValidation.signUp, createUserController.signUp);
-router.post('/signin', signInValidation.signIn, createUserController.signIn);
-router.post('/confirmEmail', confirmEmailValidation.confirmEmail, createUserController.confirmEmail);
-router.post('/forgotpassword', forgotPasswordValidation.forgotPassword, editUserController.forgotPassword);
-router.post('/changepassword', changePasswordValidation.changePassword, editUserController.changePassword);
+router.post('/signup', signUpValidation.signUp, errorHandler.isValid, createUserController.signUp);
+router.post('/signin', signInValidation.signIn, errorHandler.isValid, createUserController.signIn);
+router.post('/confirmEmail', confirmEmailValidation.confirmEmail, errorHandler.isValid, createUserController.confirmEmail);
+router.post('/forgotpassword', forgotPasswordValidation.forgotPassword, errorHandler.isValid, editUserController.forgotPassword);
+router.post('/changepassword', changePasswordValidation.changePassword, errorHandler.isValid, editUserController.changePassword);
 router.post(
     '/searchuser',
     passport.authenticate('jwt', {
         session: false
     }),
     searchUserValidator.userSearch,
+    errorHandler.isValid,
     infoUserController.searchUsers
 );
 router.post(
@@ -33,6 +35,7 @@ router.post(
         session: false
     }),
     editPasswordValidator.Validator,
+    errorHandler.isValid,
     editUserController.editPassword
 );
 
@@ -61,11 +64,6 @@ router.get(
 );
 
 
-
-router.get(
-    '/findlatenotconfirmedusers',
-    deleteUserController.findLateNotConfirmedUsers
-);
 
 router.post(
     '/editProfile',

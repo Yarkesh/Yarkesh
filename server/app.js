@@ -61,7 +61,7 @@ sequelize.sync();
 //* For deleting database and creating again!
 
 // sequelize.sync({
-// 	force: true
+// 	alter: true
 // });
 
 module.exports = app;

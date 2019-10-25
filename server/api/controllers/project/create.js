@@ -2,18 +2,9 @@ const Projects = require('../../models/projects');
 const ProjectMembers = require('../../models/projectMembers');
 const Sprints = require('../../models/sprints');
 const Activities = require('../../models/activities');
-const config = require('config')
+const config = require('config');
+
 exports.createProject = (req, res) => {
-    //createProject express validtaor
-    const errorsList = validationResult(req).errors;
-    const handledErrorsList = errorHandler.handler(errorsList);
-    if (Object.keys(handledErrorsList).length > 0) {
-        return res.status(422).json({
-            errorCode: '8',
-            errors: handledErrorsList
-        });
-    }
-    // creating project with foreign key for user
     Projects.create({
             title: req.body.title,
             description: req.body.description,
@@ -60,19 +51,20 @@ exports.createProject = (req, res) => {
                         })
                         .then((sprint) => {
                             Projects.update({
-                                    activeSprint: sprint.sprintId,
                                     defaultSprintId: sprint.sprintId,
                                     defaultActivityId: activity.activityId
                                 }, {
                                     where: {
                                         projectId: project.projectId
                                     }
-                                }).then(project => {
+                                }).then(() => {
+                                    //create project successfull
                                     return res.status(200).json({
-                                        title: project.title,
                                         projectId: project.projectId,
+                                        title: project.title,
                                         description: project.description,
-                                        activeSprint: sprint.sprintName,
+                                        defaultActivityId: activity.activityId,
+                                        defaultSprintId: sprint.sprintId,
                                         createdAt: project.createdAt,
                                         creator: {
                                             name: req.user.name

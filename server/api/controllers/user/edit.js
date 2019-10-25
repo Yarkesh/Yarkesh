@@ -12,15 +12,7 @@ const {
 const errorHandler = require('../errorHandler');
 
 module.exports.forgotPassword = (req, res) => {
-	//forgotPassword express validtaor
-	const errorsList = validationResult(req).errors;
-	const handledErrorsList = errorHandler.handler(errorsList);
-	if (Object.keys(handledErrorsList).length > 0) {
-		return res.status(422).json({
-			errorCode: '4',
-			errors: handledErrorsList
-		});
-	}
+
 	Users.findOne({
 			where: {
 				email: req.body.email
@@ -107,15 +99,7 @@ module.exports.forgotPassword = (req, res) => {
 };
 
 module.exports.changePassword = (req, res) => {
-	//changePassword express validtaor
-	const errorsList = validationResult(req).errors;
-	const handledErrorsList = errorHandler.handler(errorsList);
-	if (Object.keys(handledErrorsList).length > 0) {
-		return res.status(422).json({
-			errorCode: '5',
-			errors: handledErrorsList
-		});
-	}
+
 	Users.findOne({
 			where: {
 				email: req.body.email
@@ -245,7 +229,7 @@ module.exports.editProfile = (req, res) => {
 			});
 		})
 		.catch((err) => {
-			console.log(err);
+			// console.log(err);
 			return res.status(500).json({
 				editProfileError: err
 			});
@@ -253,15 +237,6 @@ module.exports.editProfile = (req, res) => {
 };
 
 module.exports.editPassword = (req, res) => {
-	//editPassword express validtaor
-	const errorsList = validationResult(req).errors;
-	const handledErrorsList = errorHandler.handler(errorsList);
-	if (Object.keys(handledErrorsList).length > 0) {
-		return res.status(422).json({
-			errorCode: '7',
-			errors: handledErrorsList
-		});
-	}
 
 	Users.findOne({
 		where: {

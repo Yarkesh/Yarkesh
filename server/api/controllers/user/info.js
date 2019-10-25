@@ -61,15 +61,6 @@ exports.getUserProjects = (req, res) => {
 
 
 module.exports.searchUsers = (req, res) => {
-	//confirm email express validtaor
-	const errorsList = validationResult(req).errors;
-	const handledErrorsList = errorHandler.handler(errorsList);
-	if (Object.keys(handledErrorsList).length > 0) {
-		return res.status(422).json({
-			errorCode: '6',
-			errors: handledErrorsList
-		});
-	}
 	var searchTerm = req.body.email;
 	Users.findAll({
 			where: {

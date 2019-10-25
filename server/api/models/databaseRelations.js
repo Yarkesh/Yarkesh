@@ -61,8 +61,8 @@ Projects.hasMany(Sprints, {
 	hooks: true
 });
 Projects.hasOne(Sprints, {
-	foreignKey: 'projectId',
-	targetKey: 'projectId',
+	foreignKey: 'activeSprintId',
+	targetKey: 'sprintId',
 	as: 'activeSprint'
 })
 Projects.hasOne(Sprints, {
