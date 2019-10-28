@@ -9,6 +9,10 @@ const Users = require('../../models/users');
 const errorHandler = require('../errorHandler');
 const NotConfirmedUsers = require('../../models/notConfirmedUsers');
 const mailController = require('../mailController');
+const Project = require('../../models/projects');
+const invitedEmails = require('../../models/invitedEmails');
+const _ = require('lodash');
+const ProjectMembers = require('../../models/projectMembers');
 
 const jwtSecret = config.app.webServer.jwtSecret;
 
@@ -80,8 +84,6 @@ module.exports.confirmEmail = (req, res) => {
             errors: handledErrorsList
         });
     }
-
-
     NotConfirmedUsers.findOne({
             where: {
                 email: req.body.email
@@ -99,10 +101,27 @@ module.exports.confirmEmail = (req, res) => {
                             password: user.password,
                             avatar: config.get('app.webServer.baseUrl') +
                                 '/pictures/users/defaultAvatar.jpg'
-                        }).then(confirmedUser => {
-                            return res.status(200).json({
-                                message: 'your account has been activated'
-                            });
+                        }).then(user => {
+                            invitedEmails.findAll({
+                                where: {
+                                    email: user.email
+                                }
+                            }).then((invites) => {
+                                projectIdList = (invites.map((invite) => {
+                                    return invite.projectId;
+                                }))
+                                _.forEach(projectIdList, (projectId) => {
+                                    ProjectMembers.create({
+                                        memberId: user.userId,
+                                        projectId: projectId
+                                    })
+                                })
+                                res.status(200).json({
+                                    message: 'your account has been activated'
+                                });
+                            })
+
+
                         })
                         .catch(() => {
                             return res.status(500).json({
@@ -183,3 +202,34 @@ exports.signIn = (req, res) => {
 
 
 };
+
+module.exports.inviteMember = (req, res) => {
+    Users.findOne({
+        where: {
+            userId: req.user.userId
+        }
+    }).then((user) => {
+        Project.findOne({
+            where: {
+                projectId: req.body.projectId
+            }
+        }).then((project) => {
+            mailController.inviteEmail(req.body.email, user, project, req.body.message)
+
+            invitedEmails.create({
+                inviterId: req.user.userId,
+                projectId: req.body.projectId,
+                email: req.body.email,
+                message: req.body.message
+            }).then((invitedEmail) => {
+                return res.status(200).json({
+                    invitedEmail,
+                    message: 'done'
+                })
+            })
+
+        })
+    })
+
+
+}

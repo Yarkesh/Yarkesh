@@ -9,7 +9,7 @@ const signInValidation = require('../validators/userValidator/signInValidator');
 const confirmEmailValidation = require('../validators/userValidator/confirmEmailValidator');
 const forgotPasswordValidation = require('../validators/userValidator/forgotPasswordValidator');
 const changePasswordValidation = require('../validators/userValidator/changePasswordValidator');
-
+const authenticateRoutes = require('../middlewares/authentication');
 const upload = require('../middlewares/uploadMiddleware');
 
 router.post('/signup', signUpValidation.signUp, createUserController.signUp);
@@ -73,11 +73,20 @@ router.post(
 );
 
 router.post(
-    '/editproject',
+    '/inviteMember',
     passport.authenticate('jwt', {
         session: false
     }),
-    editUserController.editPassword
-);
+    authenticateRoutes.isMember,
+    createUserController.inviteMember
+)
+
+// router.post(
+//     '/editproject',
+//     passport.authenticate('jwt', {
+//         session: false
+//     }),
+//     editUserController.editPassword
+// );
 
 module.exports = router;

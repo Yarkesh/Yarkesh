@@ -3,9 +3,8 @@ const nodemailer = require('nodemailer');
 const config = require('config');
 
 module.exports.emailVerification = async (email, confirmationCode) => {
-
 	let transporter = nodemailer.createTransport({
-		service: config.get('app.mail.servise'),
+		service: config.get('app.mail.service'),
 		secure: false,
 		auth: {
 			user: config.get('app.mail.mail'),
@@ -35,48 +34,66 @@ module.exports.emailVerification = async (email, confirmationCode) => {
 };
 
 module.exports.forgotPassword = async (email, forgotPasswordCode) => {
-	// Generate test SMTP service account from ethereal.email
-	// Only needed if you don't have a real mail account for testing
-	let testAccount = await nodemailer.createTestAccount();
 
-	// create reusable transporter object using the default SMTP transport
 	let transporter = nodemailer.createTransport({
-		// host: 'gmail',
-		service: 'gmail',
+		service: config.get('app.mail.service'),
 		secure: false,
 		auth: {
-			user: config.app.mail.mail,
-			// generated ethereal user
-			pass: config.app.mail.password
-			// generated ethereal password
+			user: config.get('app.mail.mail'),
+			pass: config.get('app.mail.password')
 		},
 		tls: {
 			rejectUnauthorized: false
 		}
 	});
-	// send mail with defined transport object
-	// TODO: fix this
+
 	let info = await transporter
 		.sendMail({
-			from: 'hoosht101@gmail.com',
-			// sender address
+			from: config.get('app.mail.mail'),
 			to: email,
-			// list of receivers
-			subject: 'Hello ✔ ',
-			// Subject line
-			text: `Hello world activation code: ${forgotPasswordCode}`
-			// plain text body
+			subject: 'Kayer Confirmation Code',
+			text: `Hello ,This is your code. Use it to set a new password: ${forgotPasswordCode}`
 		})
 		.then((result) => {
-			console.log(result);
+			// console.log(result);
 		})
 		.catch((err) => {
-			console.log(err);
+			// console.log(err);
 		});
-	// console.log('Message sent: %s', info.messageId);
-	// Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
-	// Preview only available when sending through an Ethereal account
-	// console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-	// Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+};
+
+
+
+module.exports.inviteEmail = async (email, sender, project, message) => {
+	let transporter = nodemailer.createTransport({
+		service: config.get('app.mail.service'),
+		secure: false,
+		auth: {
+			user: config.get('app.mail.mail'),
+			pass: config.get('app.mail.password')
+		},
+		tls: {
+			rejectUnauthorized: false
+		}
+	});
+	//deleted async from here
+	return transporter
+		.sendMail({
+			from: config.get('app.mail.mail'),
+			to: email,
+			subject: `Kayer invitaion`,
+			text: `Hello ,${sender.name} has invited you to join project ${project.title} on kayer
+with the message: ${message}
+you can signup from the link below
+----Link----
+			`
+		})
+		.then((result) => {
+			console.log('success')
+		})
+		.catch((err) => {
+			console.log('fail')
+		});
+
 };
