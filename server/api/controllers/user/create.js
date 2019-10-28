@@ -17,17 +17,6 @@ const ProjectMembers = require('../../models/projectMembers');
 const jwtSecret = config.app.webServer.jwtSecret;
 
 exports.signUp = (req, res) => {
-    // first we go to validation to validate the errors.
-    // then we get a list and we call errorHandler.handler on it
-    // then we get another list called handledErrorsList which contains errors
-    const errorsList = validationResult(req).errors;
-    const handledErrorsList = errorHandler.handler(errorsList);
-    if (Object.keys(handledErrorsList).length > 0) {
-        return res.status(422).json({
-            errorCode: '1',
-            errors: handledErrorsList
-        });
-    }
     // hasing the password
     bcrypt.hash(req.body.password, 10, (err, hash) => {
         // if hashing fails
@@ -75,15 +64,7 @@ exports.signUp = (req, res) => {
 };
 
 module.exports.confirmEmail = (req, res) => {
-    //confirm email express validtaor
-    const errorsList = validationResult(req).errors;
-    const handledErrorsList = errorHandler.handler(errorsList);
-    if (Object.keys(handledErrorsList).length > 0) {
-        return res.status(422).json({
-            errorCode: '2',
-            errors: handledErrorsList
-        });
-    }
+
     NotConfirmedUsers.findOne({
             where: {
                 email: req.body.email
@@ -152,16 +133,6 @@ module.exports.confirmEmail = (req, res) => {
 };
 
 exports.signIn = (req, res) => {
-    //signIn express validtaor
-    const errorsList = validationResult(req).errors;
-    const handledErrorsList = errorHandler.handler(errorsList);
-    if (Object.keys(handledErrorsList).length > 0) {
-        return res.status(422).json({
-            errorCode: '3',
-            errors: handledErrorsList
-        });
-    }
-
     Users.findOne({
         where: {
             email: req.body.email

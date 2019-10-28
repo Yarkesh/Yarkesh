@@ -5,6 +5,8 @@ const moment = require('moment')
 const {
     Op
 } = require('sequelize')
+
+
 module.exports.getSprintStories = (req, res) => {
     Sprint.findAll({
             where: {
@@ -21,10 +23,10 @@ module.exports.getSprintStories = (req, res) => {
                 sprints
             });
         })
-        .catch((err) => {
+        .catch(() => {
             return res.status(500).json({
-                message: 'Couldnt find sprints',
-
+                message: 'couldnt find sprint',
+                errorCode: '358'
             });
         });
 };
@@ -45,44 +47,44 @@ module.exports.getProjectSprints = (req, res) => {
         })
         .catch((err) => {
             return res.status(500).json({
-                message: 'Couldn\'t find sprints',
-
+                message: 'couldnt find sprints',
+                errorCode: '359'
             });
         });
 };
 
 
-module.exports.findActiveSprint = (req, res) => {
-    Sprint.findOne({
-            where: {
-                startDate: {
-                    [Op.lt]: moment()
-                },
-                dueDate: {
-                    [Op.gt]: moment()
-                },
-                projectId: req.body.projectId
-            },
-            attributes: ['sprintId', 'sprintName', 'startDate', 'duration', 'dueDate']
-        })
-        .then((sprint) => {
-            Project.update({
-                activeSprintId: sprint.sprintId
-            }, {
-                where: {
-                    projectId: req.body.projectId
-                }
-            }).then(project => {
-                res.status(200).json({
-                    message: "activesprint updated"
-                })
+// module.exports.findActiveSprint = (req, res) => {
+//     Sprint.findOne({
+//             where: {
+//                 startDate: {
+//                     [Op.lt]: moment()
+//                 },
+//                 dueDate: {
+//                     [Op.gt]: moment()
+//                 },
+//                 projectId: req.body.projectId
+//             },
+//             attributes: ['sprintId', 'sprintName', 'startDate', 'duration', 'dueDate']
+//         })
+//         .then((sprint) => {
+//             Project.update({
+//                 activeSprintId: sprint.sprintId
+//             }, {
+//                 where: {
+//                     projectId: req.body.projectId
+//                 }
+//             }).then(project => {
+//                 res.status(200).json({
+//                     message: "activesprint updated"
+//                 })
 
-            })
-        })
-        .catch((err) => {
-            return res.status(500).json({
-                message: 'Couldn\'t find sprints',
+//             })
+//         })
+//         .catch((err) => {
+//             return res.status(500).json({
+//                 message: 'Couldn\'t find sprints',
 
-            });
-        });
-};
+//             });
+//         });
+// };

@@ -2,10 +2,9 @@ const Projects = require('../../models/projects');
 const ProjectMembers = require('../../models/projectMembers');
 const Sprints = require('../../models/sprints');
 const Activities = require('../../models/activities');
-const config = require('config')
-exports.createProject = (req, res) => {
+const config = require('config');
 
-    // creating project with foreign key for user
+exports.createProject = (req, res) => {
     Projects.create({
             title: req.body.title,
             description: req.body.description,
@@ -19,47 +18,102 @@ exports.createProject = (req, res) => {
             ProjectMembers.create({
                 memberId: req.user.userId,
                 projectId: project.projectId
+            }).catch(() => {
+                return res.status(500).json({
+                    message: 'creating member failed',
+                    errorCode: '345'
+                });
             });
             Activities.create({
-                activityName: 'Default Activity',
-                projectId: project.projectId
-            }).then((activity) => {
+                    activityName: 'Default Activity',
+                    projectId: project.projectId
+                })
+                .catch(() => {
+                    return res.status(500).json({
+                        message: 'couldnt create activity',
+                        errorCode: '346'
+                    });
+                })
+                .then((activity) => {
+                    Sprints.create({
+                            projectId: project.projectId,
+                            sprintName: 'Story Pool',
+                            status: 'Open',
+                            startDate: now,
+                            duration: project.sprintDuration,
+                            dueDate: now2.setDate(now2.getDate())
+                        })
+                        .catch(() => {
+                            return res.status(500).json({
+                                message: 'couldnt create sprint',
+                                errorCode: '347'
+                            });
+                        })
+                        .then((sprint) => {
+                            Projects.update({
+                                    defaultSprintId: sprint.sprintId,
+                                    defaultActivityId: activity.activityId
+                                }, {
+                                    where: {
+                                        projectId: project.projectId
+                                    }
+                                }).then(() => {
+                                    //create project successfull
+                                    return res.status(200).json({
+                                        projectId: project.projectId,
+                                        title: project.title,
+                                        description: project.description,
+                                        defaultActivityId: activity.activityId,
+                                        defaultSprintId: sprint.sprintId,
+                                        createdAt: project.createdAt,
+                                        creator: {
+                                            name: req.user.name
+                                        }
+                                    });
+                                })
+                                .catch(() => {
+                                    return res.status(500).json({
+                                        message: 'couldnt update project',
+                                        errorCode: '348'
+                                    });
+                                })
 
-                Sprints.create({
-                    projectId: project.projectId,
-                    sprintName: 'Story Pool',
-                    status: 'Open',
-                    startDate: now,
-                    duration: project.sprintDuration,
-                    dueDate: now2.setDate(now2.getDate())
-                }).then((sprint) => {
-                    Projects.update({
-                        activeSprintId: sprint.sprintId,
-                        defaultSprintId: sprint.sprintId,
-                        defaultActivityId: activity.activityId
-                    }, {
-                        where: {
-                            projectId: project.projectId
-                        }
-                    });
-                    return res.status(200).json({
-                        title: project.title,
-                        projectId: project.projectId,
-                        description: project.description,
-                        activeSprintId: sprint.sprintId,
-                        createdAt: project.createdAt,
-                        creator: {
-                            name: req.user.name
-                        }
-                    });
+                            Sprints.create({
+                                projectId: project.projectId,
+                                sprintName: 'Story Pool',
+                                status: 'Open',
+                                startDate: now,
+                                duration: project.sprintDuration,
+                                dueDate: now2.setDate(now2.getDate())
+                            }).then((sprint) => {
+                                Projects.update({
+                                    activeSprintId: sprint.sprintId,
+                                    defaultSprintId: sprint.sprintId,
+                                    defaultActivityId: activity.activityId
+                                }, {
+                                    where: {
+                                        projectId: project.projectId
+                                    }
+                                });
+                                return res.status(200).json({
+                                    title: project.title,
+                                    projectId: project.projectId,
+                                    description: project.description,
+                                    activeSprintId: sprint.sprintId,
+                                    createdAt: project.createdAt,
+                                    creator: {
+                                        name: req.user.name
+                                    }
+                                });
+                            });
+                        })
                 });
-            })
-
         })
+
         .catch((err) => {
             return res.status(500).json({
-                message: 'Project FAILED !',
-                err
+                message: 'couldnt create project',
+                errorCode: '344'
             });
         });
 };

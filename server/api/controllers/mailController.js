@@ -90,10 +90,11 @@ you can signup from the link below
 			`
 		})
 		.then((result) => {
-			console.log('success')
+
+			// console.log(result);
 		})
 		.catch((err) => {
-			console.log('fail')
+			// console.log(err);
 		});
 
 };

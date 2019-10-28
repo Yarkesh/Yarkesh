@@ -2,6 +2,7 @@ const Sprint = require('../../models/sprints');
 const Project = require('../../models/projects');
 
 module.exports.createSprint = (req, res) => {
+
     getLastDueDate(req).then(lastSprint => {
         Project.findOne({
             where: {
@@ -12,14 +13,14 @@ module.exports.createSprint = (req, res) => {
             const end = new Date(lastSprint.getTime())
             let due = new Date(end.setDate(start.getDate() + project.sprintDuration))
             Sprint.create({
-                projectId: req.body.projectId,
-                sprintName: req.body.sprintName,
-                status: "future",
-                startDate: start,
-                duration: project.sprintDuration,
-                dueDate: due,
+                    projectId: req.body.projectId,
+                    sprintName: req.body.sprintName,
+                    status: "future",
+                    startDate: start,
+                    duration: project.sprintDuration,
+                    dueDate: due,
 
-            })
+                })
                 .then((sprint) => {
                     return res.status(200).json({
                         sprintId: sprint.sprintId,
@@ -31,10 +32,16 @@ module.exports.createSprint = (req, res) => {
                 })
                 .catch((err) => {
                     return res.status(500).json({
-                        err
+                        message: 'couldnt create sprint',
+                        errorCode: '357'
                     });
                 });
 
+        }).catch(() => {
+            return res.status(500).json({
+                message: 'couldnt create sprint',
+                errorCode: '356'
+            });
         })
 
     })
@@ -54,8 +61,8 @@ getLastDueDate = (req) => {
                 ['dueDate', 'DESC']
             ]
         }).then((sprint) => {
-            res(sprint.dueDate);
-        }
+                res(sprint.dueDate);
+            }
 
         ).catch(() => {
             rej()
