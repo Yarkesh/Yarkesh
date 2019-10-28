@@ -9,35 +9,35 @@ const config = require('config');
 
 exports.createUsers = (req, res, next) => {
     Users.create({
-        userName: 'ali',
+        nickName: 'ali',
         email: 'ali@ali.com',
         name: 'ali',
         password: '$2b$10$kMvKfmtilo4KbZqzIHPg8uBB33jZlj1Bpt9Eid.u7R2FprQ4BRIje',
         avatar: config.get('app.webServer.baseUrl') + '/pictures/users/defaultAvatar.jpg'
     });
     Users.create({
-        userName: 'mamad',
+        nickName: 'mamad',
         email: 'mamad@mamad.com',
         name: 'mamad',
         password: '$2b$10$kMvKfmtilo4KbZqzIHPg8uBB33jZlj1Bpt9Eid.u7R2FprQ4BRIje',
         avatar: config.get('app.webServer.baseUrl') + '/pictures/users/defaultAvatar.jpg'
     });
     Users.create({
-        userName: 'jack',
+        nickName: 'jack',
         email: 'jack@jack.com',
         name: 'jack',
         password: '$2b$10$kMvKfmtilo4KbZqzIHPg8uBB33jZlj1Bpt9Eid.u7R2FprQ4BRIje',
         avatar: config.get('app.webServer.baseUrl') + '/pictures/users/defaultAvatar.jpg'
     });
     Users.create({
-        userName: 'meti',
+        nickName: 'meti',
         email: 'meti@meti.com',
         name: 'meti',
         password: '$2b$10$kMvKfmtilo4KbZqzIHPg8uBB33jZlj1Bpt9Eid.u7R2FprQ4BRIje',
         avatar: config.get('app.webServer.baseUrl') + '/pictures/users/defaultAvatar.jpg'
     });
     Users.create({
-        userName: 'alij',
+        nickName: 'alij',
         email: 'alij@alij.com',
         name: 'alij',
         password: '$2b$10$kMvKfmtilo4KbZqzIHPg8uBB33jZlj1Bpt9Eid.u7R2FprQ4BRIje',

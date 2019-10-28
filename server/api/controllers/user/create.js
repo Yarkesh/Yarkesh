@@ -33,7 +33,7 @@ exports.signUp = (req, res) => {
                 charset: 'numeric'
             });
             NotConfirmedUsers.create({
-                    userName: req.body.userName,
+                    nickName: req.body.nickName,
                     email: req.body.email,
                     name: req.body.name,
                     password: hash,
@@ -45,7 +45,7 @@ exports.signUp = (req, res) => {
                     return res.status(200).json({
                         // sign up success
                         message: 'sign up complete, email verfication sent',
-                        userName: notConfirmeduser.userName,
+                        nickName: notConfirmeduser.nickName,
                         email: notConfirmeduser.email,
                         // notConfirmedUserId: notConfirmeduser.userId
                     });
@@ -76,7 +76,7 @@ module.exports.confirmEmail = (req, res) => {
                     }
                 }).then(() => {
                     Users.create({
-                            userName: user.userName,
+                            nickName: user.nickName,
                             email: user.email,
                             name: user.name,
                             password: user.password,
@@ -87,17 +87,22 @@ module.exports.confirmEmail = (req, res) => {
                                 where: {
                                     email: user.email
                                 }
-                            }).then((invites) => {
+                            }).then(async (invites) => {
                                 projectIdList = (invites.map((invite) => {
                                     return invite.projectId;
                                 }))
-                                _.forEach(projectIdList, (projectId) => {
+                                await _.forEach(projectIdList, (projectId) => {
                                     ProjectMembers.create({
                                         memberId: user.userId,
                                         projectId: projectId
                                     })
                                 })
-                                res.status(200).json({
+                                await invitedEmails.destroy({
+                                    where: {
+                                        email: user.email
+                                    }
+                                })
+                                await res.status(200).json({
                                     message: 'your account has been activated'
                                 });
                             })
@@ -142,7 +147,7 @@ exports.signIn = (req, res) => {
             name: user.name,
             email: user.email,
             userId: user.userId,
-            userName: user.userName,
+            nickName: user.nickName,
             avatar: user.avatar
         };
         jwt.sign(
@@ -173,34 +178,3 @@ exports.signIn = (req, res) => {
 
 
 };
-
-module.exports.inviteMember = (req, res) => {
-    Users.findOne({
-        where: {
-            userId: req.user.userId
-        }
-    }).then((user) => {
-        Project.findOne({
-            where: {
-                projectId: req.body.projectId
-            }
-        }).then((project) => {
-            mailController.inviteEmail(req.body.email, user, project, req.body.message)
-
-            invitedEmails.create({
-                inviterId: req.user.userId,
-                projectId: req.body.projectId,
-                email: req.body.email,
-                message: req.body.message
-            }).then((invitedEmail) => {
-                return res.status(200).json({
-                    invitedEmail,
-                    message: 'done'
-                })
-            })
-
-        })
-    })
-
-
-}

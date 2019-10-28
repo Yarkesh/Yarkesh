@@ -66,61 +66,36 @@ exports.signUp = [
 	}),
 
 	// username validation
-	check('userName')
-	.custom((value) => !/\s/.test(value))
-	// .matches(/\s/)
-	.withMessage('No spaces are allowed in the username')
+	check('nickName')
+	// .custom((value) => !/\s/.test(value))
+	// // .matches(/\s/)
+	// .withMessage('No spaces are allowed in the nickName')
 	.not()
 	.isEmpty()
-	.withMessage('userName cant be empty')
-	.trim()
-	.escape()
+	.withMessage('nickName cant be empty')
+	// .trim()
+	// .escape()
 	.isString()
-	.withMessage('username must be string')
+	.withMessage('nickName must be string')
 	.isLength({
 		min: 2,
 		max: 32
 	})
-	.withMessage('username must be  between 2 and 32 characters long')
-
-	//1
-
-	// .custom((userName) => {
-	// 	return Users.findAll({
-	// 		where: {
-	// 			userName: userName
-	// 		}
-	// 	}).then((res) => {
-	// 		if (res.length) {
-	// 			return Promise.reject('userName already in use');
-	// 		}
-	// 	});
-	// })
-	// .custom((userName) => {
-	// 	return NotConfirmedUsers.findAll({
-	// 		where: {
-	// 			userName: userName
-	// 		}
-	// 	}).then((res) => {
-	// 		if (res.length) {
-	// 			return Promise.reject('userName already in use');
-	// 		}
-	// 	});
-	// }),
+	.withMessage('nickName must be  between 2 and 32 characters long')
 
 
 	//2
 
-	.custom((userName) => {
-		return isUserNameAvailable(userName).then(() => {
-				return true;
-			})
-			.catch(() => {
-				return Promise.reject('userName already in use')
-			})
+	// .custom((nickName) => {
+	// 	return isUserNameAvailable(userName).then(() => {
+	// 			return true;
+	// 		})
+	// 		.catch(() => {
+	// 			return Promise.reject('userName already in use')
+	// 		})
 
-	}),
-
+	// }),
+	,
 
 	// name validation
 	check('name')
@@ -190,34 +165,34 @@ isEmailAvailable = (email) => {
 
 }
 
-isUserNameAvailable = (userName) => {
-	return new Promise((resolve, reject) => {
-		Users.findOne({
-			where: {
-				userName: userName
-			}
-		}).then((result) => {
-			if (result) {
-				reject();
-			} else {
-				//looking in notconfirmed users for email
-				NotConfirmedUsers.findOne({
-					where: {
-						userName: userName
-					}
-				}).then((result) => {
-					if (result) {
-						reject();
-					} else {
-						// didn't find a match in either table
-						resolve()
-					}
-				});
-			}
-		});
-	}) //looking in confirmed users for email
+// isUserNameAvailable = (userName) => {
+// 	return new Promise((resolve, reject) => {
+// 		Users.findOne({
+// 			where: {
+// 				userName: userName
+// 			}
+// 		}).then((result) => {
+// 			if (result) {
+// 				reject();
+// 			} else {
+// 				//looking in notconfirmed users for email
+// 				NotConfirmedUsers.findOne({
+// 					where: {
+// 						userName: userName
+// 					}
+// 				}).then((result) => {
+// 					if (result) {
+// 						reject();
+// 					} else {
+// 						// didn't find a match in either table
+// 						resolve()
+// 					}
+// 				});
+// 			}
+// 		});
+// 	}) //looking in confirmed users for email
 
-}
+// }
 
 module.exports.isValid = (req, res, next) => {
 	const errorsList = validationResult(req).errors;

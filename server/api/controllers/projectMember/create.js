@@ -1,6 +1,8 @@
 const ProjectMembers = require('../../models/projectMembers');
 const Users = require('../../models/users');
-
+const Project = require('../../models/projects');
+const mailController = require('../../controllers/mailController');
+const invitedEmails = require('../../models/invitedEmails');
 
 exports.addMembers = (req, res, next) => {
     Users.findOne({
@@ -16,7 +18,7 @@ exports.addMembers = (req, res, next) => {
                     },
                     include: [{
                         model: Users,
-                        attributes: ['name', 'email', 'userName', 'userId', 'avatar']
+                        attributes: ['name', 'email', 'nickName', 'userId', 'avatar']
                     }]
                 })
                 .then((member) => {
@@ -25,7 +27,7 @@ exports.addMembers = (req, res, next) => {
                             error: 'This member is already a part of this project',
                             name: user.name,
                             email: user.email,
-                            userName: user.userName,
+                            nickName: user.nickName,
                             userId: user.userId,
                             avatar: user.avatar
                         });
@@ -39,7 +41,7 @@ exports.addMembers = (req, res, next) => {
                                     message: "member added to project",
                                     name: user.name,
                                     email: user.email,
-                                    userName: user.userName,
+                                    nickName: user.nickName,
                                     userId: user.userId,
                                     avatar: user.avatar
                                 })
@@ -63,3 +65,35 @@ exports.addMembers = (req, res, next) => {
     })
 
 };
+
+
+module.exports.inviteMember = (req, res) => {
+    Users.findOne({
+        where: {
+            userId: req.user.userId
+        }
+    }).then((user) => {
+        Project.findOne({
+            where: {
+                projectId: req.body.projectId
+            }
+        }).then((project) => {
+            mailController.inviteEmail(req.body.email, user, project, req.body.message)
+
+            invitedEmails.create({
+                inviterId: req.user.userId,
+                projectId: req.body.projectId,
+                email: req.body.email,
+                message: req.body.message
+            }).then((invitedEmail) => {
+                return res.status(200).json({
+                    invitedEmail,
+                    message: 'done'
+                })
+            })
+
+        })
+    })
+
+
+}

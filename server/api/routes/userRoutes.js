@@ -12,6 +12,7 @@ const changePasswordValidation = require('../validators/userValidator/changePass
 const searchUserValidator = require('../validators/userValidator/userSearch');
 const editPasswordValidator = require('../validators/userValidator/editPassword');
 const errorHandler = require('../controllers/errorHandler');
+const authenticateRoutes = require('../middlewares/authentication');
 
 const upload = require('../middlewares/uploadMiddleware');
 
@@ -74,14 +75,14 @@ router.post(
     editUserController.editProfile
 );
 
-router.post(
-    '/inviteMember',
-    passport.authenticate('jwt', {
-        session: false
-    }),
-    authenticateRoutes.isMember,
-    createUserController.inviteMember
-)
+// router.post(
+//     '/inviteMember',
+//     passport.authenticate('jwt', {
+//         session: false
+//     }),
+//     authenticateRoutes.isMember,
+//     createUserController.inviteMember
+// )
 
 // router.post(
 //     '/editproject',

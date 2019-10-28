@@ -78,34 +78,6 @@ exports.createProject = (req, res) => {
                                     });
                                 })
 
-                            Sprints.create({
-                                projectId: project.projectId,
-                                sprintName: 'Story Pool',
-                                status: 'Open',
-                                startDate: now,
-                                duration: project.sprintDuration,
-                                dueDate: now2.setDate(now2.getDate())
-                            }).then((sprint) => {
-                                Projects.update({
-                                    activeSprintId: sprint.sprintId,
-                                    defaultSprintId: sprint.sprintId,
-                                    defaultActivityId: activity.activityId
-                                }, {
-                                    where: {
-                                        projectId: project.projectId
-                                    }
-                                });
-                                return res.status(200).json({
-                                    title: project.title,
-                                    projectId: project.projectId,
-                                    description: project.description,
-                                    activeSprintId: sprint.sprintId,
-                                    createdAt: project.createdAt,
-                                    creator: {
-                                        name: req.user.name
-                                    }
-                                });
-                            });
                         })
                 });
         })

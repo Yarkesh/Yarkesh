@@ -10,7 +10,7 @@ exports.getProjectMembers = (req, res) => {
         attributes: [],
         include: [{
             model: Users,
-            attributes: ['name', 'email', 'userName', 'userId', 'avatar']
+            attributes: ['name', 'email', 'nickName', 'userId', 'avatar']
         }]
     }).then((members) => {
         return res.status(200).json({

@@ -20,11 +20,6 @@ exports.signIn = [
     .isEmail()
     .normalizeEmail()
     .withMessage('email is not valid')
-    .isLength({
-        min: 7,
-        max: 50
-    })
-    .withMessage("email can't be more than 50 characters long")
     .custom((email) => {
         return isConfirmed(email)
             .catch(() => {

@@ -9,10 +9,10 @@ const Users = dbConnection.define('users', {
 		autoIncrement: true,
 		allowNull: false
 	},
-	userName: {
+	nickName: {
 		allowNull: false,
 		type: Sequelize.STRING,
-		unique: true
+		unique: false
 	},
 	email: {
 		allowNull: false,

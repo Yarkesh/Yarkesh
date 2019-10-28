@@ -5,6 +5,8 @@ const deleteProjectMemberController = require('../controllers/projectMember/dele
 const editProjectMemberController = require('../controllers/projectMember/edit');
 const infoProjectMemberController = require('../controllers/projectMember/info');
 const authenticateRoutes = require('../middlewares/authentication');
+const inviteMemberValidator = require('../validators/projectMemberValidator/inviteMemberValidator');
+const errorHandler = require('../controllers/errorHandler');
 
 router.post(
 	'/addmembers',
@@ -39,4 +41,16 @@ router.delete(
 	authenticateRoutes.isMember,
 	editProjectMemberController.leaveProject
 );
+
+router.post(
+	'/inviteMember',
+	passport.authenticate('jwt', {
+		session: false
+	}),
+	inviteMemberValidator.Validator,
+	errorHandler.isValid,
+	authenticateRoutes.isMember,
+	createProjectMemberController.inviteMember
+)
+
 module.exports = router;
