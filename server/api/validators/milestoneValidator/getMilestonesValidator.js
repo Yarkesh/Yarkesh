@@ -4,7 +4,6 @@ const {
 
 exports.Validator = [
 
-
     check('projectId')
     .not()
     .isEmpty()

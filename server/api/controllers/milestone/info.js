@@ -5,17 +5,17 @@ module.exports.getMilestones = (req, res) => {
             where: {
                 projectId: req.body.projectId
             },
-            attributes: ['milestoneId', 'dueDate', 'description']
+            attributes: ['milestoneId', 'title', 'dueDate', 'description']
         })
         .then((milestones) => {
             return res.status(200).json({
                 milestones
             });
         })
-        .catch((err) => {
+        .catch(() => {
             return res.status(500).json({
-                message: 'Couldn\'t find milestones',
-
+                message: 'couldnt get milestones',
+                errorCode: '377',
             });
         });
 };

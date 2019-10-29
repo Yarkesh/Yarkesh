@@ -8,10 +8,11 @@ const authenticateRoutes = require('../middlewares/authentication');
 const createProjectValidator = require('../validators/projectValidator/createProject');
 const deleteProjectValidator = require('../validators/projectValidator/deleteProject');
 const getProjectDetailsValidator = require('../validators/projectValidator/projectDetails');
-const getProjetSprintsValidator = require('../validators/projectValidator/getProjectSprintsValidator');
+const getProjetSprintsValidator = require('../validators/projectValidator/getProjectSprints');
 const errorHandler = require('../controllers/errorHandler');
-const getProjectSprintsDetailsValidator = require('../validators/projectValidator/getProjectSprintDetailsValidator');
-const getProjectTimelineValidator = require('../validators/projectValidator/getProjectTimelineValidator');
+const getProjectSprintsDetailsValidator = require('../validators/projectValidator/getProjectSprintDetails');
+const getProjectTimelineValidator = require('../validators/projectValidator/getProjectTimeline');
+const editProjectValidator = require('../validators/projectValidator/editProject');
 const upload = require('../middlewares/uploadMiddleware');
 
 
@@ -65,18 +66,9 @@ router.post(
 	getProjetSprintsValidator.Validator,
 	errorHandler.isValid,
 	authenticateRoutes.isMember,
-	infoProjectController.getPorjectSprints
+	infoProjectController.getProjectSprints
 );
 
-
-// router.post(
-// 	'/setActiveSprint',
-// 	passport.authenticate('jwt', {
-// 		session: false
-// 	}),
-// 	authenticateRoutes.isCreator,
-// 	editProjectController.setActiveSprint
-// );
 
 router.post(
 	'/getprojectsprintsdetails',
@@ -86,7 +78,7 @@ router.post(
 	getProjectSprintsDetailsValidator.Validator,
 	errorHandler.isValid,
 	authenticateRoutes.isMember,
-	infoProjectController.getPorjectSprintsDetails2
+	infoProjectController.getPorjectSprintsDetails
 );
 
 router.post(
@@ -100,12 +92,14 @@ router.post(
 	infoProjectController.getProjectTimeline
 );
 
-router.post(
+router.patch(
 	'/editproject',
 	passport.authenticate('jwt', {
 		session: false
 	}),
 	upload.single('logo'),
+	editProjectValidator.Validator,
+	errorHandler.isValid,
 	authenticateRoutes.isMember,
 	editProjectController.editProject
 );

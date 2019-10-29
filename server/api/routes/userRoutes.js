@@ -12,21 +12,21 @@ const changePasswordValidation = require('../validators/userValidator/changePass
 const searchUserValidator = require('../validators/userValidator/userSearch');
 const editPasswordValidator = require('../validators/userValidator/editPassword');
 const errorHandler = require('../controllers/errorHandler');
-const authenticateRoutes = require('../middlewares/authentication');
+const editUserValidator = require('../validators/userValidator/editUser');
 
 const upload = require('../middlewares/uploadMiddleware');
 
-router.post('/signup', signUpValidation.signUp, errorHandler.isValid, createUserController.signUp);
-router.post('/signin', signInValidation.signIn, errorHandler.isValid, createUserController.signIn);
-router.post('/confirmEmail', confirmEmailValidation.confirmEmail, errorHandler.isValid, createUserController.confirmEmail);
-router.post('/forgotpassword', forgotPasswordValidation.forgotPassword, errorHandler.isValid, editUserController.forgotPassword);
-router.post('/changepassword', changePasswordValidation.changePassword, errorHandler.isValid, editUserController.changePassword);
+router.post('/signup', signUpValidation.Validator, errorHandler.isValid, createUserController.signUp);
+router.post('/signin', signInValidation.Validator, errorHandler.isValid, createUserController.signIn);
+router.post('/confirmEmail', confirmEmailValidation.Validator, errorHandler.isValid, createUserController.confirmEmail);
+router.post('/forgotpassword', forgotPasswordValidation.Validator, errorHandler.isValid, editUserController.forgotPassword);
+router.post('/changepassword', changePasswordValidation.Validator, errorHandler.isValid, editUserController.changePassword);
 router.post(
     '/searchuser',
     passport.authenticate('jwt', {
         session: false
     }),
-    searchUserValidator.userSearch,
+    searchUserValidator.Validator,
     errorHandler.isValid,
     infoUserController.searchUsers
 );
@@ -72,24 +72,10 @@ router.post(
         session: false
     }),
     upload.single('avatar'),
+    editUserValidator.Validator,
+    errorHandler.isValid,
     editUserController.editProfile
 );
 
-// router.post(
-//     '/inviteMember',
-//     passport.authenticate('jwt', {
-//         session: false
-//     }),
-//     authenticateRoutes.isMember,
-//     createUserController.inviteMember
-// )
-
-// router.post(
-//     '/editproject',
-//     passport.authenticate('jwt', {
-//         session: false
-//     }),
-//     editUserController.editPassword
-// );
 
 module.exports = router;

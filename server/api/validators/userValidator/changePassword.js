@@ -7,7 +7,7 @@ const Users = require('../../models/users');
 const NotConfirmedUsers = require('../../models/notConfirmedUsers');
 const bcrypt = require('bcrypt');
 
-exports.changePassword = [
+exports.Validator = [
     check('email')
     .custom((value) => !/\s/.test(value))
     .withMessage('No spaces are allowed in the email')

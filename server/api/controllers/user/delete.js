@@ -1,9 +1,4 @@
 const Users = require('../../models/users');
-const NotConfirmedUsers = require('../../models/notConfirmedUsers');
-const moment = require('moment')
-const {
-    Op
-} = require('sequelize')
 
 //why do we even have delete user ?
 module.exports.deleteUser = (req, res) => {
@@ -19,13 +14,15 @@ module.exports.deleteUser = (req, res) => {
                 });
             } else {
                 return res.status(500).json({
-                    error: "user couldn't be found"
-                })
+                    message: 'couldnt delete user',
+                    errorCode: '370'
+                });
             }
         })
-        .catch((err) => {
-            res.status(500).json({
-                err
+        .catch(() => {
+            return res.status(500).json({
+                message: 'couldnt delete user',
+                errorCode: '369'
             });
         });
 };

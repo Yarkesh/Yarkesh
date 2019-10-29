@@ -5,6 +5,7 @@ const Activities = require('../../models/activities');
 const config = require('config');
 
 exports.createProject = (req, res) => {
+    //create the project
     Projects.create({
             title: req.body.title,
             description: req.body.description,
@@ -15,6 +16,7 @@ exports.createProject = (req, res) => {
         .then((project) => {
             var now = new Date(project.createdAt.getTime() + 2)
             var now2 = new Date(project.createdAt);
+            //add creator as member
             ProjectMembers.create({
                 memberId: req.user.userId,
                 projectId: project.projectId
@@ -24,6 +26,7 @@ exports.createProject = (req, res) => {
                     errorCode: '345'
                 });
             });
+            //create default activity
             Activities.create({
                     activityName: 'Default Activity',
                     projectId: project.projectId
@@ -35,6 +38,7 @@ exports.createProject = (req, res) => {
                     });
                 })
                 .then((activity) => {
+                    //create default sprint
                     Sprints.create({
                             projectId: project.projectId,
                             sprintName: 'Story Pool',
@@ -50,6 +54,7 @@ exports.createProject = (req, res) => {
                             });
                         })
                         .then((sprint) => {
+                            //update project to have the default activity and default sprint
                             Projects.update({
                                     defaultSprintId: sprint.sprintId,
                                     defaultActivityId: activity.activityId
@@ -82,7 +87,7 @@ exports.createProject = (req, res) => {
                 });
         })
 
-        .catch((err) => {
+        .catch(() => {
             return res.status(500).json({
                 message: 'couldnt create project',
                 errorCode: '344'

@@ -52,9 +52,10 @@ exports.getUserProjects = (req, res) => {
 				})
 			);
 		})
-		.catch((err) => {
+		.catch(() => {
 			return res.status(500).json({
-				error: "Can't find user projects"
+				message: 'couldnt find project members',
+				errorCode: '368'
 			});
 		});
 };

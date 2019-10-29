@@ -1,23 +1,23 @@
 const Milestone = require('../../models/milestone');
-const Project = require('../../models/projects');
 
 module.exports.editMilestone = (req, res) => {
     Milestone.update({
+            title: req.body.title,
             description: req.body.description,
-            projectId: req.body.projectIdNew
         }, {
             where: {
                 milestoneId: req.body.milestoneId
             }
         })
-        .then((milestone) => {
+        .then(() => {
             return res.status(200).json({
-                milestone
+                message: "milestone updated"
             });
         })
-        .catch((err) => {
+        .catch(() => {
             return res.status(500).json({
-                err
+                message: 'couldnt update milestone',
+                errorCode: '374',
             });
         });
 

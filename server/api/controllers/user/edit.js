@@ -213,6 +213,7 @@ module.exports.editProfile = (req, res) => {
 		'.jpg';
 	Users.update({
 			name: req.body.name,
+			nickName: req.body.nickName,
 			avatar: imageUrl
 		}, {
 			where: {
@@ -225,13 +226,15 @@ module.exports.editProfile = (req, res) => {
 			}
 			return res.status(200).json({
 				name: req.body.name,
+				nickName: req.body.nickName,
 				imageUrl
 			});
 		})
 		.catch((err) => {
 			// console.log(err);
 			return res.status(500).json({
-				editProfileError: err
+				message: 'couldnt update user',
+				errorCode: '367'
 			});
 		});
 };

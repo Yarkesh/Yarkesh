@@ -4,7 +4,7 @@ const {
 } = require('express-validator');
 const errorHandler = require('../../controllers/errorHandler');
 
-exports.userSearch = [
+exports.Validator = [
     check('email')
     .custom((value) => !/\s/.test(value))
     .withMessage('No spaces are allowed in the email')

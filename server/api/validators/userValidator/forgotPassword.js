@@ -6,7 +6,7 @@ const errorHandler = require('../../controllers/errorHandler');
 const Users = require('../../models/users');
 const NotConfirmedUsers = require('../../models/notConfirmedUsers');
 
-exports.forgotPassword = [
+exports.Validator = [
     check('email')
     .custom((value) => !/\s/.test(value))
     .withMessage('No spaces are allowed in the email')

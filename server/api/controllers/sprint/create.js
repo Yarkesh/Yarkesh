@@ -30,7 +30,7 @@ module.exports.createSprint = (req, res) => {
                         dueDate: sprint.dueDate
                     });
                 })
-                .catch((err) => {
+                .catch(() => {
                     return res.status(500).json({
                         message: 'couldnt create sprint',
                         errorCode: '357'

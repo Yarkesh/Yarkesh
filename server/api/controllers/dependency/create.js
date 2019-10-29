@@ -49,6 +49,7 @@ const isDependencyInProject = (projectId, dependsOnId) => {
         })
     })
 };
+
 module.exports.createDependencyFromList = (projectId, dependencyList, storyId) => {
     return new Promise((respond, reject) => {
         if (dependencyList.length == 0) {

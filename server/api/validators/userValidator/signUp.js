@@ -7,7 +7,7 @@ const Users = require('../../models/users');
 const NotConfirmedUsers = require('../../models/notConfirmedUsers');
 
 // Checking if the attributes provided are valid
-exports.signUp = [
+exports.Validator = [
 	// Email validation
 	check('email')
 	.custom((value) => !/\s/.test(value))

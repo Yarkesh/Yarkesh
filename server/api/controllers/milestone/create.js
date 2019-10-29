@@ -19,12 +19,19 @@ module.exports.createMilestone = (req, res) => {
                         milestone
                     });
                 })
-                .catch((err) => {
+                .catch(() => {
                     return res.status(500).json({
-                        err
+                        message: 'couldnt create milestone',
+                        errorCode: '373',
                     });
+
                 });
         })
+    }).catch((err) => {
+        return res.status(500).json({
+            message: 'couldnt create milestone',
+            errorCode: err,
+        });
     })
 
 
@@ -57,8 +64,10 @@ getLastDueDate2 = (req) => {
                 }
 
             ).catch(() => {
-
+                rej('375')
             })
+        }).catch(() => {
+            rej('376')
         })
 
 
