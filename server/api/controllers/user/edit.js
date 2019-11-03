@@ -202,7 +202,7 @@ module.exports.changePassword = (req, res) => {
 //TODO handle errors edit profile
 module.exports.editProfile = (req, res) => {
 	const imagePath = path.join(__dirname, '../../../pictures/users');
-	const info = `${req.user.userId}__${req.user.nickName}.jpg`;
+	const info = `${req.user.userId}__${req.user.userName}.jpg`;
 	const fileUpload = new Resize(imagePath, info);
 	let imageUrl =
 		config.get('app.webServer.baseUrl') +
@@ -213,7 +213,7 @@ module.exports.editProfile = (req, res) => {
 		'.jpg';
 	Users.update({
 			name: req.body.name,
-			nickName: req.body.nickName,
+			nickName: req.body.userName,
 			avatar: imageUrl
 		}, {
 			where: {

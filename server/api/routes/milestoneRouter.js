@@ -14,6 +14,14 @@ router.post(
     createMilestoneController.createMilestone
 );
 router.post(
+    '/createmilestonefromdate',
+    passport.authenticate('jwt', {
+        session: false
+    }),
+    authenticateRoutes.isCreator,
+    createMilestoneController.createMilestoneFromDate
+);
+router.post(
     '/getmilestones',
     passport.authenticate('jwt', {
         session: false

@@ -107,28 +107,3 @@ isValidated = (email) => {
         });
     })
 }
-
-module.exports.isValid = (req, res, next) => {
-    this.Validate;
-    const errorsList = validationResult(req).errors;
-    const handledErrorsList = errorHandler.handler(errorsList);
-    if (Object.keys(handledErrorsList).length > 0) {
-        return res.status(422).json({
-            errorCode: '2',
-            errors: handledErrorsList
-        });
-    }
-}
-
-module.exports.isValid = (req, res, next) => {
-    const errorsList = validationResult(req).errors;
-    const handledErrorsList = errorHandler.handler(errorsList);
-    if (Object.keys(handledErrorsList).length > 0) {
-        return res.status(422).json({
-            errorCode: '2',
-            errors: handledErrorsList
-        });
-    } else {
-        next()
-    }
-}

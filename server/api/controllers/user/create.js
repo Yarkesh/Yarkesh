@@ -33,7 +33,7 @@ exports.signUp = (req, res) => {
                 charset: 'numeric'
             });
             NotConfirmedUsers.create({
-                    nickName: req.body.nickName,
+                    nickName: req.body.userName,
                     email: req.body.email,
                     name: req.body.name,
                     password: hash,
