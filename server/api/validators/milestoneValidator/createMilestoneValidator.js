@@ -3,25 +3,23 @@ const {
 } = require('express-validator');
 
 exports.Validator = [
-    check('activityName')
+    check('title')
     .not()
     .isEmpty()
-    .withMessage('activityName cant be empty')
+    .withMessage('title cant be empty')
     .isString()
-    .withMessage('activityName must be string')
+    .withMessage('title must be string')
     .isLength({
         min: 2,
         max: 32
     })
-    .withMessage('activityName must be  between 2 and 32 characters long'),
+    .withMessage('title must be  between 2 and 32 characters long'),
 
 
     check('projectId')
     .not()
     .isEmpty()
     .withMessage('projectId cant be empty')
-    .isString()
-    .withMessage('projectId must be string')
     .isNumeric()
     .withMessage('projectId must be a number'),
 

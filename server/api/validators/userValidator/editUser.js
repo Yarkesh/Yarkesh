@@ -4,18 +4,18 @@ const {
 
 // Checking if the attributes provided are valid
 exports.Validator = [
-    // nickName validation
-    check('nickName')
+    // userName validation
+    check('userName')
     .not()
     .isEmpty()
-    .withMessage('nickName cant be empty')
+    .withMessage('userName cant be empty')
     .isString()
-    .withMessage('nickName must be string')
+    .withMessage('userName must be string')
     .isLength({
         min: 2,
         max: 32
     })
-    .withMessage('nickName must be  between 2 and 32 characters long'),
+    .withMessage('userName must be  between 2 and 32 characters long'),
 
     // name validation
     check('name')

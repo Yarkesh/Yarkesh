@@ -9,7 +9,7 @@ const NotConfirmedUsers = dbConnection.define('notConfirmedUsers', {
 		autoIncrement: true,
 		allowNull: false
 	},
-	nickName: {
+	userName: {
 		allowNull: false,
 		type: Sequelize.STRING,
 		unique: false

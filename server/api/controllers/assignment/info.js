@@ -8,7 +8,7 @@ module.exports.getStoryAssignments = (req, res) => {
             },
             include: [{
                 model: User,
-                attributes: ['userId', 'nickName'],
+                attributes: ['userId', 'userName'],
                 as: 'assignedTo'
             }],
             attributes: []

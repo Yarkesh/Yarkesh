@@ -33,7 +33,7 @@ exports.signUp = (req, res) => {
                 charset: 'numeric'
             });
             NotConfirmedUsers.create({
-                    nickName: req.body.userName,
+                    userName: req.body.userName,
                     email: req.body.email,
                     name: req.body.name,
                     password: hash,
@@ -45,7 +45,7 @@ exports.signUp = (req, res) => {
                     return res.status(200).json({
                         // sign up success
                         message: 'sign up complete, email verfication sent',
-                        nickName: notConfirmeduser.nickName,
+                        userName: notConfirmeduser.userName,
                         email: notConfirmeduser.email,
                         // notConfirmedUserId: notConfirmeduser.userId
                     });
@@ -76,7 +76,7 @@ module.exports.confirmEmail = (req, res) => {
                     }
                 }).then(() => {
                     Users.create({
-                            nickName: user.nickName,
+                            userName: user.userName,
                             email: user.email,
                             name: user.name,
                             password: user.password,
@@ -147,7 +147,7 @@ exports.signIn = (req, res) => {
             name: user.name,
             email: user.email,
             userId: user.userId,
-            nickName: user.nickName,
+            userName: user.userName,
             avatar: user.avatar
         };
         jwt.sign(

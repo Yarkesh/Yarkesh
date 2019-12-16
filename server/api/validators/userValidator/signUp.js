@@ -66,27 +66,27 @@ exports.Validator = [
 	}),
 
 	// username validation
-	check('nickName')
+	check('userName')
 	// .custom((value) => !/\s/.test(value))
 	// // .matches(/\s/)
-	// .withMessage('No spaces are allowed in the nickName')
+	// .withMessage('No spaces are allowed in the userName')
 	.not()
 	.isEmpty()
-	.withMessage('nickName cant be empty')
+	.withMessage('userName cant be empty')
 	// .trim()
 	// .escape()
 	.isString()
-	.withMessage('nickName must be string')
+	.withMessage('userName must be string')
 	.isLength({
 		min: 2,
 		max: 32
 	})
-	.withMessage('nickName must be  between 2 and 32 characters long')
+	.withMessage('userName must be  between 2 and 32 characters long')
 
 
 	//2
 
-	// .custom((nickName) => {
+	// .custom((userName) => {
 	// 	return isUserNameAvailable(userName).then(() => {
 	// 			return true;
 	// 		})

@@ -209,11 +209,10 @@ module.exports.editProfile = (req, res) => {
 		'/pictures/users/' +
 		req.user.userId +
 		'__' +
-		req.user.nickName +
+		req.user.userName +
 		'.jpg';
 	Users.update({
 			name: req.body.name,
-			nickName: req.body.userName,
 			avatar: imageUrl
 		}, {
 			where: {
@@ -226,7 +225,6 @@ module.exports.editProfile = (req, res) => {
 			}
 			return res.status(200).json({
 				name: req.body.name,
-				nickName: req.body.nickName,
 				imageUrl
 			});
 		})

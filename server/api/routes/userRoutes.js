@@ -72,8 +72,8 @@ router.post(
         session: false
     }),
     upload.single('avatar'),
-    editUserValidator.Validator,
-    errorHandler.isValid,
+    // editUserValidator.Validator,
+    // errorHandler.isValid,
     editUserController.editProfile
 );
 

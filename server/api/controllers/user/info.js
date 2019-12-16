@@ -69,7 +69,7 @@ module.exports.searchUsers = (req, res) => {
 					[Op.like]: '%' + searchTerm + '%'
 				},
 			},
-			attributes: ['userId', 'nickName', 'email', 'name'],
+			attributes: ['userId', 'userName', 'email', 'name'],
 			limit: 6,
 		})
 		.then((users) => {
