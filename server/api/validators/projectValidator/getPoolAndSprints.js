@@ -8,8 +8,6 @@ exports.Validator = [
     .not()
     .isEmpty()
     .withMessage('sprintId cant be empty')
-    .isString()
-    .withMessage('sprintId must be string')
     .isNumeric()
     .withMessage('sprintId must be a number'),
 

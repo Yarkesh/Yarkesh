@@ -30,7 +30,5 @@ exports.Validator = [
     .not()
     .isEmpty()
     .withMessage('sprintDuration cant be empty')
-    .isString()
-    .withMessage('sprintDuration must be string')
 
 ]

@@ -43,8 +43,6 @@ exports.Validator = [
     .not()
     .isEmpty()
     .withMessage('code cant be empty')
-    .isString()
-    .withMessage('code must be string')
     .isLength({
         min: 4,
         max: 4
