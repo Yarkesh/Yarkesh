@@ -3,7 +3,7 @@
 		"webServer": {
 			"port": 8585,
 			"jwtSecret": "X*FC^F&XF7xGD*X&DG@#$#@%$#%$#@#$#@$#@",
-			"baseUrl": "172.16.5.65:8585"
+			"baseUrl": "172.15.5.65:8585"
 		},
 		"mail": {
 			"mail": "hoosht101@gmail.com",
