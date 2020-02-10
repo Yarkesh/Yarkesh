@@ -87,7 +87,8 @@ exports.createProject = (req, res) => {
                 });
         })
 
-        .catch(() => {
+        .catch((err) => {
+            console.log(err)
             return res.status(500).json({
                 message: 'couldnt create project',
                 errorCode: '344'

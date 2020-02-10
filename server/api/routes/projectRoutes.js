@@ -92,7 +92,7 @@ router.post(
 	infoProjectController.getProjectTimeline
 );
 
-router.patch(
+router.post(
 	'/editproject',
 	passport.authenticate('jwt', {
 		session: false

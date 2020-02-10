@@ -201,40 +201,60 @@ module.exports.changePassword = (req, res) => {
 
 //TODO handle errors edit profile
 module.exports.editProfile = (req, res) => {
-	const imagePath = path.join(__dirname, '../../../pictures/users');
-	const info = `${req.user.userId}__${req.user.userName}.jpg`;
-	const fileUpload = new Resize(imagePath, info);
-	let imageUrl =
-		config.get('app.webServer.baseUrl') +
-		'/pictures/users/' +
-		req.user.userId +
-		'__' +
-		req.user.userName +
-		'.jpg';
-	Users.update({
-			name: req.body.name,
-			avatar: imageUrl
-		}, {
+
+	Users.findOne({
 			where: {
 				userId: req.user.userId
 			}
-		})
-		.then(async () => {
+		}).then(oldUser => {
+			let imageUrl = oldUser.avatar
+			const imagePath = path.join(__dirname, '../../../pictures/users');
+			const ImageName = `user${req.user.userId}.jpg`;
+			let fileUpload = new Resize(imagePath, ImageName);
 			if (req.file) {
-				const filename = await fileUpload.save(req.file.buffer);
+				imageUrl = config.get('app.webServer.baseUrl') + '/pictures/users/' + ImageName
 			}
-			return res.status(200).json({
-				name: req.body.name,
-				imageUrl
-			});
+			Users.update({
+					name: req.body.name,
+					avatar: imageUrl
+				}, {
+					where: {
+						userId: req.user.userId
+					}
+				})
+				.then(async () => {
+					if (req.file) {
+						const filename = await fileUpload.save(req.file.buffer);
+					}
+					Users.findOne({
+						where: {
+							userId: req.user.userId
+						}
+					}).then(updatedUser => {
+						return res.status(200).json({
+							updatedUser
+						});
+					})
+					// return res.status(200).json({
+					// 	name: req.body.name,
+					// 	imageUrl
+					// });
+				})
+				.catch((err) => {
+					// console.log(err);
+					return res.status(500).json({
+						message: 'couldnt update user',
+						errorCode: '367'
+					});
+				});
 		})
-		.catch((err) => {
-			// console.log(err);
+		.catch(err => {
+			console.log(err)
 			return res.status(500).json({
-				message: 'couldnt update user',
-				errorCode: '367'
-			});
-		});
+				error: 'cant find user'
+			})
+		})
+
 };
 
 module.exports.editPassword = (req, res) => {

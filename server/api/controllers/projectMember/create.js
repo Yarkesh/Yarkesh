@@ -45,8 +45,6 @@ exports.addMembers = (req, res, next) => {
                                     userId: user.userId,
                                     avatar: user.avatar
                                 })
-
-
                             })
                             .catch((err) => {
                                 return res.status(500).json({
@@ -57,10 +55,56 @@ exports.addMembers = (req, res, next) => {
                 })
                 .catch();
         } else {
-            res.status(500).json({
-                error: 'This email does not exist'
+            Users.findOne({
+                where: {
+                    userId: req.user.userId
+                }
+            }).then((user) => {
+                Project.findOne({
+                    where: {
+                        projectId: req.body.projectId
+                    }
+                }).then((project) => {
+                    invitedEmails.findOne({
+                        where: {
+                            projectId: req.body.projectId,
+                            email: req.body.email,
+                        }
+                    }).then(invited => {
+                        if (invited) {
+                            return res.status(500).json({
+                                message: 'you already invited this person to this project' +
+                                    'they have recieved your invitation email'
+                            })
+                        } else {
+
+                            message = 'please join our project'
+                            mailController.inviteEmail(req.body.email, user, project, message)
+                            invitedEmails.create({
+                                inviterId: req.user.userId,
+                                projectId: req.body.projectId,
+                                email: req.body.email,
+                                message: message
+                            }).then((invitedEmail) => {
+                                return res.status(200).json({
+                                    invitedEmail,
+                                    message: 'email not found. invitation email sent'
+                                })
+                            }).catch(err => {
+                                console.log(err)
+                                return res.status(500).json({
+                                    error: 'cant add invited email'
+                                })
+                            })
+                        }
+                    })
+
+
+                })
             })
         }
+
+    }).catch(err => {
 
     })
 
@@ -79,7 +123,6 @@ module.exports.inviteMember = (req, res) => {
             }
         }).then((project) => {
             mailController.inviteEmail(req.body.email, user, project, req.body.message)
-
             invitedEmails.create({
                 inviterId: req.user.userId,
                 projectId: req.body.projectId,
@@ -88,7 +131,7 @@ module.exports.inviteMember = (req, res) => {
             }).then((invitedEmail) => {
                 return res.status(200).json({
                     invitedEmail,
-                    message: 'done'
+                    message: 'email not found. invitation email sent.'
                 })
             })
 
