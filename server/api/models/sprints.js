@@ -14,7 +14,15 @@ const Sprints = dbConnection.define('sprints', {
 		type: Sequelize.INTEGER
 	},
 	sprintName: {
-		allowNull: false,
+		allowNull: true,
+		type: Sequelize.STRING
+	},
+	description: {
+		allowNull: true,
+		type: Sequelize.TEXT
+	},
+	sprintNo: {
+		allowNull: true,
 		type: Sequelize.STRING
 	},
 	duration: {

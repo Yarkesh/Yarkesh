@@ -9,6 +9,14 @@ const Projects = dbConnection.define('projects', {
 		autoIncrement: true,
 		allowNull: false
 	},
+	startDate: {
+		type: Sequelize.DATE,
+		allowNull: false
+	},
+	dueDate: {
+		type: Sequelize.DATE,
+		allowNull: false
+	},
 	title: {
 		allowNull: false,
 		type: Sequelize.STRING,
@@ -16,7 +24,7 @@ const Projects = dbConnection.define('projects', {
 	},
 	description: {
 		allowNull: true,
-		type: Sequelize.STRING,
+		type: Sequelize.TEXT,
 		unique: false
 	},
 	creatorId: {

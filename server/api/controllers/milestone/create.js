@@ -2,17 +2,30 @@ const Milestone = require('../../models/milestone');
 const Project = require('../../models/projects');
 
 module.exports.createMilestone = (req, res) => {
-    getLastMilestoneDueDate(req).then(lastMilestone => {
-        Project.findOne({
+    Project.findOne({
+        where: {
+            projectId: req.body.projectId
+        }
+    }).then(project => {
+        var start = new Date(project.startDate);
+        var addedDate = new Date(start.setDate(start.getDate() + req.body.milestoneDuration))
+        // var DateAdded = new Date(addedDate)
+        // console.log(addedDate)
+        if (project.dueDate < addedDate) {
+            return res.status(400).json({
+                error: "the milestone Duration you entered exceeds the project dueDate"
+            })
+        }
+        Milestone.count({
             where: {
                 projectId: req.body.projectId
             }
-        }).then(project => {
-            const end = new Date(lastMilestone.getTime())
+        }).then(count => {
             Milestone.create({
                     projectId: req.body.projectId,
                     title: req.body.title,
-                    dueDate: new Date(end.setDate(end.getDate() + project.sprintDuration * req.body.howManyDurations)),
+                    dueDate: addedDate,
+                    milestoneNo: 'milestone#' + (count + 1),
                     description: req.body.description,
                 })
                 .then((milestone) => {
@@ -28,12 +41,14 @@ module.exports.createMilestone = (req, res) => {
 
                 });
         })
-    }).catch((err) => {
-        return res.status(500).json({
-            message: 'couldnt create milestone',
-            errorCode: err,
-        });
+
     })
+    // }).catch((err) => {
+    //     return res.status(500).json({
+    //         message: 'couldnt create milestone',
+    //         errorCode: err,
+    //     });
+    // })
 
 };
 
@@ -41,7 +56,7 @@ module.exports.createMilestoneFromDate = (req, res) => {
     Milestone.create({
             title: req.body.title,
             projectId: req.body.projectId,
-            dueDate: new Date(req.body.dueDate),
+            dueDate: req.body.dueDate,
             description: req.body.description,
         })
         .then((milestone) => {
