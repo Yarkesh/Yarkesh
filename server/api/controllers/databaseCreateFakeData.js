@@ -412,6 +412,8 @@ exports.createStories = async (req, res, next) => {
                 storyPoint: Math.floor(Math.random() * 5) + 1,
                 priority: priorities[Math.floor(Math.random() * 3)],
                 isEpic: Math.random() >= 0.2,
+                dependency: [],
+                assignment: [],
                 creatorId: "1",
                 projectId: "1"
             })
