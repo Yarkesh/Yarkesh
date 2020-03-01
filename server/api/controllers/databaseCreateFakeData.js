@@ -287,15 +287,13 @@ exports.createMilestones = async (req, res, next) => {
     }).then(async project => {
         for (let index = 2; index < 6; index++) {
             var start = new Date(project.startDate);
-            dater = 60
             await Milestone.create({
                 projectId: project.projectId,
                 title: `my milestone ${index}`,
                 milestoneNo: `milestone#${index}`,
-                dueDate: new Date(start.setDate(start.getDate() + dater)),
+                dueDate: new Date(start.setDate(start.getDate() + 60 + (index - 1) * 30)),
                 description: `description for your milestone here. milestone ${index}`
             })
-            dater += 60
         }
     })
 
