@@ -26,7 +26,7 @@ module.exports.emailVerification = async (email, confirmationCode) => {
 	// TODO: fix this
 	let info = await transporter
 		.sendMail({
-			from: config.get('app.mail.mail'),
+			from: config.get('app.mail.user'),
 			to: email,
 			subject: 'Kayer Confirmation Code',
 			text: `Hello ,
@@ -59,7 +59,7 @@ module.exports.forgotPassword = async (email, forgotPasswordCode) => {
 
 	let info = await transporter
 		.sendMail({
-			from: config.get('app.mail.mail'),
+			from: config.get('app.mail.user'),
 			to: email,
 			subject: 'Kayer Confirmation Code',
 			text: `Hello ,This is your code. Use it to set a new password: ${forgotPasswordCode}`
@@ -89,7 +89,7 @@ module.exports.inviteEmail = async (email, sender, project, message) => {
 	//deleted async from here
 	return transporter
 		.sendMail({
-			from: config.get('app.mail.mail'),
+			from: config.get('app.mail.user'),
 			to: email,
 			subject: `Kayer invitaion`,
 			text: `Hello ,${sender.name} has invited you to join project ${project.title} on kayer
