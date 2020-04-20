@@ -9,7 +9,7 @@ const helmet = require('helmet');
 const router = require('./api/routes/router');
 const scriptRunner = require('./api/scripts/scriptRunner');
 const rateLimit = require('express-rate-limit');
-const moment = require('moment')
+const moment = require('moment');
 const limiter = rateLimit({
 	windowMs: 5 * 60 * 1000, // 5 minutes
 	max: 100 // limit each IP to 100 requests per windowMs
@@ -40,12 +40,12 @@ require('./api/models/databaseRelations');
 //* for just creating the database
 // sequelize.sync();
 
-scriptRunner.runAllScripts()
+scriptRunner.runAllScripts();
 
 //* For deleting database and creating again!
 
 sequelize.sync({
-	force: true
+	alter: true
 });
 
 module.exports = app;

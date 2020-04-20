@@ -6,9 +6,11 @@
 			"baseUrl": "78.38.77.51:8585"
 		},
 		"mail": {
-			"mail": "hoosht101@gmail.com",
-			"password": "mahdi76talebi",
-			"service": "gmail"
+			"port": 465,
+			"host": "mail.nit.ac.ir",
+			"user": "agilelab@nit.ac.ir",
+			"password": "Soft99_123",
+			"service": "mail.nit.ac.ir"
 		}
 	},
 	"sql": {

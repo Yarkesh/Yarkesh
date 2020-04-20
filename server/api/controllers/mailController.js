@@ -4,16 +4,25 @@ const config = require('config');
 
 module.exports.emailVerification = async (email, confirmationCode) => {
 	let transporter = nodemailer.createTransport({
-		service: config.get('app.mail.service'),
-		secure: false,
+		host: config.get('app.mail.host'),
+		port: config.get('app.mail.port'),
+		secure: true, // use TLS
 		auth: {
-			user: config.get('app.mail.mail'),
+			user: config.get('app.mail.user'),
 			pass: config.get('app.mail.password')
 		},
 		tls: {
+			// do not fail on invalid certs
 			rejectUnauthorized: false
 		}
 	});
+	// transporter.verify(function(error, success) {
+	// 	if (error) {
+	// 		console.log(error);
+	// 	} else {
+	// 		console.log('Server is ready to take our messages');
+	// 	}
+	// });
 	// TODO: fix this
 	let info = await transporter
 		.sendMail({
@@ -26,23 +35,24 @@ module.exports.emailVerification = async (email, confirmationCode) => {
 			code: ${confirmationCode}`
 		})
 		.then((result) => {
-			// console.log(result);
+			console.log(result);
 		})
 		.catch((err) => {
-			// console.log(err);
+			console.log(err);
 		});
 };
 
 module.exports.forgotPassword = async (email, forgotPasswordCode) => {
-
 	let transporter = nodemailer.createTransport({
-		service: config.get('app.mail.service'),
-		secure: false,
+		host: config.get('app.mail.host'),
+		port: config.get('app.mail.port'),
+		secure: true, // use TLS
 		auth: {
-			user: config.get('app.mail.mail'),
+			user: config.get('app.mail.user'),
 			pass: config.get('app.mail.password')
 		},
 		tls: {
+			// do not fail on invalid certs
 			rejectUnauthorized: false
 		}
 	});
@@ -55,25 +65,24 @@ module.exports.forgotPassword = async (email, forgotPasswordCode) => {
 			text: `Hello ,This is your code. Use it to set a new password: ${forgotPasswordCode}`
 		})
 		.then((result) => {
-			// console.log(result);
+			console.log(result);
 		})
 		.catch((err) => {
-			// console.log(err);
+			console.log(err);
 		});
-
 };
-
-
 
 module.exports.inviteEmail = async (email, sender, project, message) => {
 	let transporter = nodemailer.createTransport({
-		service: config.get('app.mail.service'),
-		secure: false,
+		host: config.get('app.mail.host'),
+		port: config.get('app.mail.port'),
+		secure: true, // use TLS
 		auth: {
-			user: config.get('app.mail.mail'),
+			user: config.get('app.mail.user'),
 			pass: config.get('app.mail.password')
 		},
 		tls: {
+			// do not fail on invalid certs
 			rejectUnauthorized: false
 		}
 	});
@@ -90,11 +99,9 @@ you can signup from the link below
 			`
 		})
 		.then((result) => {
-
-			// console.log(result);
+			console.log(result);
 		})
 		.catch((err) => {
-			// console.log(err);
+			console.log(err);
 		});
-
 };
