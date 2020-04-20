@@ -8,7 +8,7 @@ module.exports.emailVerification = async (email, confirmationCode) => {
 		port: config.get('app.mail.port'),
 		secure: true, // use TLS
 		auth: {
-			user: config.get('app.mail.user'),
+			user: config.get('app.mail.mail'),
 			pass: config.get('app.mail.password')
 		},
 		tls: {
@@ -26,7 +26,7 @@ module.exports.emailVerification = async (email, confirmationCode) => {
 	// TODO: fix this
 	let info = await transporter
 		.sendMail({
-			from: config.get('app.mail.user'),
+			from: config.get('app.mail.mail'),
 			to: email,
 			subject: 'Kayer Confirmation Code',
 			text: `Hello ,
@@ -48,7 +48,7 @@ module.exports.forgotPassword = async (email, forgotPasswordCode) => {
 		port: config.get('app.mail.port'),
 		secure: true, // use TLS
 		auth: {
-			user: config.get('app.mail.user'),
+			user: config.get('app.mail.mail'),
 			pass: config.get('app.mail.password')
 		},
 		tls: {
@@ -59,7 +59,7 @@ module.exports.forgotPassword = async (email, forgotPasswordCode) => {
 
 	let info = await transporter
 		.sendMail({
-			from: config.get('app.mail.user'),
+			from: config.get('app.mail.mail'),
 			to: email,
 			subject: 'Kayer Confirmation Code',
 			text: `Hello ,This is your code. Use it to set a new password: ${forgotPasswordCode}`
@@ -78,7 +78,7 @@ module.exports.inviteEmail = async (email, sender, project, message) => {
 		port: config.get('app.mail.port'),
 		secure: true, // use TLS
 		auth: {
-			user: config.get('app.mail.user'),
+			user: config.get('app.mail.mail'),
 			pass: config.get('app.mail.password')
 		},
 		tls: {
@@ -89,7 +89,7 @@ module.exports.inviteEmail = async (email, sender, project, message) => {
 	//deleted async from here
 	return transporter
 		.sendMail({
-			from: config.get('app.mail.user'),
+			from: config.get('app.mail.mail'),
 			to: email,
 			subject: `Kayer invitaion`,
 			text: `Hello ,${sender.name} has invited you to join project ${project.title} on kayer

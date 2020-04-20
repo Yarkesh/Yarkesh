@@ -8,7 +8,7 @@
 		"mail": {
 			"port": 465,
 			"host": "mail.nit.ac.ir",
-			"user": "agilelab@nit.ac.ir",
+			"mail": "agilelab@nit.ac.ir",
 			"password": "Soft99_123",
 			"service": "mail.nit.ac.ir"
 		}
