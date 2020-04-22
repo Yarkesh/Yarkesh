@@ -5,24 +5,23 @@ const config = require('config');
 module.exports.emailVerification = async (email, confirmationCode) => {
 	let transporter = nodemailer.createTransport({
 		host: config.get('app.mail.host'),
-		port: config.get('app.mail.port'),
-		secure: true, // use TLS
+		secure: true, // use SSL
+		port: config.get('app.mail.port'), // port for secure SMTP
 		auth: {
 			user: config.get('app.mail.mail'),
 			pass: config.get('app.mail.password')
 		},
 		tls: {
-			// do not fail on invalid certs
-			rejectUnauthorized: false
+			ciphers: 'SSLv3'
 		}
 	});
-	// transporter.verify(function(error, success) {
-	// 	if (error) {
-	// 		console.log(error);
-	// 	} else {
-	// 		console.log('Server is ready to take our messages');
-	// 	}
-	// });
+	transporter.verify(function(error, success) {
+		if (error) {
+			console.log(error);
+		} else {
+			console.log('Server is ready to take our messages');
+		}
+	});
 	// TODO: fix this
 	let info = await transporter
 		.sendMail({

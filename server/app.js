@@ -14,6 +14,7 @@ const limiter = rateLimit({
 	windowMs: 5 * 60 * 1000, // 5 minutes
 	max: 100 // limit each IP to 100 requests per windowMs
 });
+const config = require('config');
 
 //  apply to all requests
 // ! --------------------------- MIDDLEWARES ---------------------------------------
@@ -45,7 +46,7 @@ scriptRunner.runAllScripts();
 //* For deleting database and creating again!
 
 sequelize.sync({
-	alter: true
+	force: true
 });
 
 module.exports = app;
