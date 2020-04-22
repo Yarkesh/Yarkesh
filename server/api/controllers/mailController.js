@@ -2,26 +2,18 @@
 const nodemailer = require('nodemailer');
 const config = require('config');
 
+let transporter = nodemailer.createTransport({
+	host: config.get('app.mail.host'),
+	secure: false, // use SSL
+	port: config.get('app.mail.port'), // port for secure SMTP
+	auth: {
+		user: config.get('app.mail.mail'),
+		pass: config.get('app.mail.password')
+	},
+	tls: { rejectUnauthorized: false }
+});
+
 module.exports.emailVerification = async (email, confirmationCode) => {
-	let transporter = nodemailer.createTransport({
-		host: config.get('app.mail.host'),
-		secure: true, // use SSL
-		port: config.get('app.mail.port'), // port for secure SMTP
-		auth: {
-			user: config.get('app.mail.mail'),
-			pass: config.get('app.mail.password')
-		},
-		tls: {
-			ciphers: 'SSLv3'
-		}
-	});
-	transporter.verify(function(error, success) {
-		if (error) {
-			console.log(error);
-		} else {
-			console.log('Server is ready to take our messages');
-		}
-	});
 	// TODO: fix this
 	let info = await transporter
 		.sendMail({
@@ -42,19 +34,6 @@ module.exports.emailVerification = async (email, confirmationCode) => {
 };
 
 module.exports.forgotPassword = async (email, forgotPasswordCode) => {
-	let transporter = nodemailer.createTransport({
-		host: config.get('app.mail.host'),
-		secure: true, // use SSL
-		port: config.get('app.mail.port'), // port for secure SMTP
-		auth: {
-			user: config.get('app.mail.mail'),
-			pass: config.get('app.mail.password')
-		},
-		tls: {
-			ciphers: 'SSLv3'
-		}
-	});
-
 	let info = await transporter
 		.sendMail({
 			from: config.get('app.mail.mail'),
@@ -71,18 +50,6 @@ module.exports.forgotPassword = async (email, forgotPasswordCode) => {
 };
 
 module.exports.inviteEmail = async (email, sender, project, message) => {
-	let transporter = nodemailer.createTransport({
-		host: config.get('app.mail.host'),
-		secure: true, // use SSL
-		port: config.get('app.mail.port'), // port for secure SMTP
-		auth: {
-			user: config.get('app.mail.mail'),
-			pass: config.get('app.mail.password')
-		},
-		tls: {
-			ciphers: 'SSLv3'
-		}
-	});
 	//deleted async from here
 	return transporter
 		.sendMail({
