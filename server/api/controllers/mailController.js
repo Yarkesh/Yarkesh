@@ -44,15 +44,14 @@ module.exports.emailVerification = async (email, confirmationCode) => {
 module.exports.forgotPassword = async (email, forgotPasswordCode) => {
 	let transporter = nodemailer.createTransport({
 		host: config.get('app.mail.host'),
-		port: config.get('app.mail.port'),
-		secure: true, // use TLS
+		secure: true, // use SSL
+		port: config.get('app.mail.port'), // port for secure SMTP
 		auth: {
 			user: config.get('app.mail.mail'),
 			pass: config.get('app.mail.password')
 		},
 		tls: {
-			// do not fail on invalid certs
-			rejectUnauthorized: false
+			ciphers: 'SSLv3'
 		}
 	});
 
@@ -74,15 +73,14 @@ module.exports.forgotPassword = async (email, forgotPasswordCode) => {
 module.exports.inviteEmail = async (email, sender, project, message) => {
 	let transporter = nodemailer.createTransport({
 		host: config.get('app.mail.host'),
-		port: config.get('app.mail.port'),
-		secure: true, // use TLS
+		secure: true, // use SSL
+		port: config.get('app.mail.port'), // port for secure SMTP
 		auth: {
 			user: config.get('app.mail.mail'),
 			pass: config.get('app.mail.password')
 		},
 		tls: {
-			// do not fail on invalid certs
-			rejectUnauthorized: false
+			ciphers: 'SSLv3'
 		}
 	});
 	//deleted async from here
