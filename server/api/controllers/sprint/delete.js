@@ -14,14 +14,14 @@ module.exports.deleteSprint = (req, res) => {
                 });
             } else {
                 return res.status(500).json({
-                    message: 'couldnt delete sprint',
+                    error: 'couldnt delete sprint',
                     errorCode: '360'
                 });
             }
         })
         .catch(() => {
             return res.status(500).json({
-                message: 'couldnt delete sprint',
+                error: 'couldnt delete sprint',
                 errorCode: '361'
             });
         });

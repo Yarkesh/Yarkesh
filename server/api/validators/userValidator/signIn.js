@@ -116,7 +116,7 @@ module.exports.isValid = (req, res, next) => {
     if (Object.keys(handledErrorsList).length > 0) {
         return res.status(422).json({
             errorCode: '3',
-            errors: handledErrorsList
+            error: handledErrorsList
         });
     } else {
         next()

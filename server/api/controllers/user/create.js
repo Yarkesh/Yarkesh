@@ -23,7 +23,7 @@ exports.signUp = (req, res) => {
         if (err) {
             //hash fail
             return res.status(500).json({
-                message: 'sign up failed',
+                error: 'sign up failed',
                 errorCode: '320'
             });
         } else if (hash) {
@@ -50,10 +50,10 @@ exports.signUp = (req, res) => {
                         // notConfirmedUserId: notConfirmeduser.userId
                     });
                 })
-                .catch((err) => {
+                .catch((error) => {
                     //create fail
                     return res.status(500).json({
-                        message: 'sign up failed',
+                        error: 'sign up failed',
                         errorCode: '321',
 
                     });
@@ -112,7 +112,7 @@ module.exports.confirmEmail = (req, res) => {
                         .catch(() => {
                             return res.status(500).json({
                                 //creating new user in user table failed
-                                message: 'confirmation failed',
+                                error: 'confirmation failed',
                                 errorCode: '325',
                             });
                         })
@@ -121,7 +121,7 @@ module.exports.confirmEmail = (req, res) => {
                 .catch(() => {
                     return res.status(500).json({
                         //destroying user in notconfirmed table failed
-                        message: 'confirmation failed',
+                        error: 'confirmation failed',
                         errorCode: '324',
                     });
                 })
@@ -129,7 +129,7 @@ module.exports.confirmEmail = (req, res) => {
         .catch(() => {
             return res.status(500).json({
                 //couldn't find user email in not confiremd table
-                message: 'confirmation failed',
+                error: 'confirmation failed',
                 errorCode: '323',
 
             });
@@ -158,7 +158,7 @@ exports.signIn = (req, res) => {
             (err, encoded) => {
                 if (err) {
                     return res.status(500).json({
-                        message: "signIn failed",
+                        error: "signIn failed",
                         errorCode: "326"
                     });
                 } else {
@@ -171,7 +171,7 @@ exports.signIn = (req, res) => {
         );
     }).catch(() => {
         return res.status(500).json({
-            message: "signIn failed",
+            error: "signIn failed",
             errorCode: "327"
         });
     })

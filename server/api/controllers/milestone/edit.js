@@ -31,7 +31,7 @@ module.exports.editMilestone = (req, res) => {
             })
             .catch(() => {
                 return res.status(500).json({
-                    message: 'couldnt update milestone',
+                    error: 'couldnt update milestone',
                     errorCode: '374',
                 });
             });

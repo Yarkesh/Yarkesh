@@ -18,10 +18,9 @@ exports.getProjectStories = (req, res) => {
                 stories
             });
         })
-        .catch((err) => {
+        .catch((error) => {
             return res.status(500).json({
-                message: 'finding story failed',
-                err
+                error: 'finding story failed'
             });
         });
 };
@@ -37,10 +36,9 @@ exports.getProjectStoriesWithDetail = (req, res) => {
                 stories
             });
         })
-        .catch((err) => {
+        .catch((error) => {
             return res.status(500).json({
-                message: 'finding story failed',
-                err
+                error: 'finding story failed'
             });
         });
 };
@@ -117,10 +115,9 @@ exports.getProjectStoriesBacklog = (req, res) => {
                 stories
             });
         })
-        .catch((err) => {
+        .catch((error) => {
             return res.status(500).json({
-                message: 'finding story failed',
-                err
+                error: 'finding story failed'
             });
         });
 };

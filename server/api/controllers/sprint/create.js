@@ -38,14 +38,14 @@ module.exports.createSprint = (req, res) => {
                     })
                     .catch(() => {
                         return res.status(500).json({
-                            message: 'couldnt create sprint',
+                            error: 'couldnt create sprint',
                             errorCode: '357'
                         });
                     });
 
             }).catch(() => {
                 return res.status(500).json({
-                    message: 'couldnt create sprint',
+                    error: 'couldnt create sprint',
                     errorCode: '356'
                 });
             })

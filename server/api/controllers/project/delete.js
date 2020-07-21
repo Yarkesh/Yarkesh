@@ -13,7 +13,7 @@ module.exports.deleteProject = (req, res) => {
         })
         .catch(() => {
             return res.status(500).json({
-                message: 'couldnt delete project',
+                error: 'couldnt delete project',
                 errorCode: '349'
             });
         });

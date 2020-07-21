@@ -25,7 +25,7 @@ module.exports.getSprintStories = (req, res) => {
         })
         .catch(() => {
             return res.status(500).json({
-                message: 'couldnt find sprint',
+                error: 'couldnt find sprint',
                 errorCode: '358'
             });
         });
@@ -47,7 +47,7 @@ module.exports.getProjectSprints = (req, res) => {
         })
         .catch((err) => {
             return res.status(500).json({
-                message: 'couldnt find sprints',
+                error: 'couldnt find sprints',
                 errorCode: '359'
             });
         });

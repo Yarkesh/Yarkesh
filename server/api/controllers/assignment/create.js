@@ -24,9 +24,9 @@ module.exports.createAssignment = (req, res) => {
                         message: 'assignment created'
                     });
                 })
-                .catch((err) => {
+                .catch((error) => {
                     return res.status(500).json({
-                        err
+                        error
                     });
                 });
         }

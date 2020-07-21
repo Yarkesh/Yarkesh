@@ -41,7 +41,7 @@ module.exports.forgotPassword = (req, res) => {
 					.catch(() => {
 						//uuser update fail
 						return res.status(500).json({
-							message: 'send forgot pasword email failed',
+							error: 'send forgot pasword email failed',
 							errorCode: '329'
 						});
 					});
@@ -50,7 +50,7 @@ module.exports.forgotPassword = (req, res) => {
 		.catch(() => {
 			//uuser findOne fail
 			return res.status(500).json({
-				message: 'send forgot pasword email failed',
+				error: 'send forgot pasword email failed',
 				errorCode: '328'
 			});
 		});
@@ -83,7 +83,7 @@ module.exports.forgotPassword = (req, res) => {
 					.catch(() => {
 						//notConfirmedUser update fail
 						return res.status(500).json({
-							message: 'send forgot pasword email failed',
+							error: 'send forgot pasword email failed',
 							errorCode: '331'
 						});
 					});
@@ -92,7 +92,7 @@ module.exports.forgotPassword = (req, res) => {
 		.catch(() => {
 			//notConfirmedUser findOne fail
 			return res.status(500).json({
-				message: 'send forgot pasword email failed',
+				error: 'send forgot pasword email failed',
 				errorCode: '330'
 			});
 		});
@@ -111,7 +111,7 @@ module.exports.changePassword = (req, res) => {
 					if (error) {
 						//hash fail
 						return res.status(500).json({
-							message: 'change password failed',
+							error: 'change password failed',
 							errorCode: '332'
 						});
 					} else if (hash) {
@@ -132,7 +132,7 @@ module.exports.changePassword = (req, res) => {
 								.catch(() => {
 									return res.status(500).json({
 										//update failed
-										message: 'change password failed',
+										error: 'change password failed',
 										errorCode: '334'
 									});
 								});
@@ -144,7 +144,7 @@ module.exports.changePassword = (req, res) => {
 		.catch(() => {
 			return res.status(500).json({
 				//findOne failed
-				message: 'change password failed',
+				error: 'change password failed',
 				errorCode: '333'
 			});
 		});
@@ -160,7 +160,7 @@ module.exports.changePassword = (req, res) => {
 					if (err) {
 						//hash fail
 						return res.status(500).json({
-							message: 'change password failed',
+							error: 'change password failed',
 							errorCode: '332'
 						});
 					} else if (hash) {
@@ -181,7 +181,7 @@ module.exports.changePassword = (req, res) => {
 								.catch(() => {
 									return res.status(500).json({
 										//update failed
-										message: 'change password failed',
+										error: 'change password failed',
 										errorCode: '335'
 									});
 								});
@@ -193,7 +193,7 @@ module.exports.changePassword = (req, res) => {
 		.catch(() => {
 			return res.status(500).json({
 				//findOne failed
-				message: 'change password failed',
+				error: 'change password failed',
 				errorCode: '336'
 			});
 		});
@@ -243,7 +243,7 @@ module.exports.editProfile = (req, res) => {
 				.catch((err) => {
 					// console.log(err);
 					return res.status(500).json({
-						message: 'couldnt update user',
+						error: 'couldnt update user',
 						errorCode: '367'
 					});
 				});
@@ -267,7 +267,7 @@ module.exports.editPassword = (req, res) => {
 		bcrypt.compare(req.body.password, user.password, (err, same) => {
 			if (err) {
 				return res.status(500).json({
-					message: 'couldnt compare',
+					error: 'couldnt compare',
 					errorCode: '337'
 				});
 			}
@@ -288,7 +288,7 @@ module.exports.editPassword = (req, res) => {
 								})
 								.catch((err) => {
 									return res.status(500).json({
-										message: 'couldnt hash',
+										error: 'couldnt hash',
 										errorCode: '339'
 									});
 								})
@@ -296,13 +296,13 @@ module.exports.editPassword = (req, res) => {
 					});
 				} else {
 					return res.status(500).json({
-						message: 'confirm password must match the new password',
+						error: 'confirm password must match the new password',
 						errorCode: '340'
 					});
 				}
 			} else {
 				return res.status(500).json({
-					message: 'your old password is wrong',
+					error: 'your old password is wrong',
 					errorCode: '338'
 				});
 			}

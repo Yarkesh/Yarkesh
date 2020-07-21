@@ -24,9 +24,9 @@ module.exports.createDependency = (req, res) => {
                         message: 'dependency created'
                     });
                 })
-                .catch((err) => {
+                .catch((error) => {
                     return res.status(500).json({
-                        err
+                        error
                     });
                 });
         }

@@ -16,9 +16,9 @@ module.exports.deleteStory = (req, res) => {
                 message: 'Story Deleted'
             });
         })
-        .catch((err) => {
+        .catch((error) => {
             res.status(500).json({
-                err
+                error
             });
         });
 };

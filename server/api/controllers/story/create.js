@@ -81,7 +81,7 @@ exports.createStory = (req, res) => {
                                     })
                                     .then(() => {
                                         return res.status(500).json({
-                                            err: "this dependency is not in this project"
+                                            error: "this dependency is not in this project"
                                         })
                                     })
 
@@ -90,9 +90,7 @@ exports.createStory = (req, res) => {
                     })
                     .catch((err) => {
                         return res.status(500).json({
-                            message: 'story FAILED !',
-                            err
-                        });
+                            error: 'story FAILED !'                        });
                     });
             });
         });

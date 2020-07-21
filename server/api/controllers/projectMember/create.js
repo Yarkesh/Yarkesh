@@ -73,7 +73,7 @@ exports.addMembers = (req, res, next) => {
                     }).then(invited => {
                         if (invited) {
                             return res.status(500).json({
-                                message: 'you already invited this person to this project' +
+                                error: 'you already invited this person to this project' +
                                     'they have recieved your invitation email'
                             })
                         } else {

@@ -14,7 +14,7 @@ module.exports.getMilestones = (req, res) => {
         })
         .catch(() => {
             return res.status(500).json({
-                message: 'couldnt get milestones',
+                error: 'couldnt get milestones',
                 errorCode: '377',
             });
         });

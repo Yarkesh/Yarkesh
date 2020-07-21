@@ -3,7 +3,7 @@
 		"webServer": {
 			"port": 8585,
 			"jwtSecret": "X*FC^F&XF7xGD*X&DG@#$#@%$#%$#@#$#@$#@",
-			"baseUrl": "78.38.77.51:8585"
+			"baseUrl": "http://localhost:8585"
 		},
 		"mail": {
 			"port": 465,
@@ -16,7 +16,7 @@
 	"sql": {
 		"name": "postgres",
 		"userName": "postgres",
-		"password": "admin@@4321",
-		"host": "172.16.5.65"
+		"password": "123",
+		"host": "localhost"
 	}
 }

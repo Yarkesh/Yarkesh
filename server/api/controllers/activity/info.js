@@ -15,7 +15,7 @@ module.exports.getProjectActivities = (req, res) => {
         })
         .catch(() => {
             return res.status(500).json({
-                message: 'couldnt find activities',
+                error: 'couldnt find activities',
                 errorCode: '372'
             });
         });

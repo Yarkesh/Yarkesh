@@ -82,7 +82,7 @@ module.exports.editProject = (req, res) => {
                 })
                 .catch(err => {
                     return res.status(500).json({
-                        message: 'couldnt update project',
+                        error: 'couldnt update project',
                         errorCode: '366'
                     });
                 })

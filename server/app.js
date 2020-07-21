@@ -46,7 +46,7 @@ scriptRunner.runAllScripts();
 //* For deleting database and creating again!
 
 sequelize.sync({
-	alter: true
+	force: true
 });
 
 module.exports = app;

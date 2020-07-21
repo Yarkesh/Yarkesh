@@ -14,14 +14,14 @@ module.exports.deleteUser = (req, res) => {
                 });
             } else {
                 return res.status(500).json({
-                    message: 'couldnt delete user',
+                    error: 'couldnt delete user',
                     errorCode: '370'
                 });
             }
         })
         .catch(() => {
             return res.status(500).json({
-                message: 'couldnt delete user',
+                error: 'couldnt delete user',
                 errorCode: '369'
             });
         });

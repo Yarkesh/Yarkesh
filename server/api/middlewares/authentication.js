@@ -15,15 +15,15 @@ module.exports.isMember = (req, res, next) => {
 			if (member.length) {
 				return next();
 			} else {
-				return res.status(401).json({
+				return res.status(500).json({
 					message: 'user is not a member of this project'
 				});
 			}
 		})
 		.catch((error) => {
 			return res.status(500).json({
-				error,
-				mess: 'asd'
+				error
+				
 			});
 		});
 };
@@ -40,7 +40,7 @@ module.exports.isCreator = (req, res, next) => {
 				return next();
 			} else {
 				return res.status(500).json({
-					message: 'user is not the creator of this project'
+					error: 'user is not the creator of this project'
 				});
 			}
 		})
@@ -59,7 +59,7 @@ module.exports.isStoryInProject = (req, res, next) => {
 		}
 	}).then((story) => {
 		if (!story) {
-			return res.status(404).json({
+			return res.status(500).json({
 				error: "story not found"
 			})
 
@@ -76,7 +76,7 @@ module.exports.isDependencyInProject = (req, res, next) => {
 		}
 	}).then((story) => {
 		if (!story) {
-			return res.status(404).json({
+			return res.status(500).json({
 				error: "story dependsOn not found"
 			})
 
@@ -93,7 +93,7 @@ module.exports.isSprintInProject = (req, res, next) => {
 		}
 	}).then((sprint) => {
 		if (!sprint) {
-			return res.status(404).json({
+			return res.status(500).json({
 				error: "sprint not found"
 			})
 
@@ -111,7 +111,7 @@ module.exports.isActivityInProject = (req, res, next) => {
 		}
 	}).then((activity) => {
 		if (!activity) {
-			return res.status(404).json({
+			return res.status(500).json({
 				error: "activity not found"
 			})
 

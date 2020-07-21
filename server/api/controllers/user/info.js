@@ -22,7 +22,7 @@ exports.getUserInfo = (req, res) => {
 		})
 		.catch((err) => {
 			return res.status(500).json({
-				message: 'User not found',
+				error: 'User not found',
 				errorCode: "341"
 			});
 		});
@@ -54,7 +54,7 @@ exports.getUserProjects = (req, res) => {
 		})
 		.catch(() => {
 			return res.status(500).json({
-				message: 'couldnt find project members',
+				error: 'couldnt find project members',
 				errorCode: '368'
 			});
 		});
@@ -79,7 +79,7 @@ module.exports.searchUsers = (req, res) => {
 		})
 		.catch(() => {
 			return res.status(500).json({
-				message: 'error finding users',
+				error: 'error finding users',
 				errorCode: '342'
 			});
 		});
@@ -99,7 +99,7 @@ exports.getAvatar = (req, res) => {
 		})
 		.catch((err) => {
 			return res.status(500).json({
-				message: 'User not found',
+				error: 'User not found',
 				errorCode: '343'
 			});
 		});

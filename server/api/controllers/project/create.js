@@ -26,7 +26,7 @@ exports.createProject = (req, res) => {
                 projectId: project.projectId
             }).catch(() => {
                 return res.status(500).json({
-                    message: 'creating member failed',
+                    error: 'creating member failed',
                     errorCode: '345'
                 });
             });
@@ -48,7 +48,7 @@ exports.createProject = (req, res) => {
                             })
                             .catch(() => {
                                 return res.status(500).json({
-                                    message: 'couldnt create activity',
+                                    error: 'couldnt create activity',
                                     errorCode: '346'
                                 });
                             })
@@ -71,7 +71,7 @@ exports.createProject = (req, res) => {
                                         .catch((err) => {
                                             console.log(err)
                                             return res.status(500).json({
-                                                message: 'couldnt create sprint',
+                                                error: 'couldnt create sprint',
                                                 errorCode: '347'
                                             });
                                         })
@@ -103,7 +103,7 @@ exports.createProject = (req, res) => {
                                                 })
                                                 .catch(() => {
                                                     return res.status(500).json({
-                                                        message: 'couldnt update project',
+                                                        error: 'couldnt update project',
                                                         errorCode: '348'
                                                     });
                                                 })
@@ -115,7 +115,7 @@ exports.createProject = (req, res) => {
                     })
                     .catch(() => {
                         return res.status(500).json({
-                            message: 'couldnt create milestone',
+                            error: 'couldnt create milestone',
                             errorCode: '373',
                         });
 
@@ -129,7 +129,7 @@ exports.createProject = (req, res) => {
         .catch((err) => {
             console.log(err)
             return res.status(500).json({
-                message: 'couldnt create project',
+                error: 'couldnt create project',
                 errorCode: '344'
             });
         });

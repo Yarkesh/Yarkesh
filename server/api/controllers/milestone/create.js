@@ -35,7 +35,7 @@ module.exports.createMilestone = (req, res) => {
                 })
                 .catch(() => {
                     return res.status(500).json({
-                        message: 'couldnt create milestone',
+                        error: 'couldnt create milestone',
                         errorCode: '373',
                     });
 
@@ -61,13 +61,13 @@ module.exports.createMilestoneFromDate = (req, res) => {
         })
         .then((milestone) => {
             return res.status(200).json({
-                message: "milestone created successfully",
+                error: "milestone created successfully",
                 milestone
             });
         })
         .catch(() => {
             return res.status(500).json({
-                message: 'couldnt create milestone',
+                error: 'couldnt create milestone',
                 errorCode: '373',
             });
 

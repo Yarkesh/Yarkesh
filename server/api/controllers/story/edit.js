@@ -17,9 +17,9 @@ module.exports.changeSprint = (req, res) => {
         return res.status(200).json({
             message: "updated sprintId"
         })
-    }).catch(err => {
+    }).catch(error => {
         return res.status(500).json({
-            err
+            error
         })
     })
 };
@@ -119,7 +119,7 @@ module.exports.editStory = (req, res, next) => {
                                                                 }
                                                             }).then(updatedtoOld2 => {
                                                                 return res.status(500).json({
-                                                                    err: "this assignment is not in this project",
+                                                                    error: "this assignment is not in this project",
                                                                 })
 
                                                             })
@@ -168,7 +168,7 @@ module.exports.editStory = (req, res, next) => {
                                                     }
                                                 }).then(updatedtoOld => {
                                                     return res.status(500).json({
-                                                        err: "this dependency is not in this project",
+                                                        error: "this dependency is not in this project",
                                                     })
 
                                                 })
@@ -185,10 +185,10 @@ module.exports.editStory = (req, res, next) => {
                         })
                 })
             })
-        }).catch(errUpdate => {
+        }).catch(error => {
             //error updating ! 
             return res.status(500).json({
-                errUpdate
+                error
             })
         })
     })

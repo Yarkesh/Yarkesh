@@ -22,7 +22,7 @@ exports.getProjectsByCreatorId = (req, res) => {
         })
         .catch((err) => {
             return res.status(500).json({
-                message: 'couldnt find project',
+                error: 'couldnt find project',
                 errorCode: '363'
             });
         });
@@ -55,7 +55,7 @@ exports.getProjectDetails = (req, res) => {
         .catch(() => {
             return res.status(500).json({
                 message: 'couldnt find project',
-                errorCode: '362'
+                error: '362'
             });
         });
 };
@@ -95,7 +95,7 @@ module.exports.getProjectSprints = (req, res) => {
         })
         .catch(() => {
             return res.status(500).json({
-                message: 'couldnt find project',
+                error: 'couldnt find project',
                 errorCode: '363'
             });
         });
@@ -125,7 +125,7 @@ module.exports.getPorjectSprintsDetails = (req, res) => {
         })
         .catch(() => {
             return res.status(500).json({
-                message: 'couldnt find sprints',
+                error: 'couldnt find sprints',
                 errorCode: '364'
             });
         })
@@ -161,14 +161,14 @@ module.exports.getProjectTimeline = (req, res) => {
                 })
             }).catch(() => {
                 return res.status(500).json({
-                    message: 'couldnt find milestones',
+                    error: 'couldnt find milestones',
                     errorCode: '366'
                 });
             })
         })
         .catch(() => {
             return res.status(500).json({
-                message: 'couldnt find sprints',
+                error: 'couldnt find sprints',
                 errorCode: '365'
             });
         })
