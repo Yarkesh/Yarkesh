@@ -86,8 +86,8 @@ exports.createStory = async (req, res) => {
     try {
         await DependencyController.createDependencyFromList(req.body.projectId, req.body.dependency, story.storyId);
     } catch (error) {
-        //destory story if we can't create assignments
-        Stories.destroy({
+        //destory story if we can't create dependencies
+        await Stories.destroy({
                 where: {
                     projectId: req.body.projectId,
                     storyId: story.storyId
@@ -104,8 +104,8 @@ exports.createStory = async (req, res) => {
     try {
         await AssignmentController.createAssignmentFromList(req.body.projectId, req.body.assignment, story.storyId);
     } catch (error) {
-        //destory story if we can't create dependencies
-        Stories.destroy({
+        //destory story if we can't create assignments
+        await Stories.destroy({
             where: {
                 projectId: req.body.projectId,
                 storyId: story.storyId

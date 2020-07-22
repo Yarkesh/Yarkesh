@@ -24,6 +24,8 @@ exports.getProjectStories = (req, res) => {
             });
         });
 };
+
+
 exports.getProjectStoriesWithDetail = (req, res) => {
     // finding projects created by this certain user
     Stories.findAll({

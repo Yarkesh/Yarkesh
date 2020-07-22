@@ -5,12 +5,16 @@ const editStoryController = require('../controllers/story/edit');
 const infoStoryController = require('../controllers/story/info');
 const deleteStoryController = require('../controllers/story/delete');
 const authenticateRoutes = require('../middlewares/authentication');
+const createStoryValidator = require('../validators/storyValidator/createStoryValidator');
+const errorHandler = require('../controllers/errorHandler');
 
 router.post(
 	'/createStory',
 	passport.authenticate('jwt', {
 		session: false
 	}),
+	createStoryValidator.Validator,
+	errorHandler.isValid,
 	authenticateRoutes.isMember,
 	createStoryController.createStory
 );
