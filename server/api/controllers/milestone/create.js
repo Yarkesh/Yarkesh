@@ -21,8 +21,10 @@ module.exports.createMilestone = async (req, res) => {
     var addedDate = new Date(start.setDate(start.getDate() + parseInt(req.body.milestoneDuration)))
     console.log(addedDate)
     if (project.dueDate < addedDate) {
-        return res.status(500).json({
-            error: "the milestone Duration you entered exceeds the project dueDate"
+        return res.status(422).json({
+            error: {
+                "milestoneDuration": ["the milestone Duration you entered exceeds the project dueDate"]
+            }
         })
     }
 

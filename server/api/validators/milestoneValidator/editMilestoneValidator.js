@@ -40,4 +40,11 @@ exports.Validator = [
     .isNumeric()
     .withMessage('must be a number'),
 
+    check('milestoneDuration')
+    .optional()
+    .not()
+    .isEmpty()
+    .withMessage('cant be empty')
+    .isNumeric()
+    .withMessage('must be a number'),
 ]

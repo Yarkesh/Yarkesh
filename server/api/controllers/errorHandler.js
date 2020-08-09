@@ -1,4 +1,7 @@
-const { check, validationResult } = require('express-validator');
+const {
+	check,
+	validationResult
+} = require('express-validator');
 
 module.exports.handler = (inputErrors) => {
 	const outputErrors = new Object();
@@ -17,7 +20,6 @@ module.exports.isValid = (req, res, next) => {
 	const handledErrorsList = this.handler(errorsList);
 	if (Object.keys(handledErrorsList).length > 0) {
 		return res.status(422).json({
-			errorCode: '1',
 			error: handledErrorsList
 		});
 	} else {

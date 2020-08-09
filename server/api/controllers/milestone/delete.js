@@ -12,8 +12,10 @@ module.exports.deleteMilestone = async (req, res) => {
             }
         })
     } catch (error) {
-        return res.status(500).json({
-            error: "cant find milestone"
+        return res.status(422).json({
+            error: {
+                "milestoneId": ["milestone not found"]
+            }
         })
     }
 
