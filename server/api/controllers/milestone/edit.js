@@ -8,9 +8,8 @@ module.exports.editMilestone = (req, res) => {
         }
     }).then(project => {
         var start = new Date(project.startDate);
-        var addedDate = new Date(start.setDate(start.getDate() + req.body.milestoneDuration))
-        // var DateAdded = new Date(addedDate)
-        // console.log(addedDate)
+        var addedDate = new Date(start.setDate(start.getDate() + parseInt(req.body.milestoneDuration)))
+
         if (project.dueDate < addedDate) {
             return res.status(400).json({
                 error: "the milestone Duration you entered exceeds the project dueDate"
@@ -22,6 +21,7 @@ module.exports.editMilestone = (req, res) => {
                 dueDate: addedDate
             }, {
                 where: {
+                    projectId: req.body.projectId,
                     milestoneId: req.body.milestoneId
                 }
             }).then(done => {

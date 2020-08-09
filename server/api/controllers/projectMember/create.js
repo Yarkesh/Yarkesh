@@ -77,7 +77,6 @@ exports.addMembers = (req, res, next) => {
                                     'they have recieved your invitation email'
                             })
                         } else {
-
                             message = 'please join our project'
                             mailController.inviteEmail(req.body.email, user, project, message)
                             invitedEmails.create({
@@ -88,7 +87,7 @@ exports.addMembers = (req, res, next) => {
                             }).then((invitedEmail) => {
                                 return res.status(200).json({
                                     invitedEmail,
-                                    message: 'email not found. invitation email sent'
+                                    message: 'user email not found on site. invitation email sent to the user\'s email'
                                 })
                             }).catch(err => {
                                 console.log(err)
@@ -103,8 +102,6 @@ exports.addMembers = (req, res, next) => {
                 })
             })
         }
-
-    }).catch(err => {
 
     })
 

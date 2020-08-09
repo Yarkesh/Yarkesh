@@ -6,6 +6,7 @@ const infoStoryController = require('../controllers/story/info');
 const deleteStoryController = require('../controllers/story/delete');
 const authenticateRoutes = require('../middlewares/authentication');
 const createStoryValidator = require('../validators/storyValidator/createStoryValidator');
+const editStoryValidator = require('../validators/storyValidator/editStoryValidator');
 const errorHandler = require('../controllers/errorHandler');
 
 router.post(
@@ -81,6 +82,8 @@ router.post(
 	passport.authenticate('jwt', {
 		session: false
 	}),
+	editStoryValidator.Validator,
+	errorHandler.isValid,
 	authenticateRoutes.isCreator,
 	authenticateRoutes.isStoryInProject,
 	editStoryController.editStory

@@ -6,21 +6,38 @@ exports.Validator = [
     check('title')
     .not()
     .isEmpty()
-    .withMessage('title cant be empty')
+    .withMessage('cant be empty')
     .isString()
-    .withMessage('title must be string')
+    .withMessage('must be string')
     .isLength({
         min: 2,
         max: 32
     })
-    .withMessage('title must be  between 2 and 32 characters long'),
+    .withMessage('must be  between 2 and 32 characters long'),
+
+
+    check('description')
+    .isString()
+    .withMessage('must be string')
+    .isLength({
+        min: 2,
+        max: 500
+    })
+    .withMessage('must be  between 2 and 500 characters long'),
 
 
     check('projectId')
     .not()
     .isEmpty()
-    .withMessage('projectId cant be empty')
+    .withMessage('cant be empty')
     .isNumeric()
-    .withMessage('projectId must be a number'),
+    .withMessage('must be a number'),
 
+
+    check('milestoneDuration')
+    .not()
+    .isEmpty()
+    .withMessage('cant be empty')
+    .isNumeric()
+    .withMessage('must be a number')
 ]

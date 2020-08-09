@@ -5,7 +5,9 @@ module.exports.getMilestones = (req, res) => {
             where: {
                 projectId: req.body.projectId
             },
-            attributes: ['milestoneId', 'title', 'dueDate', 'description']
+            order: [
+                ['dueDate', 'ASC']
+            ]
         })
         .then((milestones) => {
             return res.status(200).json({
@@ -14,8 +16,7 @@ module.exports.getMilestones = (req, res) => {
         })
         .catch(() => {
             return res.status(500).json({
-                error: 'couldnt get milestones',
-                errorCode: '377',
+                error: 'couldnt get milestones'
             });
         });
 };
