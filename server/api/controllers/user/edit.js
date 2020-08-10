@@ -199,7 +199,6 @@ module.exports.changePassword = (req, res) => {
 		});
 };
 
-//TODO handle errors edit profile
 module.exports.editProfile = (req, res) => {
 
 	Users.findOne({
@@ -249,7 +248,6 @@ module.exports.editProfile = (req, res) => {
 				});
 		})
 		.catch(err => {
-			console.log(err)
 			return res.status(500).json({
 				error: 'cant find user'
 			})
@@ -295,16 +293,19 @@ module.exports.editPassword = (req, res) => {
 						}
 					});
 				} else {
-					return res.status(500).json({
-						error: 'confirm password must match the new password',
-						errorCode: '340'
-					});
+					return res.status(422).json({
+						error: {
+							"confirmNewPassword": ["confirm password must match the new password"]
+						}
+					})
+
 				}
 			} else {
-				return res.status(500).json({
-					error: 'your old password is wrong',
-					errorCode: '338'
-				});
+				return res.status(422).json({
+					error: {
+						"password": ["old password is wrong"]
+					}
+				})
 			}
 		});
 	});

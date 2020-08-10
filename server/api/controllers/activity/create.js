@@ -13,8 +13,7 @@ module.exports.createActivity = (req, res) => {
         })
         .catch(() => {
             return res.status(500).json({
-                error: 'couldnt create activity',
-                errorCode: '371'
+                error: 'couldnt create activity'
             });
         });
 };

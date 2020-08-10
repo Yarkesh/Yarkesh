@@ -85,6 +85,7 @@ module.exports.searchUsers = (req, res) => {
 		});
 };
 
+
 exports.getAvatar = (req, res) => {
 	Users.findOne({
 			where: {
