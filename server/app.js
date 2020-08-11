@@ -44,7 +44,8 @@ require('./api/models/databaseRelations');
 scriptRunner.runAllScripts();
 
 //* For deleting database and creating again!
-
+console.log(process.env.NODE_ENV)
+console.log(config.get('app.webServer.baseUrl'))
 sequelize.sync({
 	force: true
 });
