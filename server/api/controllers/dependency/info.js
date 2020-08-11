@@ -11,9 +11,9 @@ module.exports.getStoryDependencies = (req, res) => {
                 depends
             });
         })
-        .catch((err) => {
+        .catch((error) => {
             return res.status(500).json({
-                err
+                error
             });
         });
 };

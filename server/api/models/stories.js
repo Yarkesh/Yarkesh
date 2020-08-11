@@ -74,7 +74,16 @@ const Stories = dbConnection.define('stories', {
 	isEpic: {
 		type: Sequelize.BOOLEAN,
 		allowNull: true
+	},
+	dependency: {
+		type: Sequelize.ARRAY(Sequelize.INTEGER),
+		allowNull: true
+	},
+	assignment: {
+		type: Sequelize.ARRAY(Sequelize.INTEGER),
+		allowNull: true
 	}
+
 });
 
 module.exports = Stories;

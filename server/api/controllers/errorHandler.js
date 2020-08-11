@@ -1,4 +1,9 @@
-exports.handler = (inputErrors) => {
+const {
+	check,
+	validationResult
+} = require('express-validator');
+
+module.exports.handler = (inputErrors) => {
 	const outputErrors = new Object();
 	inputErrors.forEach((item) => {
 		if (outputErrors[item.param]) {
@@ -8,4 +13,16 @@ exports.handler = (inputErrors) => {
 		}
 	});
 	return outputErrors;
+};
+
+module.exports.isValid = (req, res, next) => {
+	const errorsList = validationResult(req).errors;
+	const handledErrorsList = this.handler(errorsList);
+	if (Object.keys(handledErrorsList).length > 0) {
+		return res.status(422).json({
+			error: handledErrorsList
+		});
+	} else {
+		return next();
+	}
 };

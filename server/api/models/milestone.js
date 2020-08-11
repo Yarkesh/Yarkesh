@@ -13,12 +13,20 @@ const milestone = dbConnection.define('milestone', {
         type: Sequelize.INTEGER,
         allowNull: false
     },
+    title: {
+        type: Sequelize.STRING,
+        allowNull: true,
+    },
+    milestoneNo: {
+        type: Sequelize.STRING,
+        allowNull: true,
+    },
     dueDate: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: true
     },
     description: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: true
     }
 

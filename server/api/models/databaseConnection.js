@@ -5,8 +5,7 @@ const config = require('config');
 const sequelize = new Sequelize(
 	config.get('sql.name'),
 	config.get('sql.userName'),
-	config.get('sql.password'),
-	{
+	config.get('sql.password'), {
 		host: config.get('sql.host'),
 		dialect: 'postgres',
 		logging: false

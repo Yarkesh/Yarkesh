@@ -12,7 +12,7 @@ const NotConfirmedUsers = dbConnection.define('notConfirmedUsers', {
 	userName: {
 		allowNull: false,
 		type: Sequelize.STRING,
-		unique: true
+		unique: false
 	},
 	email: {
 		allowNull: false,

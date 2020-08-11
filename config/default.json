@@ -2,17 +2,21 @@
 	"app": {
 		"webServer": {
 			"port": 8585,
-			"jwtSecret": "X*FC^F&XF7xGD*X&DG@#$#@%$#%$#@#$#@$#@"
+			"jwtSecret": "X*FC^F&XF7xGD*X&DG@#$#@%$#%$#@#$#@$#@",
+			"baseUrl": "78.38.77.51:8585"
 		},
 		"mail": {
-			"mail": "hoosht101@gmail.com",
-			"password": "mahdi76talebi"
+			"port": 465,
+			"host": "mail.nit.ac.ir",
+			"mail": "agilelab@nit.ac.ir",
+			"password": "Soft99_123",
+			"service": "mail.nit.ac.ir"
 		}
 	},
 	"sql": {
-		"name": "Yarkesh",
+		"name": "postgres",
 		"userName": "postgres",
-		"password": "123",
-		"host": "localhost"
+		"password": "admin@@4321",
+		"host": "172.16.5.65"
 	}
 }

@@ -8,6 +8,7 @@ const Sprints = require('../models/sprints');
 const Assignment = require('../models/assignments');
 const StorySprints = require('../models/storySprints');
 const Milestones = require('../models/milestone');
+const invitedEmails = require('../models/invitedEmails');
 
 Projects.belongsTo(Users, {
 	foreignKey: 'creatorId',
@@ -61,9 +62,9 @@ Projects.hasMany(Sprints, {
 	hooks: true
 });
 Projects.hasOne(Sprints, {
-	foreignKey: 'projectId',
-	targetKey: 'projectId',
-	as: 'currentSprint'
+	foreignKey: 'activeSprintId',
+	targetKey: 'sprintId',
+	as: 'activeSprint'
 })
 Projects.hasOne(Sprints, {
 	foreignKey: 'defaultSprintId',
@@ -92,8 +93,22 @@ Stories.belongsTo(Activities, {
 })
 Stories.hasMany(Dependencies, {
 	foreignKey: 'storyId',
-	targetKey: 'storyId'
+	targetKey: 'storyId',
+	as: 'dependencies',
+	onUpdate: 'cascade',
+	onDelete: 'cascade',
+	constraints: false
+
 });
+
+Dependencies.belongsTo(Stories, {
+	foreignKey: 'dependsOn',
+	targetKey: 'storyId',
+	as: 'story',
+	onUpdate: 'cascade',
+	onDelete: 'cascade',
+	constraints: false
+})
 
 Assignment.belongsTo(Users, {
 	foreignKey: 'userId',
@@ -103,7 +118,10 @@ Assignment.belongsTo(Users, {
 Stories.hasMany(Assignment, {
 	foreignKey: 'storyId',
 	targetKey: 'storyId',
-	as: 'member'
+	as: 'assignedTo',
+	onUpdate: 'cascade',
+	onDelete: 'cascade',
+	hooks: true
 });
 Projects.hasMany(Activities, {
 	foreignKey: 'projectId',
@@ -131,3 +149,14 @@ Projects.hasMany(Milestones, {
 	targetKey: 'projectId',
 	as: 'milestone'
 });
+
+Users.hasMany(invitedEmails, {
+	foreignKey: 'inviterId',
+	targetKey: 'userId',
+	as: 'inviter'
+})
+
+Projects.hasMany(invitedEmails, {
+	foreignKey: 'projectId',
+	targetKey: 'projectId',
+})

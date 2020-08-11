@@ -9,6 +9,10 @@ const Assignments = dbConnection.define('assignments', {
 		autoIncrement: true,
 		allowNull: false
 	},
+	projectId: {
+		type: Sequelize.INTEGER,
+		allowNull: false
+	},
 	userId: {
 		type: Sequelize.INTEGER,
 		allowNull: false

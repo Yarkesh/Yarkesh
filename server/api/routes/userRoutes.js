@@ -1,14 +1,44 @@
 const router = require('express').Router();
 const passport = require('passport');
-// const userController = require('../controllers/userController');
 const createUserController = require('../controllers/user/create');
 const deleteUserController = require('../controllers/user/delete');
 const editUserController = require('../controllers/user/edit');
 const infoUserController = require('../controllers/user/info');
-const validation = require('../controllers/validation');
+const signUpValidation = require('../validators/userValidator/signUp');
+const signInValidation = require('../validators/userValidator/signIn');
+const confirmEmailValidation = require('../validators/userValidator/confirmEmail');
+const forgotPasswordValidation = require('../validators/userValidator/forgotPassword');
+const changePasswordValidation = require('../validators/userValidator/changePassword');
+const searchUserValidator = require('../validators/userValidator/userSearch');
+const editPasswordValidator = require('../validators/userValidator/editPassword');
+const errorHandler = require('../controllers/errorHandler');
+const editUserValidator = require('../validators/userValidator/editUser');
 
-router.post('/signup', validation.signUp, createUserController.signUp);
-router.post('/signin', createUserController.signIn);
+const upload = require('../middlewares/uploadMiddleware');
+
+router.post('/signup', signUpValidation.Validator, errorHandler.isValid, createUserController.signUp);
+router.post('/signin', signInValidation.Validator, errorHandler.isValid, createUserController.signIn);
+router.post('/confirmEmail', confirmEmailValidation.Validator, errorHandler.isValid, createUserController.confirmEmail);
+router.post('/forgotpassword', forgotPasswordValidation.Validator, errorHandler.isValid, editUserController.forgotPassword);
+router.post('/changepassword', changePasswordValidation.Validator, errorHandler.isValid, editUserController.changePassword);
+router.post(
+    '/searchuser',
+    passport.authenticate('jwt', {
+        session: false
+    }),
+    searchUserValidator.Validator,
+    errorHandler.isValid,
+    infoUserController.searchUsers
+);
+router.post(
+    '/editpassword',
+    passport.authenticate('jwt', {
+        session: false
+    }),
+    editPasswordValidator.Validator,
+    errorHandler.isValid,
+    editUserController.editPassword
+);
 
 router.get(
     '/singleUserInfo',
@@ -19,30 +49,33 @@ router.get(
 );
 
 router.get(
+    '/getavatar',
+    passport.authenticate('jwt', {
+        session: false
+    }),
+    infoUserController.getAvatar
+);
+
+router.get(
     '/getUserProjects',
     passport.authenticate('jwt', {
         session: false
     }),
     infoUserController.getUserProjects
 );
-router.post('/confirmEmail', createUserController.confirmEmail);
-router.post('/forgotpassword', editUserController.forgotPassword);
-router.post('/changepassword', editUserController.changePassword);
 
-router.delete(
-    '/deleteuser',
-    passport.authenticate("jwt", {
-        session: false
-    }),
-    deleteUserController.deleteUser
-);
+
 
 router.post(
-    '/searchuser',
+    '/editProfile',
     passport.authenticate('jwt', {
         session: false
     }),
-    infoUserController.searchUsers
+    upload.single('avatar'),
+    // editUserValidator.Validator,
+    // errorHandler.isValid,
+    editUserController.editProfile
 );
 
-module.exports = router
+
+module.exports = router;

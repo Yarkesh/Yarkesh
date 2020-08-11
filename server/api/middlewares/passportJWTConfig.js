@@ -4,7 +4,7 @@ const config = require('config');
 
 var opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = config.get('app.webServer.jwtSecret');
+opts.secretOrKey = config.app.webServer.jwtSecret;
 module.exports = (passport) => {
 	passport.use(
 		new JwtStrategy(opts, (jwt_payload, done) => {
