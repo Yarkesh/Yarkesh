@@ -1,0 +1,22 @@
+{
+    "app": {
+        "webServer": {
+            "port": 8585,
+            "jwtSecret": "X*FC^F&XF7xGD*X&DG@#$#@%$#%$#@#$#@$#@",
+            "baseUrl": "78.38.77.51:8585"
+        },
+        "mail": {
+            "port": 465,
+            "host": "mail.nit.ac.ir",
+            "mail": "agilelab@nit.ac.ir",
+            "password": "Soft99_123",
+            "service": "mail.nit.ac.ir"
+        }
+    },
+    "sql": {
+        "name": "postgres",
+        "userName": "postgres",
+        "password": "admin@@4321",
+        "host": "172.16.5.65"
+    }
+}
