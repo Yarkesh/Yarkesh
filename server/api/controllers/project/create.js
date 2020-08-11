@@ -39,7 +39,7 @@ exports.createProject = (req, res) => {
                         projectId: project.projectId,
                         title: 'MVP',
                         milestoneNo: 'milestone#1',
-                        dueDate: new Date(start.setDate(start.getDate() + req.body.milestoneDuration)),
+                        dueDate: new Date(start.setDate(start.getDate() + parseInt(req.body.milestoneDuration))),
                         description: 'Your first initial software'
                     }).then(milestone => {
                         Activities.create({

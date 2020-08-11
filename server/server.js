@@ -8,4 +8,6 @@ const port = process.env.PORT || config.get('app.webServer.port');
 
 const server = http.createServer(app);
 
-server.listen(port);
+server.listen(port, () => {
+    console.log("server running on port " + port)
+});
