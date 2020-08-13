@@ -44,7 +44,6 @@ exports.Validator = [
             return true;
         }
     })
-    //TODO new password can't be the same as the old one
 ]
 
 

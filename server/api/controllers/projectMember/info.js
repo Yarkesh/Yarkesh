@@ -2,7 +2,6 @@ const ProjectMembers = require('../../models/projectMembers');
 const Users = require('../../models/users');
 
 exports.getProjectMembers = (req, res) => {
-    // TODO fix this shit
     ProjectMembers.findAll({
         where: {
             projectId: req.body.projectId

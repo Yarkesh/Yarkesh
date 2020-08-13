@@ -95,7 +95,7 @@ module.exports.setActiveSprint = (time) => {
                 }
             })
             Sprint.update({
-                status: "todo"
+                status: "future"
             }, {
                 where: {
                     startDate: {

@@ -68,7 +68,7 @@ exports.createStory = async (req, res) => {
             iWant: req.body.iWant,
             soThat: req.body.soThat,
             acceptanceTest: req.body.acceptanceTest,
-            status: 'Todo',
+            status: req.body.status,
             storyPoint: req.body.storyPoint,
             priority: req.body.priority,
             isEpic: req.body.isEpic,

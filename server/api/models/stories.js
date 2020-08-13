@@ -3,7 +3,6 @@ const dbConnection = require('./databaseConnection');
 
 // ! INITIALIZING THE PROEJCT PROPERTY IN DATABASE
 const Stories = dbConnection.define('stories', {
-	// TODO: add title
 	storyId: {
 		type: Sequelize.INTEGER,
 		primaryKey: true,
@@ -45,13 +44,11 @@ const Stories = dbConnection.define('stories', {
 	},
 	// * Foreign key to statuses table
 	status: {
-		//TODO add 3 filters only in validation
 		allowNull: true,
 		type: Sequelize.STRING
 	},
 	// * Foreign key to User table
 	storyPoint: {
-		//TODO add 3 filters only in validation
 		type: Sequelize.INTEGER,
 		allowNull: false
 	},

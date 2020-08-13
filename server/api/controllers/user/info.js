@@ -28,7 +28,6 @@ exports.getUserInfo = (req, res) => {
 		});
 };
 
-//TODO validate getUserProjects
 exports.getUserProjects = (req, res) => {
 	ProjectMembers.findAll({
 			where: {

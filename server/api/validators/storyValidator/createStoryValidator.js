@@ -67,10 +67,10 @@ exports.Validator = [
     .isString()
     .withMessage(' must be string')
     .isLength({
-        min: 2,
+        min: 1,
         max: 500
     })
-    .withMessage('must be between 2 and 500 characters long'),
+    .withMessage('must be between 1 and 500 characters long'),
 
     check('acceptanceTest.*.checked')
     .isIn(['true', 'false'])

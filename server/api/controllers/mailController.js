@@ -10,11 +10,12 @@ let transporter = nodemailer.createTransport({
 		user: config.get('app.mail.mail'),
 		pass: config.get('app.mail.password')
 	},
-	tls: { rejectUnauthorized: false }
+	tls: {
+		rejectUnauthorized: false
+	}
 });
 
 module.exports.emailVerification = async (email, confirmationCode) => {
-	// TODO: fix this
 	let info = await transporter
 		.sendMail({
 			from: config.get('app.mail.mail'),
