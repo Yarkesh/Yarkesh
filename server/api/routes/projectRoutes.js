@@ -98,6 +98,8 @@ router.post(
 		session: false
 	}),
 	upload.single('logo'),
+	editProjectValidator.Validator,
+	errorHandler.isValid,
 	authenticateRoutes.isMember,
 	editProjectController.editProject
 );

@@ -26,7 +26,7 @@ app.use(
 );
 app.use(limiter);
 app.use(bodyParser.json());
-app.use(cors());
+// app.use(cors());
 app.use(helmet());
 
 app.use('/pictures', express.static(__dirname + '/pictures'));
@@ -44,8 +44,8 @@ require('./api/models/databaseRelations');
 scriptRunner.runAllScripts();
 
 //* For deleting database and creating again!
-console.log(process.env.NODE_ENV)
-console.log(config.get('app.webServer.baseUrl'))
+console.log(process.env.NODE_ENV);
+console.log(config.get('app.webServer.baseUrl'));
 sequelize.sync({
 	alter: true
 });

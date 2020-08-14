@@ -4,6 +4,7 @@ const {
 
 exports.Validator = [
     check('title')
+    .optional()
     .isString()
     .withMessage('title must be string')
     .isLength({
@@ -13,6 +14,7 @@ exports.Validator = [
     .withMessage('title must be  between 2 and 32 characters long'),
 
     check('description')
+    .optional()
     // .not()
     // .isEmpty()
     // .withMessage('description cant be empty')
@@ -25,6 +27,7 @@ exports.Validator = [
 
 
     check('sprintDuration')
+    .optional()
     .isNumeric()
     .withMessage('sprintDuration must be a number')
     .not()
