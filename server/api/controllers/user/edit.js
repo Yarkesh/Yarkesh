@@ -213,6 +213,8 @@ module.exports.editProfile = (req, res) => {
 			if (req.file) {
 				imageUrl = config.get('app.webServer.baseUrl') + '/pictures/users/' + ImageName
 			}
+
+
 			Users.update({
 					name: req.body.name,
 					avatar: imageUrl

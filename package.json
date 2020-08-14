@@ -1,62 +1,62 @@
 {
-  "name": "yarkesh",
-  "version": "1.0.0",
-  "description": "application project management platform for agile developers",
-  "main": "index.js",
-  "scripts": {
-    "dev": "nodemon server/server.js",
-    "start": "nodemon server/server.js",
-    "test": "mocha -w"
-  },
-  "author": "mjavad_alj",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mjavadalj/Yarkesh"
-  },
-  "license": "ISC",
-  "dependencies": {
-    "bcrypt": "^3.0.6",
-    "body-parser": "^1.19.0",
-    "config": "^3.2.2",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "express-rate-limit": "^5.0.0",
-    "express-validator": "^6.1.1",
-    "helmet": "^3.21.1",
-    "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.15",
-    "moment": "^2.24.0",
-    "multer": "^1.4.2",
-    "node-cron": "^2.0.3",
-    "nodemailer": "^6.3.0",
-    "passport": "^0.4.0",
-    "passport-jwt": "^4.0.0",
-    "pg": "^7.12.0",
-    "randomstring": "^1.1.5",
-    "sequelize": "^5.19.0",
-    "sharp": "^0.23.0"
-  },
-  "devDependencies": {
-    "chai": "^4.2.0",
-    "eslint": "^5.3.0",
-    "eslint-config-airbnb-base": "^13.2.0",
-    "eslint-config-node": "^4.0.0",
-    "eslint-config-prettier": "^6.0.0",
-    "eslint-plugin-import": "^2.17.2",
-    "eslint-plugin-node": "^9.1.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "mocha": "^6.2.0",
-    "nodemon": "^1.19.1",
-    "prettier": "^1.18.2",
-    "supertest": "^4.0.2"
-  },
-  "keywords": [
-    "agile",
-    "scrum",
-    "application project management platform for agile developers",
-    "web app",
-    "managing application project flow",
-    "mjavad_alj"
-  ],
-  "homepage": "https://github.com/mjavadalj/Yarkesh"
+	"name": "yarkesh",
+	"version": "1.0.0",
+	"description": "application project management platform for agile developers",
+	"main": "index.js",
+	"scripts": {
+		"dev": "nodemon server/server.js",
+		"start": "nodemon server/server.js",
+		"test": "mocha -w"
+	},
+	"author": "mjavad_alj",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mjavadalj/Yarkesh"
+	},
+	"license": "ISC",
+	"dependencies": {
+		"bcrypt": "^3.0.6",
+		"body-parser": "^1.19.0",
+		"config": "^3.2.2",
+		"cors": "^2.8.5",
+		"express": "^4.17.1",
+		"express-rate-limit": "^5.0.0",
+		"express-validator": "^6.1.1",
+		"helmet": "^3.21.1",
+		"jsonwebtoken": "^8.5.1",
+		"lodash": "^4.17.15",
+		"moment": "^2.24.0",
+		"multer": "^1.4.2",
+		"node-cron": "^2.0.3",
+		"nodemailer": "^6.3.0",
+		"passport": "^0.4.0",
+		"passport-jwt": "^4.0.0",
+		"pg": "^7.12.0",
+		"randomstring": "^1.1.5",
+		"sequelize": "^5.19.0",
+		"sharp": "^0.23.0"
+	},
+	"devDependencies": {
+		"chai": "^4.2.0",
+		"eslint": "^5.3.0",
+		"eslint-config-airbnb-base": "^13.2.0",
+		"eslint-config-node": "^4.0.0",
+		"eslint-config-prettier": "^6.0.0",
+		"eslint-plugin-import": "^2.17.2",
+		"eslint-plugin-node": "^9.1.0",
+		"eslint-plugin-prettier": "^3.1.0",
+		"mocha": "^6.2.0",
+		"nodemon": "^1.19.1",
+		"prettier": "^1.18.2",
+		"supertest": "^4.0.2"
+	},
+	"keywords": [
+		"agile",
+		"scrum",
+		"application project management platform for agile developers",
+		"web app",
+		"managing application project flow",
+		"mjavad_alj"
+	],
+	"homepage": "https://github.com/mjavadalj/Yarkesh"
 }

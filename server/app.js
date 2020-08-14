@@ -47,7 +47,7 @@ scriptRunner.runAllScripts();
 console.log(process.env.NODE_ENV)
 console.log(config.get('app.webServer.baseUrl'))
 sequelize.sync({
-	force: true
+	alter: true
 });
 
 module.exports = app;
