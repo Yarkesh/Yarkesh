@@ -43,7 +43,8 @@ exports.addMembers = (req, res, next) => {
                                     email: user.email,
                                     userName: user.userName,
                                     userId: user.userId,
-                                    avatar: user.avatar
+                                    avatar: user.avatar,
+                                    added: true
                                 })
                             })
                             .catch((err) => {
