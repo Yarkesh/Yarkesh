@@ -11,9 +11,9 @@ exports.Validator = [
     .withMessage('title must be string')
     .isLength({
         min: 2,
-        max: 32
+        max: 64
     })
-    .withMessage('title must be  between 2 and 32 characters long'),
+    .withMessage('title must be  between 2 and 64 characters long'),
 
     check('description')
     .optional()

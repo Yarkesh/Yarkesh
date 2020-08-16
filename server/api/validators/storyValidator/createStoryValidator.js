@@ -13,9 +13,9 @@ exports.Validator = [
     .withMessage('must be string')
     .isLength({
         min: 2,
-        max: 32
+        max: 64
     })
-    .withMessage('must be between 2 and 32 characters long'),
+    .withMessage('must be between 2 and 64 characters long'),
 
     check('projectId')
     .not()

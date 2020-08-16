@@ -26,7 +26,7 @@ app.use(
 );
 app.use(limiter);
 app.use(bodyParser.json());
-// app.use(cors());
+app.use(cors());
 app.use(helmet());
 
 app.use('/pictures', express.static(__dirname + '/pictures'));
